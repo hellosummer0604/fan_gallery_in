@@ -13,7 +13,7 @@ class MY_Controller extends CI_Controller {
 	}
 	
 	private function setTheme() {
-		echo "extends<br>";
+//		echo "extends<br>";
 	}
 	
 }
