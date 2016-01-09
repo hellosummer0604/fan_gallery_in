@@ -1,0 +1,265 @@
+*, html {
+    margin: 0px;
+    padding:0px;
+    font-family: "Helvetica Neue", HelveticaNeue, Helvetica, "Microsoft YaHei", "微软雅黑";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+    height: 100%;
+}
+body {
+    overflow: auto;
+    height: 100%;
+}
+
+/* unset bs3 setting */
+.modal-open {
+    overflow: auto;
+}
+
+body.modal-open[style] {
+    padding-right: 0px !important;
+}
+
+.loading {
+    /*display: none;*/
+}
+
+.loading img {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    left: 50%;
+    margin-left: -25px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.green{
+    color: #54ab99;
+}
+
+.font_color_333 {
+    color: #333333;
+}
+
+.font_color_666{
+    color: #666666;
+}
+
+.font_color_999{
+    color: #999999;
+}
+
+.font_size_12{
+    font-size: 12px;
+}
+
+.font_size_14 {
+    font-size: 14px;
+}
+
+.font_size_16{
+    font-size: 16px;
+}
+
+.float_left {
+    float: left;
+}
+
+.float_right {
+    float: right;
+}
+
+
+
+.border_bottom_grey{
+    border-bottom: 1px solid #eeeeee;
+}
+
+/* header nav start*/
+
+.headerNav {
+    margin-left: 7%;
+    width: 86%;
+    color: #ffffff;
+    font-size: 22px;
+    height: 50px;
+    line-height: 50px;
+    position: fixed;
+    z-index: 500;
+}
+
+.headerNav span {
+    margin: 0px 20px 0px 20px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .headerNav {
+        width: 100%;
+        margin-left: 0px;
+    }
+
+}
+
+.headerNavBackground {
+    opacity: 0.9;
+    background-color: #222;
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 499;
+}
+
+/* header nav end*/
+
+/* poster start*/
+
+.poster {
+    /*background-image: url("../img/header.jpg");*/
+    background-image: url("../img/8206-8.jpg");
+    background-repeat: no-repeat;
+    height: 620px;
+    width: 100%;
+}
+
+/* poster end*/
+
+
+
+/* text container section start*/
+.textSection {
+    position: absolute;
+    text-align: center;
+    height: auto;
+    width: 84%;
+    margin-left: 7%;
+    top: 640px;
+    padding-bottom: 70px;
+}
+
+.textSection .large {
+    width: calc(100% - 40px);
+    margin: 0px 20px 0px 20px;
+    font-size: 33px;
+    line-height: 50px;
+}
+
+.textSection .small {
+    line-height: 26px;
+    font-size: 18px;
+    width: 600px;
+    position: relative;
+    left: 50%;
+    margin-left: -300px;
+}
+
+@media only screen and (max-width: 600px) {
+    .textSection .small {
+        width: calc(100% - 40px);
+        left: 0px;
+        margin: 0px 20px 0px 20px;
+    }
+
+}
+
+@media only screen and (max-width: 1024px) {
+    .textSection {
+        width: 100%;
+        margin-left: 0px;
+    }
+
+}
+
+/* text container section end*/
+
+/* img nav container section start*/
+.imgNavContainer {
+    width: 100%;
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+    /*top is determined by every page*/
+    position: absolute;
+
+}
+
+.imgNavContainerBackground {
+    opacity: 0.9;
+    background-color: #fdfdfd;
+    z-index: 497;
+}
+
+.imgNavContainerForeground {
+
+    height: 49px;
+    border-top: solid 1px #efefef;
+    box-shadow: 0px 1px 2px #ededed;
+    z-index: 498;
+}
+
+.linkContainer {
+    position: relative;
+    /*background-color: red;*/
+}
+
+.imgNavContainer li {
+    /*background-color: #54ab99;*/
+    color: #666666;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 46px;
+    height: 50px;
+    border: 0px;
+    padding-left: 30px;
+    padding-right: 30px;
+    max-width: 320px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+
+
+.imgNavContainerForeground .active {
+    height: 46px;
+    color: rgb(0, 171, 230);
+    border-bottom: solid 4px;
+}
+
+/* img nav container section end*/
+
+/* image grid container section start*/
+.bodySection {
+    /*test height*/
+    /*height: 1500px;*/
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    background-color: #f9f9f9;
+}
+
+/* image grid container section end*/
+
+/* image group section start*/
+
+.imgGroup {
+    width: 96%;
+    margin-left: 2%;
+    position: relative;
+}
+
+@media only screen and (max-width: 1024px) {
+    .imgGroup {
+        width: calc(100% - 4px);
+        margin-left: 2px;
+        position: relative;
+    }
+
+}
+
+/* image group section end*/
