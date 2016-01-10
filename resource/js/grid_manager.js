@@ -21,7 +21,7 @@ var ImgGrid = Class.create({
 	default: function () {
 		this._resizeEvt;
 
-		
+
 		this._imgThumbPath = location.protocol + "//" + location.host + "/resource/gallery/img_publish/img_thumb/";
 
 
@@ -44,8 +44,8 @@ var ImgGrid = Class.create({
 		this.imgGroup = new Array();
 		this.display = false;
 
-		popupBox.bindCloseAction(function() {
-			popupBox.hidePopup();
+		popupBox.bindCloseAction(function () {
+			popupBox.hidePopup(['#imgBox', '#uploadBox']);
 		});
 	},
 	_setContainerWidth: function () {
@@ -351,9 +351,9 @@ var ImgGrid = Class.create({
 		target = jQuery("#" + target);
 
 		target.height(obj[obj.length - 1]['offset']);
-		
+
 		target.html("");
-		
+
 		for (var row = 0; row < obj.length; row++) {
 			/***<div class='imgThumbBox' style="cursor:pointer; position: absolute; width:285px; height: 190px; left: 5px; top: 5px; background-color: red"></div>**/
 
@@ -366,7 +366,7 @@ var ImgGrid = Class.create({
 	},
 	_assignImgAndEvent: function (imgArray, target) {
 		var clazz = this;
-		
+
 		jQuery("#" + target + " .imgThumbBox").each(function (index) {
 			/****console.log( index + ": " + jQuery( this ).text() );****/
 			var container = this;
@@ -381,24 +381,24 @@ var ImgGrid = Class.create({
 					"background-position": "0px 0px"
 				});
 				jQuery(container).fadeIn(200);
-				
+
 				//bind event;
 //				popupBox
 				jQuery(container).bind({
-					click: function() {
-						popupBox.showPopup();
+					click: function () {
+						popupBox.showPopup('#imgBox');
 					},
-					mouseenter: function() {
-						
+					mouseenter: function () {
+
 					},
-					mouseleave: function() {
-						
+					mouseleave: function () {
+
 					}
 				});
-			}); 
+			});
 		});
-		
-		
+
+
 	},
 	_renderImgSection: function () {
 

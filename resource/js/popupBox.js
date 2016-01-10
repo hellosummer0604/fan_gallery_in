@@ -4,23 +4,23 @@ var popupBox = popupBox || {}
 popupBox._resizeEvt;
 
 popupBox.activate = function () {
-
-
-	
+	jQuery("#upload").click(function(){
+		popupBox.showPopup("#uploadBox");
+	});
 }
 
-popupBox.showPopup = function () {
-	jQuery('#shadowWrapper').fadeIn(200);
+popupBox.showPopup = function (target) {
+	jQuery(target).fadeIn(200);
 	
 	document.body.style.overflow='hidden';
 }
 
-popupBox.hidePopup = function () {
-	jQuery('#shadowWrapper').fadeOut(200, function(){
-		document.body.style.overflow='auto';
+popupBox.hidePopup = function (targetArray) {
+	targetArray.forEach(function (entry) {
+		jQuery(entry).fadeOut(200);
 	});
-	
-	
+
+	document.body.style.overflow = 'auto';
 }
 
 
@@ -28,7 +28,10 @@ popupBox.bindCloseAction = function (func) {
 	jQuery(document).keyup(function (e) {
 		if (e.keyCode === 27)
 			func();
-
+	});
+	
+	jQuery('.closeButton').click(function(){
+		func();
 	});
 	
 	//click on cross
