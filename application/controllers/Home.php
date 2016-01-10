@@ -7,7 +7,7 @@ class Home extends MY_Controller {
 		parent::__construct();
 		
 		$cssArray =  ['default', 'index'];
-		$jsArray = ['jquery1.11.3.min', 'prototype1.7.3.0_1', 'jquery-color', 'init', 'indexNav', 'poster_manager', 'color_manager', 'grid_manager', 'img_grid_manager' , 'temp_test'];
+		$jsArray = ['jquery1.11.3.min', 'prototype1.7.3.0_1', 'jquery-color', 'init', 'indexNav', 'poster_manager', 'color_manager', 'grid_manager', 'img_grid_manager' , 'popupBox', 'temp_test'];
 		
 		$this->setHeader(array('css' => $cssArray, 'js' => $jsArray));
 		
