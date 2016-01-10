@@ -134,7 +134,7 @@ body.modal-open[style] {
 
 .popupImg{
 	margin-bottom: 20px;
-	background-color: #ffffff;
+	background-color: #f9f9f9;
 	/*test*/
 	height: 600px;
 	width: 1024px;
@@ -374,9 +374,9 @@ body.modal-open[style] {
 	cursor:pointer;
 	position: absolute; 
 	box-shadow: 1px 1px 5px #999999;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 }
 
 @media only screen and (max-width: 1024px) {
