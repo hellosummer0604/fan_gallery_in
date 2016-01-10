@@ -12,7 +12,20 @@ popupBox.activate = function () {
 popupBox.showPopup = function (target) {
 	jQuery(target).fadeIn(200);
 	
-	document.body.style.overflow='hidden';
+	
+	jQuery('body').css({
+		overflow:  'hidden',
+		position: 'relative',
+		height: '100%'
+	});
+	
+	jQuery('html').css({
+		overflow:  'hidden',
+		position: 'relative',
+		height: '100%'
+	});
+	
+	
 }
 
 popupBox.hidePopup = function (targetArray) {
@@ -20,7 +33,17 @@ popupBox.hidePopup = function (targetArray) {
 		jQuery(entry).fadeOut(200);
 	});
 
-	document.body.style.overflow = 'auto';
+	jQuery('body').css({
+		overflow:  'auto',
+		position: 'relative',
+		height: '100%'
+	});
+	
+	jQuery('html').css({
+		overflow:  'auto',
+		position: 'relative',
+		height: '100%'
+	});
 }
 
 
