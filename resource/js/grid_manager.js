@@ -25,7 +25,7 @@ var ImgGrid = Class.create({
 		this._imgThumbPath = location.protocol + "//" + location.host + "/resource/gallery/img_publish/img_thumb/";
 
 
-		this.imgBorder = 3;
+		this.imgBorder = 5;
 		this.imgMinWidth = 150;
 		this.imgMinHeight = 150;
 		this.imgMaxHeight = 600;
@@ -44,13 +44,16 @@ var ImgGrid = Class.create({
 		this.imgGroup = new Array();
 		this.display = false;
 
+		popupBox.bindCloseAction(function() {
+			popupBox.hidePopup();
+		});
 	},
 	_setContainerWidth: function () {
 		this.containerWidth = jQuery(".imgGroup").innerWidth();
 		if (this.containerWidth < 1024) {
-			this.imgBorder = 1;
-		} else {
 			this.imgBorder = 3;
+		} else {
+			this.imgBorder = 5;
 		}
 	},
 	initialize: function (typeId, page) {
@@ -339,7 +342,7 @@ var ImgGrid = Class.create({
 
 		this._insertDiv(groupDetail, containerId);
 
-		this._assignImg(imgArray['imgList'], containerId);
+		this._assignImgAndEvent(imgArray['imgList'], containerId);
 
 		//console_test(groupDetail);
 	},
@@ -355,13 +358,13 @@ var ImgGrid = Class.create({
 			/***<div class='imgThumbBox' style="cursor:pointer; position: absolute; width:285px; height: 190px; left: 5px; top: 5px; background-color: red"></div>**/
 
 			for (var col = 0; col < obj[row]['entris'].length; col++) {
-				var div_html = "<div class='imgThumbBox' style='display:none; cursor:pointer; position: absolute; width:" + obj[row]['entris'][col]['width'] + "px; height: " + obj[row]['entris'][col]['height'] + "px; left: " + obj[row]['entris'][col]['left'] + "px; top: " + obj[row]['entris'][col]['top'] + "px;'></div>";
+				var div_html = "<div class='imgThumbBox' style='width:" + obj[row]['entris'][col]['width'] + "px; height: " + obj[row]['entris'][col]['height'] + "px; left: " + obj[row]['entris'][col]['left'] + "px; top: " + obj[row]['entris'][col]['top'] + "px;'></div>";
 				target.append(div_html);
 			}
 		}
 
 	},
-	_assignImg: function (imgArray, target) {
+	_assignImgAndEvent: function (imgArray, target) {
 		var clazz = this;
 		
 		jQuery("#" + target + " .imgThumbBox").each(function (index) {
@@ -377,9 +380,25 @@ var ImgGrid = Class.create({
 					"background-size": "100% 100%",
 					"background-position": "0px 0px"
 				});
-				jQuery(container).fadeIn(500);
+				jQuery(container).fadeIn(200);
+				
+				//bind event;
+//				popupBox
+				jQuery(container).bind({
+					click: function() {
+						popupBox.showPopup();
+					},
+					mouseenter: function() {
+						
+					},
+					mouseleave: function() {
+						
+					}
+				});
 			}); 
 		});
+		
+		
 	},
 	_renderImgSection: function () {
 
