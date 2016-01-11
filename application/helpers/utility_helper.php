@@ -16,6 +16,20 @@ function img_thumb_url($path) {
 	return resource_url()."img_publish/img_thumb/$path";
 }
 
+function getStartEndOfPage($fullLen, $pageNo = 1, $pageSize = 80, $lastMin = 30) {
+	$startNo = ($pageNo - 1) * $pageSize;
+	$endNo = $startNo + $pageSize;
+	
+	if ( $pageNo != 1 && ($fullLen - $endNo < 0)) {
+		return null;
+	}
+	
+	if ($fullLen - $endNo < $lastMin) {
+		$endNo = $fullLen;
+	}
+	
+	return [$startNo, $endNo];
+}
 
 ?>
 
