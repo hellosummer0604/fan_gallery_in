@@ -27,9 +27,13 @@ class Photograph extends MY_Model {
 	//detail information of image, optional
 	public $detailInfo;
 	
-	public function getImgList() {
-		
+	
+	//author, category, tag
+	public function getSectionImg($sectionId, $pageNo = 1, $pageSize = 100, $last = 20 ) {
+			
 	}
+	
+	
 	
 	
 	public function test() {
