@@ -46,6 +46,13 @@ Init.act_headNav = function () {
 Init.Act_Img_Grid_Manager = function () {
 	if (typeof Img_Grid_Manager != "undefined") {
 		Img_Grid_Manager.activate();
+		
+		Img_Grid_Manager._loadImgSection('repository');
+		
+		Img_Grid_Manager._loadImgSection('repository');
+		
+		Img_Grid_Manager._loadImgSection('repository');
+		
 		console.log("Loading img_grid_manager.js");
 	} else {
 		console.error("Haven't load img_grid_manager.js");

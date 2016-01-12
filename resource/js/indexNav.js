@@ -5,6 +5,7 @@ headNav._resizeEvt;
 
 headNav.activate = function () {
 
+	headNav.loadNavItem();
 
 	//only index page has poster
 	this._enableAdjustOpacity = jQuery(".poster").length > 0 ? true : false;
@@ -34,6 +35,42 @@ headNav.activate = function () {
 
 	headNav._bindClickEvt();
 }
+
+/**
+ * load nav item and the img grid container
+ * @returns {undefined}
+ */
+headNav.loadNavItem = function(){
+	jQuery.ajax({
+			method: 'POST',
+			url: 'http://north.gallery/ajax_controller/getNavLink',
+			data: null,
+			dataType: 'json',
+			async: false,
+			success: function (navItems) {
+				// 悲剧啊忘了footer
+				var footHtml = "<div class=\"footer\" ></div>";
+				var navHtml = "";
+				var sectionHtml = "";
+				
+				jQuery.each(navItems, function() {
+					navHtml = navHtml + "<li class=\"imgSection\">" + this + "</li>";
+					
+					sectionHtml = sectionHtml + "<section class=\"bodySection\" id=\"" + navItems + "\" style=\"display:none\"> " + footHtml + "</section>";
+					
+				})
+				
+				jQuery('.linkContainer').prepend(navHtml);
+				jQuery(sectionHtml).insertAfter(jQuery('#bodySectioneferent'));
+				
+				
+			},
+			error: function () {
+				console.error('loading nav link fail' );
+			}
+	});
+}
+
 
 headNav._adjustOpacity = function () {
 	if (this._enableAdjustOpacity) {

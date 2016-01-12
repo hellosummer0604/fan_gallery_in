@@ -29,8 +29,8 @@ class Photograph extends MY_Model {
 	
 	
 	//author, category, tag
-	public function getSectionImg($sectionId, $pageNo = 1, $pageSize = 100, $last = 20 ) {
-			
+	public function getSectionImg($sectionId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE ) {
+		return $sectionId;
 	}
 	
 	

@@ -19,7 +19,7 @@
 
 <section class="imgNavContainer imgNavContainerForeground">
     <span class="linkContainer">
-        <li class="imgSection active">All</li><li class="imgSection">Popular</li><li class="imgSection">Art</li><li class="imgSection">Nature</li><li>More</li>
+        <li>More</li>
     </span>
 </section>
 <!--img category nav end-->
@@ -32,19 +32,19 @@
 <!--</section>-->
 <!-- loading gif end -->
 
-<section class="bodySection" style="background-color: #fcff93">
+<section id="bodySectioneferent" class="bodySection" style="background-color: #fcff93">
 
 </section>
 
 <section class="bodySection">
     <div class="imgGroup" id="s12g2">
     </div>
-    <!--<div id="" class="imgGroup" style=" height: 212px; background-color: antiquewhite">-->
+    <div id="" class="imgGroup" style=" height: 212px; background-color: antiquewhite">
 
-    <!--<div style="cursor:pointer; position: absolute; width:285px; height: 190px; left: 5px; top: 5px; background-color: red"></div>-->
+<!--    <div style="cursor:pointer; position: absolute; width:285px; height: 190px; left: 5px; top: 5px; background-color: red"></div>
 
-    <!--</div>-->
-	
+    </div>
+	-->
 	
 <div class="footer" >
 	
@@ -53,6 +53,7 @@
 	
 </section>
 
+<!--<section class="bodySection">asdasd</section>-->
 
 </body>
 </html>

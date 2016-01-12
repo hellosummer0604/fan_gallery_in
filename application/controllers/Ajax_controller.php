@@ -23,12 +23,43 @@ class Ajax_controller extends MY_Controller {
 		
 	}
 	
-	public function test() {
-		$this->getImgSection('repository');
+	
+	
+	
+	/**
+	 * get img section from database
+	 */
+	public function getImg() {
+	
+		if(empty($_POST['sectionId'])){
+			return;
+		} else {
+			$sectionId = $_POST['sectionId'] ;
+		}
 		
+		$pageNo = empty($_POST['page'])? IMG_SECTION_PAGE_NO : $_POST['page'];
+		
+		$pageSize = empty($_POST['pageSize']) ? IMG_SECTION_PAGE_SIZE : $_POST['pageSize'];
+		
+		$lastSize = empty($_POST['lastSize']) ? IMG_SECTION_LAST_SIZE : $_POST['lastSize'];
+		
+		
+		$imgSec = $this->getImgSection($sectionId, $pageNo, $lastSize);
+		
+		if (empty($imgSec)) {
+			return;
+		}
+		
+		echo json_encode($imgSec);
 	}
 	
-	public function getImgSection($typeId, $pageNo = 1, $pageSize = 100, $last = 20) {
+	/*
+	 * get img section from database
+	 * 
+	 * $typeId can be 1.repository, 2.category name, 3.tag name, 4 author id
+	 */
+	
+	private function getImgSection($typeId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
 		$groupSize = 20;
 		
 		if($typeId == 'repository') {
@@ -37,7 +68,8 @@ class Ajax_controller extends MY_Controller {
 			$imgSection = $this->Photograph->getSectionImg($typeId, $pageNo, $pageSize, $last);
 		}
 		
-		if ($imgSection == null) {
+		
+		if (empty($imgSection['imgList'])) {
 			return null;
 		}
 		
@@ -79,8 +111,15 @@ class Ajax_controller extends MY_Controller {
 			$res = array('id' => $typeId, 'loadingList' => array_shift($groupList), 'waitingList' => $groupList);
 		}
 		
-		echo json_encode($res);
+		return $res;
+	}
+	
+	//temp
+	//generate link items in nav
+	public function getNavLink() {
+		$res = ['All', 'Popular','Nature'];
 		
+		echo json_encode($res);
 	}
 }
 
