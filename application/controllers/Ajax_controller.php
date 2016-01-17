@@ -60,7 +60,7 @@ class Ajax_controller extends MY_Controller {
 	 */
 	
 	private function getImgSection($typeId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
-		$groupSize = 20;
+		$groupSize = 6;
 		
 		$typeId = strtolower($typeId);
 		
