@@ -13,11 +13,11 @@ class Infocenter extends MY_Controller {
 			'jquery-color',
 			'init',
 			'indexNav',
+			'popupBox',
 			'poster_manager',
 			'color_manager',
 			'grid_manager',
 			'img_grid_manager',
-			'popupBox',
 			'temp_test',
 			'img_grid_manager'];
 
@@ -25,7 +25,9 @@ class Infocenter extends MY_Controller {
 	}
 
 	public function index() {
-		$this->load->view('img_repository');
+		$data['cateList'] = $this->getCategoryLink();
+		
+		$this->loadView('img_repository', $data);
 	}
 
 }

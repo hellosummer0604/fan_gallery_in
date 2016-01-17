@@ -47,10 +47,10 @@ class Ajax_controller extends MY_Controller {
 		$imgSec = $this->getImgSection($sectionId, $pageNo, $lastSize);
 		
 		if (empty($imgSec)) {
-			return;
+			echo json_encode(null);
+		} else {
+			echo json_encode($imgSec);
 		}
-		
-		echo json_encode($imgSec);
 	}
 	
 	/*
@@ -62,7 +62,9 @@ class Ajax_controller extends MY_Controller {
 	private function getImgSection($typeId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
 		$groupSize = 20;
 		
-		if($typeId == 'repository') {
+		$typeId = strtolower($typeId);
+		
+		if($typeId == 'repo_id') {
 			$imgSection = $this->File_manipulation->getRepositoryImgs('resource/img_repository', $pageNo, $pageSize, $last);
 		}else{
 			$imgSection = $this->Photograph->getSectionImg($typeId, $pageNo, $pageSize, $last);
@@ -73,6 +75,8 @@ class Ajax_controller extends MY_Controller {
 			return null;
 		}
 		
+		
+		
 		$groupNum = count($imgSection['imgList']) / $groupSize;
 		
 		if ($groupNum < 2 ) {
@@ -80,7 +84,7 @@ class Ajax_controller extends MY_Controller {
 			
 			$groupList = array( $groupName =>  array('id' => $groupName, 'imgList' => $imgSection['imgList']));
 			
-			$res = array('id' => $typeId, 'loadingList' => $groupList, 'waitingList' => array());
+			$res = array('id' => $typeId, 'loadingList' => array(), 'waitingList' => $groupList);
 			
 			
 		} else {
@@ -108,19 +112,13 @@ class Ajax_controller extends MY_Controller {
 			
 			$groupList[$groupName] = $temp_img_array;
 			
-			$res = array('id' => $typeId, 'loadingList' => array_shift($groupList), 'waitingList' => $groupList);
+			$res = array('id' => $typeId, 'loadingList' => array(), 'waitingList' => $groupList);
 		}
 		
 		return $res;
 	}
 	
-	//temp
-	//generate link items in nav
-	public function getNavLink() {
-		$res = ['All', 'Popular','Nature'];
-		
-		echo json_encode($res);
-	}
+	
 }
 
 

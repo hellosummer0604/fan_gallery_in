@@ -19,6 +19,11 @@
 
 <section class="imgNavContainer imgNavContainerForeground">
     <span class="linkContainer">
+		<?php
+		foreach ($cateList as $key => $item) {
+			echo "<li id='nav_$item' class='nav_li'>" . ucfirst($key) . "</li>";
+		}
+		?>
         <li>More</li>
     </span>
 </section>
@@ -31,29 +36,27 @@
 <!--</div>-->
 <!--</section>-->
 <!-- loading gif end -->
-
-<section id="bodySectioneferent" class="bodySection" style="background-color: #fcff93">
+<section class="bodySection" style="background-color: #fcff93">
 
 </section>
 
-<section class="bodySection">
-    <div class="imgGroup" id="s12g2">
-    </div>
-    <div id="" class="imgGroup" style=" height: 212px; background-color: antiquewhite">
+<!--<section class="bodySection">
+	<div class="imgGroup" id="s12g2">
+	</div>
+	<div id="" class="imgGroup" style=" height: 212px; background-color: antiquewhite">
 
-<!--    <div style="cursor:pointer; position: absolute; width:285px; height: 190px; left: 5px; top: 5px; background-color: red"></div>
-
-    </div>
-	-->
+		
+	</div>
 	
-<div class="footer" >
-	
+</section>-->
 
-</div>
-	
-</section>
 
-<!--<section class="bodySection">asdasd</section>-->
 
+<?php 
+	foreach ($cateList as $item) {
+		$html = "<section class=\"bodySection imgSection\" id=\"".$item."\" style=\"display:none;\"><div class=\"beforeThis\"></div><div class=\"moreGroup\">++++++++++</div><div class=\"footer\" >".$item."</div></section>";
+		echo $html;
+	}
+?>
 </body>
 </html>

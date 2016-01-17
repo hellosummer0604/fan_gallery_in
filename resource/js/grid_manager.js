@@ -22,8 +22,8 @@ var ImgGrid = Class.create({
 		this._resizeEvt;
 
 
-		this._imgThumbPath = location.protocol + "//" + location.host + "/resource/gallery/img_publish/img_thumb/";
-
+//		this._imgThumbPath = location.protocol + "//" + location.host + "/resource/gallery/img_publish/img_thumb/";
+		this._imgThumbPath = location.protocol + "//" + location.host ;
 
 		this.imgBorder = 5;
 		this.imgMinWidth = 150;
@@ -36,26 +36,34 @@ var ImgGrid = Class.create({
 		//this.appendLoad = 25;
 
 		//
-		this._setContainerWidth();
+//		this._setContainerWidth();
 
 
 		//same to id of bodySection
 		this.typeId = null;
 		this.imgGroup = new Array();
 		this.display = false;
+		
+		this.imgData = null;
 
 		popupBox.bindCloseAction(function () {
 			popupBox.hidePopup(['#imgBox', '#uploadBox']);
 		});
 	},
+	
 	_setContainerWidth: function () {
-		this.containerWidth = jQuery(".imgGroup").innerWidth();
+		
+		var curId = this.imgData.id;
+		
+		this.containerWidth = jQuery("#" + curId).innerWidth();
+		
 		if (this.containerWidth < 1024) {
 			this.imgBorder = 3;
 		} else {
 			this.imgBorder = 5;
 		}
 	},
+	
 	initialize: function (typeId, page) {
 
 		this.default();
@@ -64,6 +72,58 @@ var ImgGrid = Class.create({
 		this.page = page;
 		this.groupId = 0;
 
+	},
+	
+	/**
+	 * Render the group
+	 * @param imgArray
+	 * @private
+	 */
+	renderImgGroup: function () {
+		
+		var imgArray = this.imgData;
+		
+		this._setContainerWidth();
+		
+		//temp, this should be move to append image function
+		this._preProcessImgArray(imgArray['imgList']);
+
+		var containerWidth = this.containerWidth;
+
+		var imgSum = imgArray['imgList'].length;
+
+		//make grid
+		var costGrid = [];
+
+
+		for (var row = 0; row < imgSum; row++) {
+			var costRow = [];
+
+			for (var col = 0; col < imgSum; col++) {
+				costRow.push(this._calCost(imgArray['imgList'], row, col));
+			}
+
+			costGrid.push(costRow);
+		}
+		
+		
+
+		var shortestPath = this._shortestPath(costGrid);
+
+		var groupDetail = this._scaleImgGroup(imgArray['imgList'], shortestPath);
+
+		var containerId = imgArray['id'];
+
+		this._insertDiv(groupDetail, containerId);
+
+		this._assignImgAndEvent(imgArray['imgList'], containerId);
+
+		//console_test(groupDetail);
+	},
+	
+	
+	setImgArray: function(imgArray){
+		this.imgData = imgArray;
 	},
 	/**
 	 *
@@ -101,7 +161,7 @@ var ImgGrid = Class.create({
 		}
 		/****each image has border****/
 		var widthExpBorder = this.containerWidth - (end - start + 1) * 2 * this.imgBorder;
-
+		
 		/**
 		 * - cost
 		 * - imgArray
@@ -132,6 +192,7 @@ var ImgGrid = Class.create({
 			return null;
 		}
 
+
 		/** calculate cost***/
 		var cost = Math.pow(Math.abs(reconciledHeight - this.imgBestHeight), 3);
 		gridEntry = cost;
@@ -147,6 +208,7 @@ var ImgGrid = Class.create({
 
 		return gridEntry;
 	},
+	
 	_shortestPath: function (costGrid) {
 		if (costGrid.length < 1) {
 			console.error("_shortestPath error: none path table error");
@@ -164,6 +226,7 @@ var ImgGrid = Class.create({
 				costGrid[0][col] = {'cost': costGrid[0][col], 'path': [{'start': 0, 'end': col}]};
 			}
 		}
+
 
 		for (var row = 1; row < len; row++) {
 			for (var col = row; col < len; col++) {
@@ -308,44 +371,7 @@ var ImgGrid = Class.create({
 
 		return group;
 	},
-	/**
-	 * Render the group
-	 * @param imgArray
-	 * @private
-	 */
-	_renderImgGroup: function (imgArray) {
-		//temp, this should be move to append image function
-		this._preProcessImgArray(imgArray['imgList']);
-
-		var containerWidth = this.containerWidth;
-
-		var imgSum = imgArray['imgList'].length;
-
-		//make grid
-		var costGrid = [];
-
-		for (var row = 0; row < imgSum; row++) {
-			var costRow = [];
-
-			for (var col = 0; col < imgSum; col++) {
-				costRow.push(this._calCost(imgArray['imgList'], row, col));
-			}
-
-			costGrid.push(costRow);
-		}
-
-		var shortestPath = this._shortestPath(costGrid);
-
-		var groupDetail = this._scaleImgGroup(imgArray['imgList'], shortestPath);
-
-		var containerId = imgArray['id'];
-
-		this._insertDiv(groupDetail, containerId);
-
-		this._assignImgAndEvent(imgArray['imgList'], containerId);
-
-		//console_test(groupDetail);
-	},
+	
 	_insertDiv: function (obj, target) {
 
 		target = jQuery("#" + target);
@@ -419,17 +445,17 @@ var ImgGrid = Class.create({
 
 	},
 	resizeWindow: function () {
-		var obj = this;
-
-		jQuery(window).resize(function () {
-			clearTimeout(obj._resizeEvt);
-			obj._resizeEvt = setTimeout(function () {
-				obj._setContainerWidth();
-
-				obj._renderImgGroup(data);
-
-			}, 10);
-		});
+//		var obj = this;
+//
+//		jQuery(window).resize(function () {
+//			clearTimeout(obj._resizeEvt);
+//			obj._resizeEvt = setTimeout(function () {
+//				obj._setContainerWidth();
+//
+//				obj._renderImgGroup(data);
+//
+//			}, 10);
+//		});
 
 	}
 
