@@ -5,6 +5,7 @@ headNav._resizeEvt;
 
 headNav.activate = function () {
 
+//	headNav.loadNavItem();
 
 	//only index page has poster
 	this._enableAdjustOpacity = jQuery(".poster").length > 0 ? true : false;
@@ -33,7 +34,45 @@ headNav.activate = function () {
 	headNav._bindScrollEvt();
 
 	headNav._bindClickEvt();
+	
+	headNav._setFirstCateActive();
 }
+
+///**
+// * load nav item and the img grid container
+// * @returns {undefined}
+// */
+//headNav.loadNavItem = function(){
+//	jQuery.ajax({
+//			method: 'POST',
+//			url: 'http://north.gallery/ajax_controller/getNavLink',
+//			data: null,
+//			dataType: 'json',
+//			async: false,
+//			success: function (navItems) {
+//				// 悲剧啊忘了footer
+//				var footHtml = "<div class=\"footer\" ></div>";
+//				var navHtml = "";
+//				var sectionHtml = "";
+//				
+//				jQuery.each(navItems, function() {
+//					navHtml = navHtml + "<li class=\"imgSection\">" + this + "</li>";
+//					
+//					sectionHtml = sectionHtml + "<section class=\"bodySection\" id=\"" + navItems + "\" style=\"display:none\"> " + footHtml + "</section>";
+//					
+//				})
+//				
+//				jQuery('.linkContainer').prepend(navHtml);
+//				jQuery(sectionHtml).insertAfter(jQuery('#bodySectioneferent'));
+//				
+//				
+//			},
+//			error: function () {
+//				console.error('loading nav link fail' );
+//			}
+//	});
+//}
+
 
 headNav._adjustOpacity = function () {
 	if (this._enableAdjustOpacity) {
@@ -219,14 +258,48 @@ headNav._bindResizeEvt = function () {
 
 }
 
-headNav._liOnClick = function (obj) {
-	headNav._setNavColor("clear");
+headNav._setFirstCateActive = function() {
+	var obj = jQuery('.nav_li:first');
+	
+	if (obj.length > 0) {
+		headNav._setActive(obj);
+	}
+}
 
+headNav._setActive = function(obj) {
+	obj.addClass("active");
+	var activeSectionId = obj.attr('id').substr(4);
+	
+	jQuery("#"+ activeSectionId).css({
+		'display': 'block'
+	});
+	
+	//load img section
+	Img_Grid_Manager.loadImgSection(activeSectionId);
+	
+	
+}
+
+headNav._setDeactive = function() {
 	jQuery(".linkContainer li").each(function () {
 		jQuery(this).removeClass("active");
 	});
+	
+	jQuery(".imgSection").each(function () {
+		jQuery(this).css({
+			'display': 'none'
+		});
+	});
+	
+	
+}
 
-	obj.addClass("active");
+headNav._liOnClick = function (obj) {
+	headNav._setNavColor("clear");
+
+	headNav._setDeactive();
+
+	headNav._setActive (obj);
 
 	headNav._setNavColor();
 }

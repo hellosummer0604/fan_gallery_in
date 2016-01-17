@@ -9,6 +9,7 @@ class MY_Controller extends CI_Controller {
 	
 	private $js_path = "resource/js/";
 	
+	public $CategoryLink = array();
 	
 	protected function setLanguage() {
 		
@@ -56,5 +57,20 @@ class MY_Controller extends CI_Controller {
 		$this->load->view($view, $data);
 	}
 
+
+	//generate link items in nav
+	public function getCategoryLink() {
+		$res = ['Repository' => 'repo_id' , 'all' => 'all_id', 'Popular' =>'pop_id', 'Nature' => 'nature_id'];
+		
+		$result = array();
+		
+		foreach ($res as $key => $item) {
+			$result[strtolower($key)] = $item;
+		}
+		
+		$this->CategoryLink = $result;
+		
+		return $this->CategoryLink ;
+	}
 }
 ?>

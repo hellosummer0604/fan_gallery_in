@@ -8,7 +8,7 @@ class File_manipulation extends MY_Model {
 		$this->load->helper('directory');
 	}
 
-	public function getRepositoryImgs($path, $pageNo = 1, $pageSize = 100, $last = 20) {
+	public function getRepositoryImgs($path, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
 		$path = './resource/gallery/img_repository/';
 
 		$imgList = $this->getFileList($path, $pageNo, $pageSize, $last, false);
@@ -36,6 +36,9 @@ class File_manipulation extends MY_Model {
 
 		$res = ['sectionId' => 'repository', 'imgList' => $res];
 		
+		if (empty($res['imgList'])) {
+			return null;
+		}
 
 		return $res;
 	}
@@ -56,7 +59,7 @@ class File_manipulation extends MY_Model {
 		exif_read_data($filename);
 	}
 
-	private function getFileList($path, $pageNo = 1, $pageSize = 80, $last = 30, $full = true) {
+	private function getFileList($path, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $full = true) {
 		$res = array();
 
 		$fileList = directory_map($path);
