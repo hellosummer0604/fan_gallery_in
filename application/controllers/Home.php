@@ -12,10 +12,10 @@ class Home extends MY_Controller {
 			'jquery-color',
 			'init',
 			'indexNav',
-			'popupBox',
 			'poster_manager',
 			'color_manager',
 			'grid_manager',
+			'popupBox',
 			'img_grid_manager',
 			'temp_test',
 			'img_grid_manager'];

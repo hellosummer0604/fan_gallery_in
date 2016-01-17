@@ -10,22 +10,23 @@ popupBox.activate = function () {
 }
 
 popupBox.showPopup = function (target) {
+	//basic setting
 	jQuery(target).fadeIn(200);
-	
 	
 	jQuery('body').css({
 		overflow:  'hidden',
-		
 	});
 	
 	jQuery('html').css({
 		overflow:  'hidden',
 	});
 	
+	///
 	
 }
 
 popupBox.hidePopup = function (targetArray) {
+	//basic setting
 	targetArray.forEach(function (entry) {
 		jQuery(entry).fadeOut(200);
 	});
@@ -37,13 +38,25 @@ popupBox.hidePopup = function (targetArray) {
 	jQuery('html').css({
 		overflow:  'auto',
 	});
+	
+	///
+	
+}
+
+popupBox._loadImgdetail = function () {
+	
+}
+
+popupBox._clearImgdetail = function () {
+	
 }
 
 
 popupBox.bindCloseAction = function (func) {
 	jQuery(document).keyup(function (e) {
-		if (e.keyCode === 27)
+		if (e.keyCode === 27){
 			func();
+		}
 	});
 	
 	jQuery('.closeButton').click(function(){

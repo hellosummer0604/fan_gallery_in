@@ -44,7 +44,7 @@ class Ajax_controller extends MY_Controller {
 		$lastSize = empty($_POST['lastSize']) ? IMG_SECTION_LAST_SIZE : $_POST['lastSize'];
 		
 		
-		$imgSec = $this->getImgSection($sectionId, $pageNo, $lastSize);
+		$imgSec = $this->getImgSection($sectionId, $pageNo, $pageSize);
 		
 		if (empty($imgSec)) {
 			echo json_encode(null);
@@ -60,7 +60,7 @@ class Ajax_controller extends MY_Controller {
 	 */
 	
 	private function getImgSection($typeId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
-		$groupSize = 6;
+		$groupSize = 23;
 		
 		$typeId = strtolower($typeId);
 		

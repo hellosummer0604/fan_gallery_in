@@ -21,14 +21,18 @@ extract($data);
 			<div class="baseLayer">
 
 				<div class="closeBanner"> 
-					<div class="closeButton">x</div>
+					<div class="closeButton">Esc</div>
 				</div>
 
-				<div class="popupImg">
+				<div class="popupImg" id="popImgBox">
 
 				</div>
 
-				<div class="popupImg">
+				<div class="popupImg" id="popImgText">
+
+				</div>
+				
+				<div class="popupImg" id="popImgDescription">
 
 				</div>
 			</div>
@@ -44,7 +48,7 @@ extract($data);
 			<div class="baseLayer">
 
 				<div class="closeBanner"> 
-					<div class="closeButton">x</div>
+					<div class="closeButton">Esc</div>
 				</div>
 
 				<div class="popupImg">
