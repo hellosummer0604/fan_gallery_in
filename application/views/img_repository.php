@@ -1,17 +1,3 @@
-<section id="indexPoster" class="poster">
-
-</section>
-
-<section class="textSection font_color_666">
-    <div class="large"><br>我觉得我觉得我像一个艺术家</div>
-    <br><br>
-
-    <div class="small">Explore 50 million inspiring photos, connect with other enthusiasts and learn more about the
-        craft.
-    </div>
-</section>
-
-
 <!--img category nav start-->
 <section class="imgNavContainer imgNavContainerBackground">
 
@@ -24,7 +10,10 @@
 			echo "<li id='nav_$item' class='nav_li'>" . ucfirst($key) . "</li>";
 		}
 		?>
-        <li>More</li>
+	<li>Posted</li>
+	<li>Categories</li>
+	<li>Tags</li>
+        <li>Settings</li>
     </span>
 </section>
 <!--img category nav end-->
@@ -52,11 +41,11 @@
 
 
 
-<?php 
-	foreach ($cateList as $item) {
-		$html = "<section class=\"bodySection imgSection\" id=\"".$item."\" style=\"display:none;\"><div class=\"beforeThis\"></div><div class=\"moreGroup\">++++++++++</div><div class=\"footer\" >".$item."</div></section>";
-		echo $html;
-	}
+<?php
+foreach ($cateList as $item) {
+	$html = "<section class=\"bodySection imgSection\" id=\"" . $item . "\" style=\"display:none;\"><div class=\"beforeThis\"></div><div class=\"moreGroup\">++++++++++</div><div class=\"footer\" >" . $item . "</div></section>";
+	echo $html;
+}
 ?>
 </body>
 </html>

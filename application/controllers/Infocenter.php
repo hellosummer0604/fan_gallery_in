@@ -25,7 +25,9 @@ class Infocenter extends MY_Controller {
 	}
 
 	public function index() {
-		$data['cateList'] = $this->getCategoryLink();
+		$this->loadView('/include/popup/imgPopupEdit');
+		
+		$data['cateList'] = $res = ['Repository' => 'repo_id'];
 		
 		$this->loadView('img_repository', $data);
 	}

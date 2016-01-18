@@ -9,9 +9,9 @@ Img_Grid_Manager.default = function () {
 
 }
 
-Img_Grid_Manager.grid_handler = new ImgGrid();
-
 Img_Grid_Manager.activate = function () {
+	//dont init too early
+	Img_Grid_Manager.grid_handler = new ImgGrid();
 
 	Img_Grid_Manager._bindMoreGroup();
 	//test one section

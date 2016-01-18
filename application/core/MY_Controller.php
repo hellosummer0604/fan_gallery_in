@@ -60,7 +60,7 @@ class MY_Controller extends CI_Controller {
 
 	//generate link items in nav
 	public function getCategoryLink() {
-		$res = ['Repository' => 'repo_id' , 'all' => 'all_id', 'Popular' =>'pop_id', 'Nature' => 'nature_id'];
+		$res = ['all' => 'all_id', 'Popular' =>'pop_id', 'Nature' => 'nature_id'];
 		
 		$result = array();
 		
@@ -71,6 +71,10 @@ class MY_Controller extends CI_Controller {
 		$this->CategoryLink = $result;
 		
 		return $this->CategoryLink ;
+	}
+	
+	public function needLogin($destination = WEN_INDEX) {
+		
 	}
 }
 ?>

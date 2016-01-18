@@ -15,18 +15,42 @@ class Ajax_controller extends MY_Controller {
 		echo "index---";
 		echo repository_url("img2.jpg");
 		echo "!!!";
-		$this->db->query();
+//		$this->db->query();
 	}
 	
-	public function getImgList($authorID, $category = "undefined", $tag = "undefined") {
-		$this->load->model('Image');
+	public function getImgDetail() {
+		if(empty($_POST['imgId'])){
+			echo json_encode(null);
+			return;
+		} else {
+			$imgId = $_POST['imgId'] ;
+		}
 		
+		
+		//firstly check database
+		$imgObj = $this->Photograph->getImg($imgId);
+		
+		if ($imgObj != null) {
+			echo json_encode(array('data' => $imgObj, 'type' =>'posted' ));
+			return;
+		}
+		
+		//secondly check repository
+		$imgObj = $this->File_manipulation->getImgDetailInfo($imgId);
+		
+		if ($imgObj != null) {
+			echo json_encode(array('data' => $imgObj, 'type' =>'repository' ));
+			return;
+		}
+		
+		//cannot find
+		echo json_encode(null);
 	}
-	
-	
+
 	
 	
 	/**
+	 * The main img grid will call this function to get img section
 	 * get img section from database
 	 */
 	public function getImg() {
@@ -44,7 +68,7 @@ class Ajax_controller extends MY_Controller {
 		$lastSize = empty($_POST['lastSize']) ? IMG_SECTION_LAST_SIZE : $_POST['lastSize'];
 		
 		
-		$imgSec = $this->getImgSection($sectionId, $pageNo, $lastSize);
+		$imgSec = $this->getImgSection($sectionId, $pageNo, $pageSize);
 		
 		if (empty($imgSec)) {
 			echo json_encode(null);
@@ -60,7 +84,7 @@ class Ajax_controller extends MY_Controller {
 	 */
 	
 	private function getImgSection($typeId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
-		$groupSize = 6;
+		$groupSize = 43;
 		
 		$typeId = strtolower($typeId);
 		
@@ -74,8 +98,6 @@ class Ajax_controller extends MY_Controller {
 		if (empty($imgSection['imgList'])) {
 			return null;
 		}
-		
-		
 		
 		$groupNum = count($imgSection['imgList']) / $groupSize;
 		

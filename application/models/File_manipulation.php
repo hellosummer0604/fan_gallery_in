@@ -1,15 +1,22 @@
 <?php
 
 class File_manipulation extends MY_Model {
+	
+	private $path = './resource/gallery/img_repository/';
+	
+	public function getPath() {
+		return $this->path;;
+	}
 
 	public function __construct() {
 		parent::__construct();
 
 		$this->load->helper('directory');
 	}
+	
 
 	public function getRepositoryImgs($path, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
-		$path = './resource/gallery/img_repository/';
+		$path = $this->getPath();
 
 		$imgList = $this->getFileList($path, $pageNo, $pageSize, $last, false);
 //		echo json_encode($imgList);
@@ -43,12 +50,26 @@ class File_manipulation extends MY_Model {
 		return $res;
 	}
 
-	public function getImgBreifInfo() {
+	public function getImgDetailInfo($imgId) {
+		$imgPath = $this->getPath().$imgId;
 		
-	}
-
-	public function getImgDetailInfo() {
+		if (!file_exists($imgPath)  || $imgId == null) {
+			return null;
+		}
 		
+		$exif = exif_read_data($imgPath);
+		
+		$fileName = $exif['FileName'];
+		$createTime = $exif['DateTime'];
+		$orgWidth = $exif['ExifImageWidth'] == null ? 0 : $exif['ExifImageWidth'];
+		$orgHeight = $exif['ExifImageLength'] == null ? 0 : $exif['ExifImageLength'];
+		
+		$detail = array('MimeType' => $exif['MimeType'], 'Make' => $exif['Make'], 'Model' => $exif['Model'],
+			'ApertureValue' =>  $exif['ApertureValue'], 'FocalLength' => $exif['FocalLength'], 'ExposureTime' => $exif['ExposureTime'],  'ISOSpeedRatings' => $exif['ISOSpeedRatings'], 'exif' => $exif);
+		
+		$res =  array('path' => $imgPath, 'filename' => $fileName, 'createTime' => $createTime, 'orgWidth' => $orgWidth, 'orgHeight' => $orgHeight, 'details' => $detail);
+		
+		return $res;
 	}
 
 	private function getImgSize() {

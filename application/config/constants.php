@@ -74,6 +74,8 @@ define('SHOW_DEBUG_BACKTRACE', TRUE);
 |       http://tldp.org/LDP/abs/html/exitcodes.html
 |
 */
+define('WEN_INDEX', 'http://north.gallery/');
+
 define('EXIT_SUCCESS', 0); // no errors
 define('EXIT_ERROR', 1); // generic error
 define('EXIT_CONFIG', 3); // configuration error
@@ -87,5 +89,5 @@ define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 
 define('IMG_SECTION_PAGE_NO', 1);
-define('IMG_SECTION_PAGE_SIZE', 100);
+define('IMG_SECTION_PAGE_SIZE', 150);
 define('IMG_SECTION_LAST_SIZE', 20);
