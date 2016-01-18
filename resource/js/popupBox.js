@@ -97,7 +97,7 @@ popupBox._loadImgdetail = function (imgId) {
 }
 
 popupBox._displayImgdetail = function (data) {
-//	console.log("try to display" + data['data']['path']);
+	//display image
 	var imgUrl = data['data']['path'];
 
 	var container = "#popImgBox";
@@ -111,6 +111,12 @@ popupBox._displayImgdetail = function (data) {
 
 		jQuery(container).fadeIn(200);
 	});
+	
+	//display exif
+	jQuery('#popImgText').html("微软推出了诺基亚230，这款只要399元的手机采用了铝制机身，不仅双卡双待，而且一次充电待机长达22天，这款手机于1月19日正式开卖。");
+	
+	
+	//display text
 }
 
 
@@ -147,10 +153,19 @@ popupBox.bindCloseAction = function (func) {
 		}
 	});
 
-	jQuery('.closeButton').click(function () {
+
+	jQuery('.popupImg').click(function (event) {
+		event.stopPropagation();
+		
+		if(jQuery(window).width() < 512 ){
+			func();
+		}
+	});
+	
+	jQuery('.baseLayer').click(function (event) {
 		func();
 	});
-
+	
 	//click on cross
 }
 

@@ -134,49 +134,69 @@ body.modal-open[style] {
 }
 
 
+
+
 .popupImg{
-	margin-bottom: 20px;
+	padding: 20px 10px 20px 10px;
 	background-color: #f9f9f9;
-	/*test*/
-	height: 50px;
-	width: 1024px;
+	height: auto;
+	width: 1004px;
 	margin-left: calc(50% - 512px);
-	-webkit-border-radius: 3px;
+	
+}
+
+#popImgBox{
+	position: relative;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 3px 3px 0px 0px;
+	border-radius: 3px 3px 0px 0px; 
+	z-index: 610;
+}
+
+#popImgText{
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px 0px 3px 3px ;
+	border-radius: 0px 0px 3px 3px ; 
+}
+
+#popImgDescription{
+	margin-top: 20px;
 	-moz-border-radius: 3px;
-	border-radius: 3px;
+	-webkit-border-radius: 3px ;
+	border-radius: 3px ; 
 }
 
 @media only screen and (max-width: 1280px) {
 	.popupImg{
-		width: 960px;
+		width: 940px;
 		margin-left: calc(50% - 512px);
 	}
 }
 
 @media only screen and (max-width: 1024px) {
 	.popupImg{
-		width: calc(100% - 100px);
+		width: calc(100% - 120px);
 		margin-left: 50px;
 	}
 }
 
 @media only screen and (max-width: 768px) {
 	.popupImg{
-		width: calc(100% - 70px);
+		width: calc(100% - 90px);
 		margin-left: 35px;
 	}
 }
 
 @media only screen and (max-width: 512px) {
 	.popupImg{
-		width: calc(100% - 40px);
+		width: calc(100% - 60px);
 		margin-left: 20px;
 	}
 }
 
 @media only screen and (max-width: 420px) {
 	.popupImg{
-		width: 100%;
+		width: calc(100% - 20px);
 		margin-left: 0px;
 	}
 }

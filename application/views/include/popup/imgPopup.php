@@ -1,4 +1,4 @@
-<div id="imgBox" class="shadowWrapper">
+<div id="imgBox" class="shadowWrapper font_color_666">
 	<div class="shadowLayer baseLayer">
 
 	</div>
@@ -14,7 +14,7 @@
 		</div>
 
 		<div class="popupImg" id="popImgText">
-
+			
 		</div>
 
 		<div class="popupImg" id="popImgDescription">

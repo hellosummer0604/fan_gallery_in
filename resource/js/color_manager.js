@@ -1,6 +1,6 @@
 var Color_scroller = Class.create({
     default: function () {
-        this.period = 500;
+        this.period = 2000;
         this.blue = new jQuery.Color('rgb(0, 171, 230)');
         this.pink = new jQuery.Color('rgb(255, 51, 153)');
         this.color = this.blue;
