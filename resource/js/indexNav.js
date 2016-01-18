@@ -34,7 +34,7 @@ headNav.activate = function () {
 	headNav._bindScrollEvt();
 
 	headNav._bindClickEvt();
-	
+
 	headNav._setFirstCateActive();
 }
 
@@ -147,7 +147,7 @@ headNav._bindScrollEvt = function () {
 		headNav._setImgNavContainerPosition();
 
 		headNav._setNavColor();
-		
+
 //		headNav._setFooterColor();
 	});
 
@@ -242,56 +242,58 @@ headNav._setLinkList = function () {
 headNav._bindResizeEvt = function () {
 	var obj = this;
 
-	jQuery(window).resize(function () {
-		clearTimeout(obj._resizeEvt);
-		obj._resizeEvt = setTimeout(function () {
-			obj.track = obj._getTrack();
+	if (!GLOBAL_IS_MOBILE) {
+		jQuery(window).resize(function () {
+			clearTimeout(obj._resizeEvt);
+			obj._resizeEvt = setTimeout(function () {
+				obj.track = obj._getTrack();
 
-			obj._setLinkList();
+				obj._setLinkList();
 
-			obj._setBodyPosition();
+				obj._setBodyPosition();
 
-			obj._setImgNavContainerPosition();
+				obj._setImgNavContainerPosition();
 
-		}, 10);
-	});
+			}, 10);
+		});
+	}
 
 }
 
-headNav._setFirstCateActive = function() {
+headNav._setFirstCateActive = function () {
 	var obj = jQuery('.nav_li:first');
-	
+
 	if (obj.length > 0) {
 		headNav._setActive(obj);
 	}
 }
 
-headNav._setActive = function(obj) {
+headNav._setActive = function (obj) {
 	obj.addClass("active");
 	var activeSectionId = obj.attr('id').substr(4);
-	
-	jQuery("#"+ activeSectionId).css({
+
+	jQuery("#" + activeSectionId).css({
 		'display': 'block'
 	});
-	
+
 	//load img section
 	Img_Grid_Manager.loadImgSection(activeSectionId);
-	
-	
+
+
 }
 
-headNav._setDeactive = function() {
+headNav._setDeactive = function () {
 	jQuery(".linkContainer li").each(function () {
 		jQuery(this).removeClass("active");
 	});
-	
+
 	jQuery(".imgSection").each(function () {
 		jQuery(this).css({
 			'display': 'none'
 		});
 	});
-	
-	
+
+
 }
 
 headNav._liOnClick = function (obj) {
@@ -299,7 +301,7 @@ headNav._liOnClick = function (obj) {
 
 	headNav._setDeactive();
 
-	headNav._setActive (obj);
+	headNav._setActive(obj);
 
 	headNav._setNavColor();
 }

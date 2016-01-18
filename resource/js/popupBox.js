@@ -128,7 +128,7 @@ popupBox._clearImgdetail = function () {
 
 	jQuery(container).css({
 //		'background-image': "url(../img/loading.gif)",
-	'background-image': "none",
+		'background-image': "none",
 		'height': "500px",
 	});
 
@@ -180,14 +180,14 @@ popupBox._setPopImgBoxHeight = function () {
 
 popupBox._bindResizeEvt = function () {
 	var obj = this;
-
-	jQuery(window).resize(function () {
-		clearTimeout(obj._resizeEvt);
-		obj._resizeEvt = setTimeout(function () {
-			popupBox._setPopImgBoxHeight();
-		}, 10);
-	});
-
+	if (!GLOBAL_IS_MOBILE) {
+		jQuery(window).resize(function () {
+			clearTimeout(obj._resizeEvt);
+			obj._resizeEvt = setTimeout(function () {
+				popupBox._setPopImgBoxHeight();
+			}, 10);
+		});
+	}
 }
 
 
