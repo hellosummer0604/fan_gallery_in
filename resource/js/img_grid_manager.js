@@ -114,11 +114,11 @@ Img_Grid_Manager._bindMoreGroup = function () {
 
 Img_Grid_Manager._renderGroup = function (gid) {
 //	console.log("render group " + JSON.stringify(gid) + " need to impl");
-	
+
 	var gridHandler = Img_Grid_Manager.grid_handler;
-	
+
 	gridHandler.setImgArray(gid);
-	
+
 	gridHandler.renderImgGroup();
 }
 
@@ -197,12 +197,13 @@ Img_Grid_Manager.loadImg = function () {
 
 Img_Grid_Manager.bindResizeWindow = function () {
 
-
-	jQuery(window).resize(function () {
-		clearTimeout(Img_Grid_Manager._resizeEvt);
-		Img_Grid_Manager._resizeEvt = setTimeout(function () {
-			Img_Grid_Manager._renderVisibleSection();
-		}, 10);
-	});
+	if (!GLOBAL_IS_MOBILE) {
+		jQuery(window).resize(function () {
+			clearTimeout(Img_Grid_Manager._resizeEvt);
+			Img_Grid_Manager._resizeEvt = setTimeout(function () {
+				Img_Grid_Manager._renderVisibleSection();
+			}, 10);
+		});
+	}
 
 }
