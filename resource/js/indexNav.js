@@ -305,12 +305,12 @@ headNav._liOnClick = function (obj) {
 }
 
 headNav._bindClickEvt = function () {
-	jQuery(".linkContainer li").each(function () {
+	jQuery(".linkContainer .nav_li").each(function () {
 		jQuery(this).click(function (e) {
 			headNav._liOnClick(jQuery(this));
 		});
 	});
 
 	//remove last one button  -- More
-	jQuery(".linkContainer li").last().off('click');
+//	jQuery(".linkContainer ").last().off('click');
 }

@@ -74,6 +74,8 @@ define('SHOW_DEBUG_BACKTRACE', TRUE);
 |       http://tldp.org/LDP/abs/html/exitcodes.html
 |
 */
+define('WEN_INDEX', 'http://north.gallery/');
+
 define('EXIT_SUCCESS', 0); // no errors
 define('EXIT_ERROR', 1); // generic error
 define('EXIT_CONFIG', 3); // configuration error

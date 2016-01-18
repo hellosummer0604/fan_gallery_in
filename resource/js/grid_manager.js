@@ -408,11 +408,25 @@ var ImgGrid = Class.create({
 				});
 				jQuery(container).fadeIn(200);
 
+//just temp text for test
+				var curId = imgArray[index]['id'];
+				var preId = "";
+				var postId = "";
+				
+				if(index > 0) {
+					preId = imgArray[index - 1]['id'];
+				}
+				
+				if (index + 1 < imgArray.length) {
+					postId = imgArray[index + 1]['id'];
+				}
+				
+				jQuery(container).html("<div class='hideImgId'><div class='hide_cur_id'>" + curId + "</div><div class='hide_pre_id'>" + preId + "</div><div class='hide_post_id'>" + postId + "</div> </div>");
 				//bind event;
 //				popupBox
 				jQuery(container).bind({
 					click: function () {
-						popupBox.showPopup('#imgBox');
+						popupBox.showPopup('#imgBox', container);
 					},
 					mouseenter: function () {
 

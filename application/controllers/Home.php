@@ -29,7 +29,12 @@ class Home extends MY_Controller {
 	
 	public function index()
 	{
+		$this->loadView('/include/popup/imgPopup');
+		
+		$this->loadView('/include/poster');
+		
 		$data['cateList'] = $this->getCategoryLink();
+		
 		
 		$this->loadView('home', $data);
 	}
