@@ -221,7 +221,7 @@ body.modal-open[style] {
 
 @media only screen and (max-width: 420px) {
 	.popupImg{
-		width: calc(100% - 60px);
+		width: calc(100% - 64px);
 		margin-left: 0px;
 	}
 }
@@ -408,9 +408,58 @@ body.modal-open[style] {
 	position: relative;
 }
 
+.pagingBanner{
+	width: calc(96% - 10px);
+	margin-left: 2%;
+	padding:5px;
+	margin-top: 20px;
+	position: relative;
+}
+
+@media only screen and (max-width: 1024px) {
+	.pagingBanner{
+		width: calc(100% - 4px);
+		margin-left: 2px;
+	}
+}
+
+.pagingBanner a {
+	font-size: 14px;
+	background-color: #ffffff;
+	border:1px solid #aaaaaa;
+	padding: 10px 15px 10px 15px;
+	color: #999999;
+	line-height: 23px;
+	margin-left:-1px;
+}
+
+.pagingBanner .start{
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 3px 0px 0px 3px;
+	border-radius: 3px 0px 0px 3px; 
+}
+
+.pagingBanner .end{
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px 3px 3px 0px;
+	border-radius: 0px 3px 3px 0px;
+}
+
+.pagingBanner .active{
+	padding: 6px 15px 9px 15px;
+	color: rgb(0, 171, 230);
+	font-size: 18px;
+}
+
+.pagingBanner a:hover {
+	border:1px solid #aaaaaa;
+	color: rgb(0, 171, 230);
+	background-color: #eeeeee;
+}
+
 .footer{
 	width: 100%;
-	margin-top:25px;
+	margin-top:45px;
 	background-color: #FFFFFF;
 	min-height: 220px;
 	border-top: 1px solid #ededed;
@@ -435,7 +484,7 @@ body.modal-open[style] {
 	}
 
 	.footer{
-		margin-top:10px;
+		margin-top:25px;
 	}
 }
 

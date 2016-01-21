@@ -2,6 +2,7 @@ var Img_Grid_Manager = Img_Grid_Manager || {}
 
 Img_Grid_Manager._resizeEvt;
 
+Img_Grid_Manager.canLoad = true;
 
 Img_Grid_Manager.sectionList = [];
 
@@ -35,6 +36,8 @@ Img_Grid_Manager.loadImgSection = function (sid, page) {
 	} else {
 		var sectionInfo = {'sectionId': sid};
 
+		Img_Grid_Manager.canLoad = false;
+		
 		jQuery.ajax({
 			method: 'POST',
 			url: 'http://north.gallery/ajax_controller/getImg',
@@ -50,10 +53,11 @@ Img_Grid_Manager.loadImgSection = function (sid, page) {
 					Img_Grid_Manager._addImgGroup(sid);
 				}
 
-
+				Img_Grid_Manager.canLoad = true;
 			},
 			error: function (section) {
 				console.error('loading img section ' + sid + ' fail: ' + JSON.stringify(section));
+				Img_Grid_Manager.canLoad = true;
 			}
 		});
 	}
@@ -70,6 +74,7 @@ Img_Grid_Manager._addImgGroup = function (sid) {
 	//move group from waiting list to loading list
 	//add div for group
 	for (var key in waitingList) {
+		console.log("loading "+ key);
 		if (waitingList.hasOwnProperty(key)) {
 			//pick one group
 			var temp_group = waitingList[key];
@@ -100,16 +105,54 @@ Img_Grid_Manager._addImgGroup = function (sid) {
 }
 
 //add new group by click
-Img_Grid_Manager._bindMoreGroup = function () {
-	jQuery(".moreGroup").each(function () {
-		var obj = this;
-		jQuery(obj).click(function () {
-			var sectionId = jQuery(obj).parent().attr('id');
+//Img_Grid_Manager._bindMoreGroup = function () {
+//	jQuery(".moreGroup").each(function () {
+//		var obj = this;
+//		jQuery(obj).click(function () {
+//			var sectionId = jQuery(obj).parent().attr('id');
+//
+//			Img_Grid_Manager._addImgGroup(sectionId);
+//		});
+//	});
+//}
 
-			Img_Grid_Manager._addImgGroup(sectionId);
+Img_Grid_Manager._bindMoreGroup = function () {
+
+	jQuery(window).scroll(function () {
+		var sectionLoadId = null
+		jQuery(".moreGroup").each(function () {
+			var obj = this;
+			var sectionId = jQuery(obj).parent().attr('id');
+			var display = jQuery('#' + sectionId).css('display');
+			if (display == 'block') {
+				sectionLoadId = sectionId;
+			}
 		});
+		
+		//auto load by visibility of paging block 
+		var needLoad = false;
+		
+		var pagingBlockToTop = jQuery('#' + sectionLoadId + " > .moreGroup").offset().top;
+		var windowScroll = jQuery(window).scrollTop();
+		var windowSize = jQuery(window).height();
+		
+		
+		if (pagingBlockToTop - windowScroll < windowSize) {
+			needLoad = true;
+		}
+		
+		if (needLoad && Img_Grid_Manager.canLoad && sectionLoadId != null) {
+			Img_Grid_Manager._addImgGroup(sectionLoadId);
+		}
+		
+
+		
 	});
 }
+
+
+
+
 
 
 Img_Grid_Manager._renderGroup = function (gid) {
