@@ -93,6 +93,7 @@ headNav._adjustOpacity = function () {
 
 headNav._getTrack = function () {
 	var prev = jQuery(".imgNavContainerBackground").prev();
+	console.log(prev);
 	var prevTop = prev.offset().top;
 	var prevHeight = prev.outerHeight(true);
 
@@ -108,7 +109,7 @@ headNav._getTrack = function () {
 }
 
 headNav._setImgNavContainerPosition = function () {
-	var flag = headNav.track - headNav.height - jQuery(document).scrollTop();
+	var flag = headNav.track - headNav.height - jQuery(window).scrollTop();
 
 
 	if (flag <= 0) {//fix img nav
@@ -247,6 +248,8 @@ headNav._bindResizeEvt = function () {
 			clearTimeout(obj._resizeEvt);
 			obj._resizeEvt = setTimeout(function () {
 				obj.track = obj._getTrack();
+				
+				console.log(obj.track);
 
 				obj._setLinkList();
 

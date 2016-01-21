@@ -42,10 +42,20 @@
 
 
 <?php
-foreach ($cateList as $item) {
-	$html = "<section class=\"bodySection imgSection\" id=\"" . $item . "\" style=\"display:none;\"><div class=\"beforeThis\"></div><div class=\"moreGroup\">++++++++++</div><div class=\"footer\" >" . $item . "</div></section>";
-	echo $html;
-}
+	foreach ($cateList as $item) {
+//	$html = "<section class=\"bodySection imgSection\" id=\"" . $item . "\" style=\"display:none;\"><div class=\"beforeThis\"></div><div class=\"imgGroup pagingBanner\">++++++++++</div><div class=\"footer\" >" . $item . "</div></section>";
+//	echo $html;
+?>
+	<section class="bodySection imgSection" id="<?php echo $item ?>" style="display:none;">
+		<div class="beforeThis"></div>
+		<div class="pagingBanner moreGroup">
+			<a href="#" class="start">First</a><a href="#">1</a><a href="#">2</a><a href="#">3</a><a class="active" href="javascript: void(0)">4</a><a href="#">4</a><a href="#">4</a><a href="#">5</a><a href="#" class="end">Last</a>
+		</div>
+
+		<div class="footer" ><?php echo $item ?></div>
+	</section>
+<?php
+	}
 ?>
 </body>
 </html>
