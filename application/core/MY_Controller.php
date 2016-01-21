@@ -60,7 +60,7 @@ class MY_Controller extends CI_Controller {
 
 	//generate link items in nav
 	public function getCategoryLink() {
-		$res = ['all' => 'all_id', 'Popular' =>'pop_id', 'Nature' => 'nature_id'];
+		$res = ['all' => 'repo_id', 'Popular' =>'pop_id', 'Nature' => 'nature_id'];
 		
 		$result = array();
 		
