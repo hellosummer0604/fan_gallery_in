@@ -104,3 +104,7 @@
 			  "GPSDateStamp":"0000:00:00"
 		   }
 		}
+
+
+//下拉+自己输入
+http://labs.abeautifulsite.net/jquery-dropdown/#2

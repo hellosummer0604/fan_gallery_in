@@ -10,6 +10,7 @@ class Infocenter extends MY_Controller {
 		$cssArray = ['default', 'index'];
 		$jsArray = ['jquery1.11.3.min',
 			'prototype1.7.3.0_1',
+			'autogrow.min',
 			'jquery-color',
 			'init',
 			'indexNav',

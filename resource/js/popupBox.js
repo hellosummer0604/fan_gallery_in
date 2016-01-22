@@ -113,14 +113,23 @@ popupBox._displayImgdetail = function (data) {
 	});
 
 	//display image info
-	jQuery('.baseLayer > #imgTitle').html("我就是图片标题怎么了");
+	console.log('test');
+	if (jQuery('#imgTitle > input').length > 0)  {
+		jQuery('#imgTitle >input').val('asdasd');
+	} else {
+		jQuery('.baseLayer > #imgTitle').html("我就是图片标题怎么了");
+	}
 	
 	jQuery('#imgBox > #authorBox').html("North Fan<br>2016-01-12");
 	
 	jQuery('#popImgText > #imgTags').html("<div><a href='#'>Drink</a></div><div><a href='#'>Smoothy</a></div><div><a href='#'>Interior</a></div><div><a href='#'>Light</a></div><div><a href='#'>Night</a></div>");
 	
-	jQuery('#popImgText > #imgText').html("微软推出了诺基亚230，这款只要399元的手机采用了铝制机身，不仅双卡双待，而且一次充电待机长达22天，这款手机于1月19日正式开卖。其实不只是在船上。一切封闭的场所，最后都会导致这种文明准则丧失、大家弱肉强食的事。历史上的围城战，人相食者有多少？历史上的大饥荒，村子里互相杀戮的有多少？海难则争夺食物，雪灾则互相撕咬。");
 	
+	if (jQuery('#imgText  textarea').length > 0) {
+		jQuery('#imgText > textarea').css('overflow', 'hidden').autogrow();
+	} else {
+		jQuery('#popImgText > #imgText').html("微软推出了诺基亚230，这款只要399元的手机采用了铝制机身，不仅双卡双待，而且一次充电待机长达22天，这款手机于1月19日正式开卖。其实不只是在船上。一切封闭的场所，最后都会导致这种文明准则丧失、大家弱肉强食的事。历史上的围城战，人相食者有多少？历史上的大饥荒，村子里互相杀戮的有多少？海难则争夺食物，雪灾则互相撕咬。");
+	}
 
 
 	//display text
@@ -150,13 +159,21 @@ popupBox._clearImgdetail = function () {
 
 
 	//CLEAR TEXT HERE
-	jQuery('.baseLayer > #imgTitle').html("");
+	
+	if (jQuery('#imgTitle > input').length > 0)  {
+		jQuery('#imgTitle >input').val('');
+	} else {
+		jQuery('.baseLayer > #imgTitle').html("");
+	}
+	
 	jQuery('#imgBox > #authorBox').html("");
 	
-	jQuery('#popImgText > .innerBox').each(function() {
-		var temp_obj = this;
-		jQuery(temp_obj).html('');
-	});
+	if (jQuery('#imgText  textarea').length > 0) {
+		jQuery('#imgText > textarea').css('overflow', 'hidden').autogrow();
+		jQuery('#imgText > textarea').val('');
+	} else {
+		jQuery('#popImgText > #imgText').html("");
+	}
 }
 
 

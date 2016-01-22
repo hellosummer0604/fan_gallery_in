@@ -80,6 +80,25 @@ body.modal-open[style] {
 	float: right;
 }
 
+.btn-default, .btn-reset, .btn-submit{
+	margin-top: 10px;
+	padding: 10px 15px 10px 15px;
+	color:#ffffff;
+	border: none;
+	margin-right: 15px;
+	font-size: 16px;
+	box-shadow: 1px 1px 2px #888888;
+	cursor: pointer;
+}
+
+.btn-reset{
+	background-color: rgb(255, 51, 153);
+}
+
+.btn-submit{
+	background-color: rgb(0, 171, 230);
+}
+
 .border_bottom_grey{
 	border-bottom: 1px solid #eeeeee;
 }
@@ -143,6 +162,30 @@ body.modal-open[style] {
 	font-size: 22px;
 	padding-top:0px;
 	padding-bottom: 0px;
+}
+
+.baseLayer input{
+	font-size: 22px;
+	line-height: 50px;
+	color:#ffffff;
+	border:0px;
+	background:none;
+	height: 50px;
+	max-width: 450px;
+	width: 85%;
+}
+.baseLayer input:focus{
+	color: #ff0;
+}
+
+#imgText textarea{
+	margin-top: 10px;
+	border: none;
+	height:220px;
+	width: 100%;
+	color:#666666;
+	font-size: 14px;
+	line-height: 24px;
 }
 
 #imgBox #authorBox{
@@ -289,6 +332,7 @@ body.modal-open[style] {
 
 /* text container section start*/
 .fake_textSection {
+	opacity: 0;
 	position: absolute;
 	text-align: center;
 	height: 50px;
@@ -435,7 +479,7 @@ body.modal-open[style] {
 .pagingBanner a {
 	font-size: 14px;
 	background-color: #ffffff;
-	border:1px solid #aaaaaa;
+	border:1px solid #dddddd;
 	padding: 10px 15px 10px 15px;
 	color: #999999;
 	line-height: 23px;
@@ -461,7 +505,7 @@ body.modal-open[style] {
 }
 
 .pagingBanner a:hover {
-	border:1px solid #aaaaaa;
+	border:1px solid #dddddd;
 	color: rgb(0, 171, 230);
 	background-color: #eeeeee;
 }
