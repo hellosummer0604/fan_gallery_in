@@ -499,9 +499,9 @@ body.modal-open[style] {
 }
 
 .pagingBanner .active{
-	padding: 6px 15px 9px 15px;
+	padding: 10px 15px 10px 15px;
 	color: rgb(0, 171, 230);
-	font-size: 18px;
+	font-size: 14px;
 }
 
 .pagingBanner a:hover {
