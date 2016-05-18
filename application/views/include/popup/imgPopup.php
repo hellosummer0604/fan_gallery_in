@@ -12,7 +12,6 @@
 					<div class="closeButton">This is </div>
 				</div>-->
 				<span class="popupImg" id="imgTitle" >
-				 
 				</span>
 
 				
