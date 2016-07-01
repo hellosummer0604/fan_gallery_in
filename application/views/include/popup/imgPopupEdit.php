@@ -28,7 +28,7 @@
                 <span class="warning">Click Tags to remove</span>
                 <br>
                 <span class="innerBox" id="imgTagNameAutoComplete">
-                    <input class="imgTagName typeahead" type="text" maxlength="30" placeholder="Tagging this photo"/>
+                    <input class="imgTagName typeahead" type="text" maxlength="20" placeholder="Tagging this photo"/>
                     <button type="button" class="addImgTag">Add Tag</button>
                 </span>
 <!--                &nbsp;&nbsp;&nbsp;-->

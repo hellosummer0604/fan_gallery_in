@@ -4,7 +4,7 @@
 #imgTagNameAutoComplete .tt-dataset {
     max-height: 180px;
     height: auto;
-    min-width: 264px;
+    min-width: 213px;
     margin-left: 5px;
     padding:6px;
     overflow-x: hidden;
@@ -12,7 +12,7 @@
     background-color: #ffffff;
     box-shadow: 1px 1px 2px #aaaaaa;
     border:1px solid #efefef;
-    border-radius: 2px;
+    border-radius: 5px;
 }
 
 #imgTagNameAutoComplete .tt-hint {
@@ -24,10 +24,9 @@
 }
 
 #imgTagNameAutoComplete .tt-selectable {
-    padding:2px 13px 2px 13px;
+    padding:1px 13px 1px 13px;
 }
 
 #imgTagNameAutoComplete .tt-selectable:hover{
-
     background-color: #f7f7f7;
 }

@@ -612,7 +612,7 @@ body.modal-open[style] {
 
 .popupImg .innerBox input[type="text"].imgTagName{
 	/*rgb(0, 171, 230)*/
-	width: 250px;
+	width: 200px;
 	font-size:14px;
 	display: inline-block;
 	border:1px solid #999999;
