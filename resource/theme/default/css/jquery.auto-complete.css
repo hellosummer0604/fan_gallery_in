@@ -15,6 +15,10 @@
     border-radius: 2px;
 }
 
+#imgTagNameAutoComplete .tt-hint {
+    color: #aaa;
+}
+
 #imgTagNameAutoComplete .tt-highlight {
     color: rgb(0, 171, 230);
 }
