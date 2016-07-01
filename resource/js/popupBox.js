@@ -122,7 +122,7 @@ popupBox._displayImgdetail = function (data) {
 	
 	jQuery('#imgBox > #authorBox').html("North Fan<br>2016-01-12");
 	
-	jQuery('#popImgText > #imgTags').html("<div><a href='#'>Drink</a></div><div><a href='#'>Smoothy</a></div><div><a href='#'>Interior</a></div><div><a href='#'>Light</a></div><div><a href='#'>Night</a></div>");
+	jQuery('.innerBox > #imgTags').html("<div class='itag'><a href='#'>Drink</a></div><div class='itag'><a href='#'>Smoothy</a></div><div class='itag'><a href='#'>Interior</a></div><div class='itag'><a href='#'>Light</a></div><div class='itag'><a href='#'>Night</a></div>");
 	
 	
 	if (jQuery('#imgText  textarea').length > 0) {
