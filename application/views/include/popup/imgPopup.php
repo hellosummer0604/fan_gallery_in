@@ -15,7 +15,7 @@
 				</span>
 
 
-        <div class="popupImg" id="popImgBox">
+        <div class="popupImg loadingBg" id="popImgBox">
 
         </div>
 

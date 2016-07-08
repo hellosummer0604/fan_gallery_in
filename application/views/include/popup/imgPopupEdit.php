@@ -15,7 +15,7 @@
 				<input type="text" id="imgTitle" name="imgTitle">
 			</span>
 
-            <div class="popupImg" id="popImgBox">
+            <div class="popupImg loadingBg" id="popImgBox">
 
             </div>
 
@@ -24,18 +24,15 @@
                     <div id="imgAuthorTags" class="buttonDiv itag"><a href="#">North Fan</a></div>
                     <span id="imgTags" class="buttonDiv"></span>
                 </span>
-                &nbsp;&nbsp;
-                <span class="warning">Click Tags to remove</span>
                 <br>
                 <span class="innerBox" id="imgTagNameAutoComplete">
                     <input class="imgTagName typeahead" type="text" maxlength="20" placeholder="Tagging this photo"/>
-                    <button type="button" class="addImgTag">Add Tag</button>
                 </span>
 <!--                &nbsp;&nbsp;&nbsp;-->
 <!--                <span>[Tagging this photo]</span>-->
 
                 <div class="innerBox" id="imgText">
-                    <textarea placeholder="请在此输入内容..."></textarea>
+                    <textarea name="imgDescription" id="imgDescription" placeholder="请在此输入内容..."></textarea>
                 </div>
                 <div class="innerBox">
                     <button class="btn-submit" type="button">Submit</button>
