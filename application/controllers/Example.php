@@ -22,7 +22,6 @@ class Example extends REST_Controller {
     {
         // Construct the parent class
         parent::__construct();
-
         // Configure limits on our controller methods
         // Ensure you have created the 'limits' table and enabled 'limits' within application/config/rest.php
         $this->methods['user_get']['limit'] = 500; // 500 requests per hour per user/key
