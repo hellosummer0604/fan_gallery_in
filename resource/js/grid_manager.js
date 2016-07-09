@@ -384,7 +384,7 @@ var ImgGrid = Class.create({
 			/***<div class='imgThumbBox' style="cursor:pointer; position: absolute; width:285px; height: 190px; left: 5px; top: 5px; background-color: red"></div>**/
 
 			for (var col = 0; col < obj[row]['entris'].length; col++) {
-				var div_html = "<div class='imgThumbBox loadingBg' style='width:" + obj[row]['entris'][col]['width'] + "px; height: " + obj[row]['entris'][col]['height'] + "px; left: " + obj[row]['entris'][col]['left'] + "px; top: " + obj[row]['entris'][col]['top'] + "px;'></div>";
+				var div_html = "<div class='imgThumbBox loadingBgLight' style='width:" + obj[row]['entris'][col]['width'] + "px; height: " + obj[row]['entris'][col]['height'] + "px; left: " + obj[row]['entris'][col]['left'] + "px; top: " + obj[row]['entris'][col]['top'] + "px;'></div>";
 				target.append(div_html);
 			}
 		}
@@ -401,43 +401,44 @@ var ImgGrid = Class.create({
 			jQuery('<img/>').attr('src', imgUrl).load(function () {
 				jQuery(this).remove(); // prevent memory leaks as @benweet suggested
 
-				setTimeout(function () {
-					jQuery(container).css({
-						'background-image': "url(" + imgUrl + ")",
-						"background-repeat": "no-repeat",
-						"background-size": "100% 100%",
-						"background-position": "0px 0px"
-					});
-					jQuery(container).fadeIn(200);
+				//remove loading gif
+				jQuery(container).removeClass('loadingBg');
+
+				jQuery(container).css({
+					'background-image': "url(" + imgUrl + ")",
+					"background-repeat": "no-repeat",
+					"background-size": "100% 100%",
+					"background-position": "0px 0px"
+				});
+				//jQuery(container).fadeIn(200);
 
 //just temp text for test
-					var curId = imgArray[index]['id'];
-					var preId = "";
-					var postId = "";
+				var curId = imgArray[index]['id'];
+				var preId = "";
+				var postId = "";
 
-					if(index > 0) {
-						preId = imgArray[index - 1]['id'];
-					}
+				if(index > 0) {
+					preId = imgArray[index - 1]['id'];
+				}
 
-					if (index + 1 < imgArray.length) {
-						postId = imgArray[index + 1]['id'];
-					}
+				if (index + 1 < imgArray.length) {
+					postId = imgArray[index + 1]['id'];
+				}
 
-					jQuery(container).html("<div class='hideImgId'><div class='hide_cur_id'>" + curId + "</div><div class='hide_pre_id'>" + preId + "</div><div class='hide_post_id'>" + postId + "</div> </div>");
-					//bind event;
+				jQuery(container).html("<div class='hideImgId'><div class='hide_cur_id'>" + curId + "</div><div class='hide_pre_id'>" + preId + "</div><div class='hide_post_id'>" + postId + "</div> </div>");
+				//bind event;
 //				popupBox
-					jQuery(container).bind({
-						click: function () {
-							popupBox.showPopup('#imgBox', container);
-						},
-						mouseenter: function () {
+				jQuery(container).bind({
+					click: function () {
+						popupBox.showPopup('#imgBox', container);
+					},
+					mouseenter: function () {
 
-						},
-						mouseleave: function () {
+					},
+					mouseleave: function () {
 
-						}
-					});
-				}, 3000);
+					}
+				});
 
 //				jQuery(container).css({
 //					'background-image': "url(" + imgUrl + ")",

@@ -567,7 +567,7 @@ body.modal-open[style] {
 }
 
 .imgThumbBox {
-	display:none; 
+	/*display:none; */
 	cursor:pointer;
 	position: absolute; 
 	box-shadow: 1px 1px 5px #999999;
@@ -618,6 +618,12 @@ body.modal-open[style] {
 .loadingBg {
 
 	background: rgb(34,34,34) url("../img/loader2.gif") no-repeat center center;
+	background-size: 30px 30px;
+}
+
+.loadingBgLight {
+
+	background: #333333 url("../img/loader2.gif") no-repeat center center;
 	background-size: 30px 30px;
 }
 
