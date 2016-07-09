@@ -75,6 +75,8 @@ define('SHOW_DEBUG_BACKTRACE', TRUE);
 |
 */
 define('WEN_INDEX', 'http://north.gallery/');
+define('WEN_LOGIN', 'http://north.gallery/login');
+define('WEN_NO_REDIRECT', 'none');
 
 define('EXIT_SUCCESS', 0); // no errors
 define('EXIT_ERROR', 1); // generic error
@@ -92,3 +94,5 @@ define('IMG_SECTION_PAGE_NO', 1);
 define('IMG_SECTION_PAGE_SIZE', 150);
 define('IMG_SECTION_SIZE', 24);
 define('IMG_SECTION_LAST_SIZE', 20);
+
+define('SESSION_USER_ID', 'userId');

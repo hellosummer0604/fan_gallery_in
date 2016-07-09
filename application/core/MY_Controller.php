@@ -73,8 +73,34 @@ class MY_Controller extends CI_Controller {
 		return $this->CategoryLink ;
 	}
 	
-	public function needLogin($destination = WEN_INDEX) {
-		
+	public function needLogin($destination = WEN_LOGIN) {
+		if(!$this->isLogin() && $destination != WEN_NO_REDIRECT) {
+//			redirect($destination);
+		}
+	}
+
+	public function isLogin() {
+		$sessUserId = $this->session->userdata(SESSION_USER_ID);
+
+		if(empty($sessUserId)) {
+			return false;
+		} else{
+			return $sessUserId;
+		}
+	}
+	//check if this userid is the current/login user
+	public function isActiveUser($userId = null) {
+		if(empty($userId)) {
+			return false;
+		}
+
+		$loggedUserId = $this->session->userdata(SESSION_USER_ID);
+
+		if(!empty($loggedUserId) && $loggedUserId == $userId) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 ?>
