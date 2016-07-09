@@ -90,4 +90,5 @@ define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 define('IMG_SECTION_PAGE_NO', 1);
 define('IMG_SECTION_PAGE_SIZE', 150);
+define('IMG_SECTION_SIZE', 24);
 define('IMG_SECTION_LAST_SIZE', 20);

@@ -40,7 +40,6 @@ Init.act_headNav = function () {
 	if (typeof headNav != "undefined") {
 		headNav.activate();
 
-
 		console.log("Loading indexNav.js");
 	} else {
 		console.error("Haven't load indexNav.js");

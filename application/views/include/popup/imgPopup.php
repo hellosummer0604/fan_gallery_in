@@ -1,69 +1,70 @@
 <div id="imgBox" class="shadowWrapper">
-	
-	<span id="authorBox">ssss</span>
-	
-			<div class="shadowLayer baseLayer">
 
-			</div>
+    <span id="authorBox">ssss</span>
 
-			<div class="baseLayer">
+    <div class="shadowLayer baseLayer">
 
-<!--				<div class="closeBanner"> 
-					<div class="closeButton">This is </div>
-				</div>-->
-				<span class="popupImg" id="imgTitle" >
+    </div>
+
+    <div class="baseLayer">
+
+        <!--				<div class="closeBanner">
+                            <div class="closeButton">This is </div>
+                        </div>-->
+				<span class="popupImg" id="imgTitle">
 				</span>
 
-				
-		
-				<div class="popupImg" id="popImgBox">
-					
-				</div>
 
-				<div class="popupImg" id="popImgText">
-					<div class="innerBox" id="imgTags"></div>
-					<div class="innerBox" id="imgText"></div>
-					
-				</div>
-				
-		<!--		<div class="popupImg" id="popImgDescription">
-						EXIF info here
-				</div>-->
-			</div>
-		</div>
+        <div class="popupImg loadingBg" id="popImgBox">
 
-		<div id="uploadBox" class="shadowWrapper">
+        </div>
 
-			<div class="shadowLayer baseLayer">
+        <div class="popupImg" id="popImgText">
+					<span class="innerBox">
+                    <div id="imgAuthorTags" class="itag"><a href="#">North Fan</a></div>
+                    <span id="imgTags"></span>
+                </span>
+            <div class="innerBox" id="imgText"></div>
 
-			</div>
+        </div>
 
+        <!--		<div class="popupImg" id="popImgDescription">
+                        EXIF info here
+                </div>-->
+    </div>
+</div>
 
-			<div class="baseLayer">
+<div id="uploadBox" class="shadowWrapper">
 
-				<div class="closeBanner"> 
-					<div class="closeButton">Esc</div>
-				</div>
+    <div class="shadowLayer baseLayer">
 
-				<div class="popupImg">
-					<h2>Upload Photo</h2>
-				</div>
-
-			</div>
-		</div>
+    </div>
 
 
+    <div class="baseLayer">
 
-		<!--		<div id="generalPopup">
-						
-				</div>-->
+        <div class="closeBanner">
+            <div class="closeButton">Esc</div>
+        </div>
+
+        <div class="popupImg">
+            <h2>Upload Photo</h2>
+        </div>
+
+    </div>
+</div>
 
 
-		<div class="headerNavBackground">
+<!--		<div id="generalPopup">
 
-		</div>
-		<nav class="headerNav">
-			<span class="float_left">North Gallery</span>
-			<span class="float_right font_size_14">Log in</span>
-			<span class="float_right font_size_14" id="upload">Sign up</span>
-		</nav>
+        </div>-->
+
+
+<div class="headerNavBackground">
+
+</div>
+<nav class="headerNav">
+    <span class="float_left">North Gallery</span>
+    <span class="float_right font_size_14">Log in</span>
+    <span class="float_right font_size_14" id="upload">Sign up</span>
+</nav>

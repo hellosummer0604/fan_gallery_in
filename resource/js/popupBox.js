@@ -5,6 +5,7 @@ popupBox._resizeEvt;
 
 popupBox._BACKGROUND_IMAGE_HEIGHT = -1;
 popupBox._BACKGROUND_IMAGE_WIDTH = -1;
+popupBox._POPUP_IMG_URL = -1;
 
 popupBox.activate = function () {
 	jQuery("#upload").click(function () {
@@ -34,7 +35,7 @@ popupBox.showPopup = function (target, obj) {
 
 	popupBox._loadImgdetail(objId);
 
-
+	popupBox._addBlur();
 
 }
 
@@ -51,6 +52,8 @@ popupBox.hidePopup = function (targetArray) {
 	jQuery('html').css({
 		overflow: 'auto',
 	});
+
+	popupBox._removeBlur();
 
 	///clear 
 	popupBox._clearImgdetail();
@@ -99,21 +102,47 @@ popupBox._loadImgdetail = function (imgId) {
 popupBox._displayImgdetail = function (data) {
 	//display image
 	var imgUrl = data['data']['path'];
+	//global id, avoid img load sequence error
+	popupBox._POPUP_IMG_URL = imgUrl;
 
 	var container = "#popImgBox";
 
 	jQuery('<img/>').attr('src', imgUrl).load(function () {
 		jQuery(this).remove(); // prevent memory leaks as @benweet suggested
-		jQuery(container).css({
-			'background-image': "url(" + imgUrl + ")",
-		});
-		popupBox._setPopImgBoxHeight();
+		//setTimeout(function () {
+        //
+		//	if(popupBox._POPUP_IMG_URL == imgUrl) {
+		//		jQuery(container).css({
+		//			'background-image': "url(" + imgUrl + ")",
+		//		});
+		//		popupBox._setPopImgBoxHeight();
+        //
+        //
+		//		jQuery(container).removeClass("loadingBg");
+		//		jQuery(container).addClass("displayBg");
+        //
+		//		jQuery(container).fadeIn(200);
+		//	}
+        //
+		//}, 3000);
 
-		jQuery(container).fadeIn(200);
+		if(popupBox._POPUP_IMG_URL == imgUrl) {
+
+			jQuery(container).css({
+				'background-image': "url(" + imgUrl + ")",
+			});
+			popupBox._setPopImgBoxHeight();
+
+
+			jQuery(container).removeClass("loadingBg");
+			jQuery(container).addClass("displayBg");
+
+			jQuery(container).fadeIn(200);
+		}
+
 	});
 
-	//display image info
-	console.log('test');
+
 	if (jQuery('#imgTitle > input').length > 0)  {
 		jQuery('#imgTitle >input').val('asdasd');
 	} else {
@@ -122,7 +151,7 @@ popupBox._displayImgdetail = function (data) {
 	
 	jQuery('#imgBox > #authorBox').html("North Fan<br>2016-01-12");
 	
-	jQuery('#popImgText > #imgTags').html("<div><a href='#'>Drink</a></div><div><a href='#'>Smoothy</a></div><div><a href='#'>Interior</a></div><div><a href='#'>Light</a></div><div><a href='#'>Night</a></div>");
+	jQuery('.innerBox > #imgTags').html("<div class='itag'><a href='#'>Drink</a></div><div class='itag'><a href='#'>Smoothy</a></div><div class='itag'><a href='#'>Interior</a></div><div class='itag'><a href='#'>Light</a></div><div class='itag'><a href='#'>Night</a></div>");
 	
 	
 	if (jQuery('#imgText  textarea').length > 0) {
@@ -145,14 +174,19 @@ popupBox._loadError = function () {
 }
 
 popupBox._clearImgdetail = function () {
+
 	//clear imgBox
 	var container = "#popImgBox";
 
 	jQuery(container).css({
-//		'background-image': "url(../img/loading.gif)",
-		'background-image': "none",
+		'background-image': "url(http://"+window.location.hostname+"/resource/loader2.gif)",
+		//'background-image': "none",
 		'height': "500px",
 	});
+
+	jQuery(container).removeClass("displayBg");
+	jQuery(container).addClass("loadingBg");
+	console.log('closing');
 
 	popupBox._BACKGROUND_IMAGE_HEIGHT = -1;
 	popupBox._BACKGROUND_IMAGE_WIDTH = -1;
@@ -174,6 +208,8 @@ popupBox._clearImgdetail = function () {
 	} else {
 		jQuery('#popImgText > #imgText').html("");
 	}
+
+
 }
 
 
@@ -243,4 +279,27 @@ popupBox._bindResizeEvt = function () {
 	}
 }
 
+popupBox._addBlur = function () {
+	jQuery("section").each(function(){
+		jQuery(this).addClass('blurred');
+	});
+
+	jQuery("nav").each(function(){
+		jQuery(this).addClass('blurred');
+	});
+
+	jQuery(".headerNavBackground").addClass('blurred');
+}
+
+popupBox._removeBlur = function () {
+	jQuery("section").each(function(){
+		jQuery(this).removeClass('blurred');
+	});
+
+	jQuery("nav").each(function(){
+		jQuery(this).removeClass('blurred');
+	});
+
+	jQuery(".headerNavBackground").removeClass('blurred');
+}
 
