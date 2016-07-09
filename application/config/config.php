@@ -498,3 +498,16 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+//autoload files, avoid 'require_once' before use
+function __autoload($class)
+{
+    //autoload REST_Controller
+    if($class == 'REST_Controller') {
+        if (file_exists($file = APPPATH . 'libraries/REST_Controller.php'))
+        {
+            require $file;
+        }
+    }
+
+}
