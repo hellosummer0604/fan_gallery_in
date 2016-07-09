@@ -32,4 +32,3 @@ function getStartEndOfPage($fullLen, $pageNo = 1, $pageSize = 80, $lastMin = 30)
 }
 
 ?>
-
