@@ -20,7 +20,9 @@ class Currentuser extends User_Controller {
     }
 
     public function info_get() {
-        echo 'asd';
+        $data = array('csa' => array('a' => 1, 'ccs' => '123123'));
+
+        $this->set_response($data, REST_Controller::HTTP_OK);
     }
 
     public function users_get()

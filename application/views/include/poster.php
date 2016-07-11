@@ -1,12 +1,3 @@
-<div class="headerNavBackground">
-
-</div>
-<nav class="headerNav">
-	<span class="float_left">North Gallery</span>
-	<span class="float_right font_size_14">Log in</span>
-	<span class="float_right font_size_14" id="upload">Sign up</span>
-</nav>
-
 <section id="indexPoster" class="poster">
 
 </section>
