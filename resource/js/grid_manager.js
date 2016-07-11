@@ -47,7 +47,7 @@ var ImgGrid = Class.create({
 		this.imgData = null;
 
 		popupBox.bindCloseAction(function () {
-			popupBox.hidePopup(['#imgBox', '#uploadBox']);
+			popupBox.hideImgBoxPopup(['#imgBox', '#uploadBox']);
 		});
 	},
 	
@@ -430,7 +430,7 @@ var ImgGrid = Class.create({
 //				popupBox
 				jQuery(container).bind({
 					click: function () {
-						popupBox.showPopup('#imgBox', container);
+						popupBox.showImgBoxPopup('#imgBox', container);
 					},
 					mouseenter: function () {
 

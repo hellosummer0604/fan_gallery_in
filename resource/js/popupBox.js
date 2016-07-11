@@ -8,14 +8,20 @@ popupBox._BACKGROUND_IMAGE_WIDTH = -1;
 popupBox._POPUP_IMG_URL = -1;
 
 popupBox.activate = function () {
-	jQuery("#upload").click(function () {
-		popupBox.showPopup("#uploadBox");
-	});
+	//jQuery("#upload").click(function () {
+	//	//popupBox.showPopup("#uploadBox");
+	//});
 
-	popupBox._bindResizeEvt();
+	//jQuery(".loginBtn").click(function () {
+	//	popupBox.showLoginPopup("#loginBox", "");
+	//});
+
+
+
+	popupBox._bindResizeEvt("#popImgBox");
 }
 
-popupBox.showPopup = function (target, obj) {
+popupBox.showPopup = function (target, obj, callback) {
 	//basic setting
 	jQuery(target).fadeIn(200);
 
@@ -30,16 +36,29 @@ popupBox.showPopup = function (target, obj) {
 	if (typeof obj == 'undefined') {
 		return;
 	}
-	///load img
-	var objId = jQuery(obj).find('.hide_cur_id').html();
-
-	popupBox._loadImgdetail(objId);
 
 	popupBox._addBlur();
 
+	callback();
 }
 
-popupBox.hidePopup = function (targetArray) {
+popupBox.showImgBoxPopup = function (target, obj) {
+	popupBox.showPopup(target, obj, function () {
+		///load img
+		var objId = jQuery(obj).find('.hide_cur_id').html();
+
+		popupBox._loadImgdetail(objId);
+	});
+}
+
+popupBox.showLoginPopup = function (target, obj) {
+	popupBox.showPopup(target, obj, function () {
+
+	});
+
+}
+
+popupBox.hidePopup = function (targetArray, callback) {
 	//basic setting
 	targetArray.forEach(function (entry) {
 		jQuery(entry).fadeOut(200);
@@ -55,8 +74,14 @@ popupBox.hidePopup = function (targetArray) {
 
 	popupBox._removeBlur();
 
-	///clear 
-	popupBox._clearImgdetail();
+	callback();
+}
+
+popupBox.hideImgBoxPopup = function (targetArray) {
+	popupBox.hidePopup(targetArray, function() {
+		///clear
+		popupBox._clearImgdetail();
+	});
 }
 
 
@@ -168,7 +193,7 @@ popupBox._displayImgdetail = function (data) {
 
 popupBox._loadError = function () {
 	setTimeout(function () {
-		popupBox.hidePopup(['#imgBox', '#uploadBox']);
+		popupBox.hideImgBoxPopup(['#imgBox', '#uploadBox']);
 	}, 1000);
 
 }
@@ -249,12 +274,11 @@ popupBox.unbindCloseAction = function () {
 	jQuery(document).unbind('keyup');
 }
 
-popupBox._setPopImgBoxHeight = function () {
+popupBox._setPopImgBoxHeight = function (container) {
 	var height = popupBox._BACKGROUND_IMAGE_HEIGHT;
 	var width = popupBox._BACKGROUND_IMAGE_WIDTH;
 
 	if (height > 0 && width > 0) {
-		var container = "#popImgBox";
 		var containerWidth = jQuery(container).width();
 
 		var container_height = Math.round(height * containerWidth / width);
@@ -267,13 +291,13 @@ popupBox._setPopImgBoxHeight = function () {
 
 }
 
-popupBox._bindResizeEvt = function () {
+popupBox._bindResizeEvt = function (container) {
 	var obj = this;
 	if (!GLOBAL_IS_MOBILE) {
 		jQuery(window).resize(function () {
 			clearTimeout(obj._resizeEvt);
 			obj._resizeEvt = setTimeout(function () {
-				popupBox._setPopImgBoxHeight();
+				popupBox._setPopImgBoxHeight(container);
 			}, 10);
 		});
 	}

@@ -63,7 +63,7 @@ class Ajax_controller extends MY_Controller
             $sectionId = $_POST['sectionId'];
         }
 
-        sleep(5);
+//        sleep(5);
 
         $pageNo = empty($_POST['page']) ? IMG_SECTION_PAGE_NO : $_POST['page'];
 

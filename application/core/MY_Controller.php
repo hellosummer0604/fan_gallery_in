@@ -27,6 +27,8 @@ class MY_Controller extends CI_Controller {
 		$headData['headerJs'] = $this->loadJS($data['js']);
 		
 		$this->loadView("include/header", $headData);
+
+		$this->loadView("include/popup/login", null);
 	}
 	
 	private function loadCss($data) {
