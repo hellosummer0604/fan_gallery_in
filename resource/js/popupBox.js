@@ -156,7 +156,7 @@ popupBox._displayImgdetail = function (data) {
 			jQuery(container).css({
 				'background-image': "url(" + imgUrl + ")",
 			});
-			popupBox._setPopImgBoxHeight();
+			popupBox._setPopImgBoxHeight(container);
 
 
 			jQuery(container).removeClass("loadingBg");
@@ -197,6 +197,7 @@ popupBox._loadError = function () {
 	}, 1000);
 
 }
+
 
 popupBox._clearImgdetail = function () {
 
@@ -298,6 +299,7 @@ popupBox._bindResizeEvt = function (container) {
 			clearTimeout(obj._resizeEvt);
 			obj._resizeEvt = setTimeout(function () {
 				popupBox._setPopImgBoxHeight(container);
+				console.error('sadasd');
 			}, 10);
 		});
 	}
