@@ -18,16 +18,13 @@ popupBox.activate = function () {
 
 	popupBox.voidSmallBoxClose();
 
+	popupBox.bindSwitchSignPopUp();
 
 	popupBox._bindResizeEvt("#popImgBox");
 }
 
 popupBox.showPopup = function (target, obj, callback) {
 	//basic setting
-	jQuery(function() {
-		jQuery(target).hide().fadeIn(200);
-	});
-
 	jQuery('body').css({
 		overflow: 'hidden',
 	});
@@ -36,13 +33,18 @@ popupBox.showPopup = function (target, obj, callback) {
 		overflow: 'hidden',
 	});
 
-	if (typeof obj == 'undefined') {
-		return;
-	}
+	jQuery(function() {
+		jQuery.when(jQuery(target).hide().fadeIn(200)).done(function() {
+			if (typeof obj == 'undefined') {
+				return;
+			}
 
-	popupBox._addBlur();
+			popupBox._addBlur();
 
-	callback();
+			callback();
+		});
+	});
+
 }
 
 popupBox.showImgBoxPopup = function (target, obj) {
@@ -76,30 +78,89 @@ popupBox.voidSmallBoxClose = function() {
 	});
 }
 
-popupBox.hideSignPopup = function (targetArray) {
-	popupBox.hidePopup(targetArray, function() {
-		///clear
-		popupBox._clearImgdetail();
+//popupBox.hideSignPopup = function (targetArray) {
+//	popupBox.hidePopup(targetArray, function() {
+//		///clear
+//		popupBox._clearImgdetail();
+//	});
+//}
+
+popupBox.bindSwitchSignPopUp = function() {
+	var target = null;
+
+	jQuery('a[href="switchtosignin"]').click(function(event) {
+		event.preventDefault();
+
+		target = jQuery('#signupBox');
+
+		popupBox.hideImgBoxPopup(['.smallPopup']);
+
+		popupBox.showPopup(target, null, function () {});
 	});
+
+	jQuery('a[href="switchtosignup"]').click(function(event) {
+		event.preventDefault();
+
+		target = jQuery('#loginBox');
+
+		popupBox.hideImgBoxPopup(['.smallPopup']);
+
+		popupBox.showPopup(target, null, function () {});
+	});
+
+	if (target == null) {
+		return;
+	}
+
+
+
 }
 
+//popupBox.hidePopup = function (targetArray, callback) {
+//	//basic setting
+//	targetArray.forEach(function (entry) {
+//		jQuery(entry).fadeOut(200);
+//	});
+//
+//	jQuery('body').css({
+//		overflow: 'auto',
+//	});
+//
+//	jQuery('html').css({
+//		overflow: 'auto',
+//	});
+//
+//	popupBox._removeBlur();
+//
+//	callback();
+//}
+
 popupBox.hidePopup = function (targetArray, callback) {
+	popupBox._removeBlur();
 	//basic setting
 	targetArray.forEach(function (entry) {
-		jQuery(entry).fadeOut(200);
+		var target = jQuery(entry);
+
+		if (target.is(":visible")) {
+
+
+			jQuery.when(target.fadeOut(200)).done(function() {
+
+				jQuery('body').css({
+					overflow: 'auto',
+				});
+
+				jQuery('html').css({
+					overflow: 'auto',
+				});
+
+				callback();
+
+			});
+		}
 	});
 
-	jQuery('body').css({
-		overflow: 'auto',
-	});
 
-	jQuery('html').css({
-		overflow: 'auto',
-	});
-
-	popupBox._removeBlur();
-
-	callback();
 }
 
 popupBox.hideImgBoxPopup = function (targetArray) {
@@ -159,22 +220,6 @@ popupBox._displayImgdetail = function (data) {
 
 	jQuery('<img/>').attr('src', imgUrl).load(function () {
 		jQuery(this).remove(); // prevent memory leaks as @benweet suggested
-		//setTimeout(function () {
-        //
-		//	if(popupBox._POPUP_IMG_URL == imgUrl) {
-		//		jQuery(container).css({
-		//			'background-image': "url(" + imgUrl + ")",
-		//		});
-		//		popupBox._setPopImgBoxHeight();
-        //
-        //
-		//		jQuery(container).removeClass("loadingBg");
-		//		jQuery(container).addClass("displayBg");
-        //
-		//		jQuery(container).fadeIn(200);
-		//	}
-        //
-		//}, 3000);
 
 		if(popupBox._POPUP_IMG_URL == imgUrl) {
 
@@ -221,7 +266,7 @@ popupBox._displayImgdetail = function (data) {
 
 popupBox._loadError = function () {
 	setTimeout(function () {
-		popupBox.hideImgBoxPopup(['#imgBox', '#uploadBox']);
+		popupBox.hideImgBoxPopup(['#imgBox', '#uploadBox', '.smallPopup']);
 	}, 1000);
 
 }
@@ -335,7 +380,6 @@ popupBox._bindResizeEvt = function (container) {
 			clearTimeout(obj._resizeEvt);
 			obj._resizeEvt = setTimeout(function () {
 				popupBox._setPopImgBoxHeight(container);
-				console.error('sadasd');
 			}, 10);
 		});
 	}

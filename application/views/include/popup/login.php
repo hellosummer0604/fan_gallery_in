@@ -30,7 +30,7 @@
             </div>
             <div class="registerFooter">
                 <ul>
-                    <li>Need an Account? <a href="#">Sign up</a> </li>
+                    <li>Need an Account? <a href="switchtosignin">Sign up</a> </li>
                     <li>Forgot password? <a href="#">Retrieve</a></li>
                 </ul>
 
@@ -76,7 +76,7 @@
             </div>
             <div class="registerFooter">
                 <ul>
-                    <li>Have an Account? <a href="#">Sign in</a> </li>
+                    <li>Have an Account? <a href="switchtosignup">Sign in</a> </li>
                 </ul>
 
                 <button class="btn-submit" type="button">Sign up</button>
