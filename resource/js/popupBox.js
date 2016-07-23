@@ -34,7 +34,7 @@ popupBox.showPopup = function (target, obj, callback) {
 	});
 
 	jQuery(function() {
-		jQuery.when(jQuery(target).hide().fadeIn(200)).done(function() {
+		jQuery.when(jQuery(target).hide().fadeIn(300)).done(function() {
 			if (typeof obj == 'undefined') {
 				return;
 			}
@@ -144,7 +144,7 @@ popupBox.hidePopup = function (targetArray, callback) {
 		if (target.is(":visible")) {
 
 
-			jQuery.when(target.fadeOut(200)).done(function() {
+			jQuery.when(target.fadeOut(300)).done(function() {
 
 				jQuery('body').css({
 					overflow: 'auto',
@@ -218,6 +218,24 @@ popupBox._displayImgdetail = function (data) {
 
 	var container = "#popImgBox";
 
+
+	if (popupBox.isEditPopup())  {
+		jQuery('#imgTitle >input').val('asdasd');
+	} else {
+		jQuery('.baseLayer > #imgTitle').html("我就是图片标题怎么了");
+	}
+	
+	jQuery('#imgBox > #authorBox').html("North Fan<br>2016-01-12");
+	
+	jQuery('.innerBox > #imgTags').html("<div class='itag'><a href='#'>Drink</a></div><div class='itag'><a href='#'>Smoothy</a></div><div class='itag'><a href='#'>Interior</a></div><div class='itag'><a href='#'>Light</a></div><div class='itag'><a href='#'>Night</a></div>");
+	
+	
+	if (popupBox.isEditPopup()) {
+		jQuery('#imgText > textarea').css('overflow', 'hidden').autogrow();
+	} else {
+		jQuery('#popImgText > #imgText').html("微软推出了诺基亚230，这款只要399元的手机采用了铝制机身，不仅双卡双待，而且一次充电待机长达22天，这款手机于1月19日正式开卖。其实不只是在船上。一切封闭的场所，最后都会导致这种文明准则丧失、大家弱肉强食的事。历史上的围城战，人相食者有多少？历史上的大饥荒，村子里互相杀戮的有多少？海难则争夺食物，雪灾则互相撕咬。");
+	}
+
 	jQuery('<img/>').attr('src', imgUrl).load(function () {
 		jQuery(this).remove(); // prevent memory leaks as @benweet suggested
 
@@ -234,31 +252,11 @@ popupBox._displayImgdetail = function (data) {
 
 			//jQuery(container).fadeIn(200);
 			jQuery(function() {
-				jQuery(container).hide().fadeIn(200);
+				jQuery(container).hide().fadeIn(300);
 			});
 		}
 
 	});
-
-
-	if (jQuery('#imgTitle > input').length > 0)  {
-		jQuery('#imgTitle >input').val('asdasd');
-	} else {
-		jQuery('.baseLayer > #imgTitle').html("我就是图片标题怎么了");
-	}
-	
-	jQuery('#imgBox > #authorBox').html("North Fan<br>2016-01-12");
-	
-	jQuery('.innerBox > #imgTags').html("<div class='itag'><a href='#'>Drink</a></div><div class='itag'><a href='#'>Smoothy</a></div><div class='itag'><a href='#'>Interior</a></div><div class='itag'><a href='#'>Light</a></div><div class='itag'><a href='#'>Night</a></div>");
-	
-	
-	if (jQuery('#imgText  textarea').length > 0) {
-		jQuery('#imgText > textarea').css('overflow', 'hidden').autogrow();
-	} else {
-		jQuery('#popImgText > #imgText').html("微软推出了诺基亚230，这款只要399元的手机采用了铝制机身，不仅双卡双待，而且一次充电待机长达22天，这款手机于1月19日正式开卖。其实不只是在船上。一切封闭的场所，最后都会导致这种文明准则丧失、大家弱肉强食的事。历史上的围城战，人相食者有多少？历史上的大饥荒，村子里互相杀戮的有多少？海难则争夺食物，雪灾则互相撕咬。");
-	}
-
-
 	//display text
 }
 
