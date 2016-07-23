@@ -1,4 +1,4 @@
-<div id="loginBox" class="shadowWrapper">
+<div id="loginBox" class="shadowWrapper smallPopup">
 
     <div class="shadowLayer baseLayer">
 
@@ -7,19 +7,44 @@
 
     <div class="baseLayer">
 
-        <div class="closeBanner">
-            <div class="closeButton">Esc</div>
-        </div>
+        <div class="mainBox">
+            <div class="colorBanner">
+                <table cellpadding="0" cellspacing="0">
+                    <tr><td></td><td></td><td></td><td></td></tr>
+                </table>
+            </div>
+            <div class="titleBox">
+                <h2>LOGIN TO ACCOUNT</h2>
+            </div>
+            <div class="registerFormBox">
+                <form name="loginForm" id="loginForm" action="" method="post">
+                    <label>#Username/Email:</label>
+                    <input type="text" maxlength="36" placeholder="insert your email/username">
+                    <label>#Password:</label>
+                    <input type="password" maxlength="36" placeholder="insert your password">
 
-        <div class="popupImg">
-            <h2>Upload Photo</h2>
+                    <div id="rememberme"><input type="checkbox" id="remembermeChk"><label for="remembermeChk" id="remembermeChkLbl">&nbsp;</label><label id="remembermeTx">Remember me</label></div>
+
+
+                </form>
+            </div>
+            <div class="registerFooter">
+                <ul>
+                    <li>Need an Account? <a href="#">Sign up</a> </li>
+                    <li>Forgot password? <a href="#">Retrieve</a></li>
+                </ul>
+
+                <button class="btn-submit" type="button">Sign in</button>
+
+                <button class="btn-reset" type="reset">Cancel</button>
+            </div>
         </div>
 
     </div>
 </div>
 
 
-<div id="signupBox" class="shadowWrapper">
+<div id="signupBox" class="shadowWrapper smallPopup">
 
     <div class="shadowLayer baseLayer">
 
@@ -28,12 +53,35 @@
 
     <div class="baseLayer">
 
-        <div class="closeBanner">
-            <div class="closeButton">Esc</div>
-        </div>
+        <div class="mainBox">
+            <div class="colorBanner">
+                <table cellpadding="0" cellspacing="0">
+                    <tr><td></td><td></td><td></td><td></td></tr>
+                </table>
+            </div>
+            <div class="titleBox">
+                <h2>CREATE AN ACCOUNT</h2>
+            </div>
+            <div class="registerFormBox">
+                <form name="registerForm" id="registerForm" action="" method="post">
+                    <label>#Email:</label>
+                    <input type="text" maxlength="36" placeholder="insert your email">
+                    <label>#Username:</label>
+                    <input type="text" maxlength="36" placeholder="username should ...">
+                    <label>#Password:</label>
+                    <input type="password" maxlength="36" placeholder="insert your password">
+                    <label>#Confirm Password:</label>
+                    <input type="password" maxlength="36" placeholder="confirm your password">
+                </form>
+            </div>
+            <div class="registerFooter">
+                <ul>
+                    <li>Have an Account? <a href="#">Sign in</a> </li>
+                </ul>
 
-        <div class="popupImg">
-            <h2>Upload Photo</h2>
+                <button class="btn-submit" type="button">Sign up</button>
+                <button class="btn-reset" type="reset">Cancel</button>
+            </div>
         </div>
 
     </div>
