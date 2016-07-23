@@ -8,14 +8,15 @@ popupBox._BACKGROUND_IMAGE_WIDTH = -1;
 popupBox._POPUP_IMG_URL = -1;
 
 popupBox.activate = function () {
-	//jQuery("#upload").click(function () {
-	//	//popupBox.showPopup("#uploadBox");
-	//});
+	jQuery(".loginBtn").click(function () {
+		popupBox.showLoginPopup();
+	});
 
-	//jQuery(".loginBtn").click(function () {
-	//	popupBox.showLoginPopup("#loginBox", "");
-	//});
+	jQuery(".signupBtn").click(function () {
+		popupBox.showSignupPopup();
+	});
 
+	popupBox.voidSmallBoxClose();
 
 
 	popupBox._bindResizeEvt("#popImgBox");
@@ -23,7 +24,9 @@ popupBox.activate = function () {
 
 popupBox.showPopup = function (target, obj, callback) {
 	//basic setting
-	jQuery(target).fadeIn(200);
+	jQuery(function() {
+		jQuery(target).hide().fadeIn(200);
+	});
 
 	jQuery('body').css({
 		overflow: 'hidden',
@@ -51,11 +54,33 @@ popupBox.showImgBoxPopup = function (target, obj) {
 	});
 }
 
-popupBox.showLoginPopup = function (target, obj) {
-	popupBox.showPopup(target, obj, function () {
+popupBox.showLoginPopup = function () {
+	var target = jQuery('#loginBox');
+	popupBox.showPopup(target, null, function () {
 
 	});
 
+}
+
+popupBox.showSignupPopup = function () {
+	var target = jQuery('#signupBox');
+	popupBox.showPopup(target, null, function () {
+
+	});
+
+}
+
+popupBox.voidSmallBoxClose = function() {
+	jQuery('.mainBox').click(function (event) {
+		event.stopPropagation();
+	});
+}
+
+popupBox.hideSignPopup = function (targetArray) {
+	popupBox.hidePopup(targetArray, function() {
+		///clear
+		popupBox._clearImgdetail();
+	});
 }
 
 popupBox.hidePopup = function (targetArray, callback) {
@@ -162,7 +187,10 @@ popupBox._displayImgdetail = function (data) {
 			jQuery(container).removeClass("loadingBg");
 			jQuery(container).addClass("displayBg");
 
-			jQuery(container).fadeIn(200);
+			//jQuery(container).fadeIn(200);
+			jQuery(function() {
+				jQuery(container).hide().fadeIn(200);
+			});
 		}
 
 	});
@@ -238,6 +266,14 @@ popupBox._clearImgdetail = function () {
 
 }
 
+popupBox.isEditPopup = function () {
+	if (typeof popupBoxEdit == "undefined") {
+		return false;
+	} else {
+		return true;
+	}
+}
+
 
 popupBox.bindCloseAction = function (func) {
 	jQuery(document).keyup(function (e) {
@@ -255,7 +291,7 @@ popupBox.bindCloseAction = function (func) {
 
 	//for mobile phone, click image to close
 	jQuery('#popImgBox').click(function (event) {
-		if (jQuery(window).width() < 512) {
+		if (jQuery(window).width() < 512 && !popupBox.isEditPopup()) {
 			func();
 		} else {
 			event.stopPropagation();

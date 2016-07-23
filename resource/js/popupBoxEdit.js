@@ -49,4 +49,6 @@ popupBoxEdit.autoComplete = function () {
 jQuery(document).ready(function(){
     //register functions here
     popupBoxEdit.autoComplete();
+
+    popupBoxEdit;
 });
