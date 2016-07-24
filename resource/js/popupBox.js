@@ -8,15 +8,8 @@ popupBox._BACKGROUND_IMAGE_WIDTH = -1;
 popupBox._POPUP_IMG_URL = -1;
 
 popupBox.activate = function () {
-	jQuery(".loginBtn").click(function () {
-		popupBox.showLoginPopup();
-	});
+	popupBox.bindSmallPopup();
 
-	jQuery(".signupBtn").click(function () {
-		popupBox.showSignupPopup();
-	});
-
-	popupBox.voidSmallBoxClose();
 
 	popupBox.bindSwitchSignPopUp();
 
@@ -47,6 +40,18 @@ popupBox.showPopup = function (target, obj, callback) {
 
 }
 
+popupBox.bindSmallPopup = function () {
+	jQuery(".loginBtn").off('click').on("click", function() {
+		popupBox._showLoginPopup();
+	});
+
+	jQuery(".signupBtn").off('click').on("click", function() {
+		popupBox._showSignupPopup();
+	});
+
+	popupBox.voidSmallBoxClose();
+}
+
 popupBox.showImgBoxPopup = function (target, obj) {
 	popupBox.showPopup(target, obj, function () {
 		///load img
@@ -56,7 +61,7 @@ popupBox.showImgBoxPopup = function (target, obj) {
 	});
 }
 
-popupBox.showLoginPopup = function () {
+popupBox._showLoginPopup = function () {
 	var target = jQuery('#loginBox');
 	popupBox.showPopup(target, null, function () {
 
@@ -64,7 +69,7 @@ popupBox.showLoginPopup = function () {
 
 }
 
-popupBox.showSignupPopup = function () {
+popupBox._showSignupPopup = function () {
 	var target = jQuery('#signupBox');
 	popupBox.showPopup(target, null, function () {
 
@@ -73,7 +78,7 @@ popupBox.showSignupPopup = function () {
 }
 
 popupBox.voidSmallBoxClose = function() {
-	jQuery('.mainBox').click(function (event) {
+	jQuery('.mainBox').off('click').on('click', function(event) {
 		event.stopPropagation();
 	});
 }
@@ -88,7 +93,7 @@ popupBox.voidSmallBoxClose = function() {
 popupBox.bindSwitchSignPopUp = function() {
 	var target = null;
 
-	jQuery('a[href="switchtosignin"]').click(function(event) {
+	jQuery('a[href="switchtosignin"]').off('click').on('click', function (event) {
 		event.preventDefault();
 
 		target = jQuery('#signupBox');
@@ -98,7 +103,7 @@ popupBox.bindSwitchSignPopUp = function() {
 		popupBox.showPopup(target, null, function () {});
 	});
 
-	jQuery('a[href="switchtosignup"]').click(function(event) {
+	jQuery('a[href="switchtosignup"]').off('click').on('click', function (event) {
 		event.preventDefault();
 
 		target = jQuery('#loginBox');
@@ -326,14 +331,12 @@ popupBox.bindCloseAction = function (func) {
 	});
 
 
-	jQuery('.popupImg').click(function (event) {
+	jQuery('.popupImg').off('click').on('click', function(event) {
 		event.stopPropagation();
-
-
 	});
 
 	//for mobile phone, click image to close
-	jQuery('#popImgBox').click(function (event) {
+	jQuery('#popImgBox').off('click').on('click', function(event) {
 		if (jQuery(window).width() < 512 && !popupBox.isEditPopup()) {
 			func();
 		} else {
@@ -341,11 +344,14 @@ popupBox.bindCloseAction = function (func) {
 		}
 	});
 
-	jQuery('.baseLayer').click(function (event) {
+	jQuery('.baseLayer').off('click').on('click', function(event) {
 		func();
 	});
 
-	//click on cross
+	//for smallPopup, if click on cancel
+	jQuery('.btn-smallpop-cancel').off('click').on('click', function(event) {
+		func();
+	});
 }
 
 

@@ -787,6 +787,20 @@ body.modal-open[style] {
 	-moz-border-radius: 2px;
 	border-radius: 2px;
 	background-position: center;
+
+	transition: 200ms -webkit-filter linear;
+	-webkit-transition : -webkit-filter 200ms linear;
+
+}
+
+.imgThumbBox:hover {
+	-webkit-filter: contrast(110%);
+	filter: contrast(110%);
+	-webkit-filter: brightness(1.20);
+	filter: brightness(1.20);
+	transition: 200ms -webkit-filter linear;
+	-webkit-transition : -webkit-filter 200ms linear
+
 }
 
 @media only screen and (max-width: 1024px) {

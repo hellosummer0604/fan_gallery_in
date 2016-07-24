@@ -61,7 +61,7 @@ var loadImgList = function(data) {
 //binding event, open the modal, on image list
 var _bindingOpenModel = function () {
     $(".homeImgContainer img").each(function () {
-        $(this).off("click").click(function () {
+        $(this).off('click').on('click', function() {
             _openImgModal(this);
         });
     });

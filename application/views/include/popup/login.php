@@ -36,7 +36,7 @@
 
                 <button class="btn-submit" type="button">Sign in</button>
 
-                <button class="btn-reset" type="reset">Cancel</button>
+                <button class="btn-reset btn-smallpop-cancel" type="reset">Cancel</button>
             </div>
         </div>
 
@@ -80,7 +80,7 @@
                 </ul>
 
                 <button class="btn-submit" type="button">Sign up</button>
-                <button class="btn-reset" type="reset">Cancel</button>
+                <button class="btn-reset btn-smallpop-cancel" type="reset">Cancel</button>
             </div>
         </div>
 

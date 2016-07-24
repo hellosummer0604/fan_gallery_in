@@ -311,9 +311,11 @@ headNav._liOnClick = function (obj) {
 
 headNav._bindClickEvt = function () {
 	jQuery(".linkContainer .nav_li").each(function () {
-		jQuery(this).click(function (e) {
+
+		jQuery(this).off('click').on('click', function(e) {
 			headNav._liOnClick(jQuery(this));
 		});
+
 	});
 
 	//remove last one button  -- More
