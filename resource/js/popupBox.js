@@ -26,6 +26,11 @@ popupBox.showPopup = function (target, obj, callback) {
 		overflow: 'hidden',
 	});
 
+	//set body scrollbar offset
+	popupBox._skipBodyScrollBar();
+
+
+
 	jQuery(function() {
 		jQuery.when(jQuery(target).hide().fadeIn(300)).done(function() {
 			if (typeof obj == 'undefined') {
@@ -141,6 +146,7 @@ popupBox.bindSwitchSignPopUp = function() {
 //}
 
 popupBox.hidePopup = function (targetArray, callback) {
+
 	popupBox._removeBlur();
 	//basic setting
 	targetArray.forEach(function (entry) {
@@ -150,6 +156,9 @@ popupBox.hidePopup = function (targetArray, callback) {
 
 
 			jQuery.when(target.fadeOut(300)).done(function() {
+
+				//remove body scrollbar offset
+				popupBox._recoverBodyScrollBar();
 
 				jQuery('body').css({
 					overflow: 'auto',
@@ -413,3 +422,14 @@ popupBox._removeBlur = function () {
 	jQuery(".headerNavBackground").removeClass('blurred');
 }
 
+popupBox._skipBodyScrollBar = function(){
+	var width = "-=" + SCROLLBAR_WIDTH + "px";
+	jQuery('.textSection').css('width', '100%').css('width', width);
+	jQuery('.headerNav').css('width', '100%').css('width', width);
+	//console.error(x);
+}
+
+popupBox._recoverBodyScrollBar = function(){
+	jQuery('.textSection').css('width', '100%');
+	jQuery('.headerNav').css('width', '100%');
+}
