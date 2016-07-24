@@ -427,17 +427,9 @@ var ImgGrid = Class.create({
 
 				jQuery(container).html("<div class='hideImgId'><div class='hide_cur_id'>" + curId + "</div><div class='hide_pre_id'>" + preId + "</div><div class='hide_post_id'>" + postId + "</div> </div>");
 				//bind event;
-//				popupBox
-				jQuery(container).bind({
-					click: function () {
-						popupBox.showImgBoxPopup('#imgBox', container);
-					},
-					mouseenter: function () {
 
-					},
-					mouseleave: function () {
-
-					}
+				jQuery(container).off('click').on('click', function() {
+					popupBox.showImgBoxPopup('#imgBox', container);
 				});
 
 //				jQuery(container).css({

@@ -8,26 +8,16 @@ popupBox._BACKGROUND_IMAGE_WIDTH = -1;
 popupBox._POPUP_IMG_URL = -1;
 
 popupBox.activate = function () {
-	jQuery(".loginBtn").click(function () {
-		popupBox.showLoginPopup();
-	});
+	popupBox.bindSmallPopup();
 
-	jQuery(".signupBtn").click(function () {
-		popupBox.showSignupPopup();
-	});
 
-	popupBox.voidSmallBoxClose();
-
+	popupBox.bindSwitchSignPopUp();
 
 	popupBox._bindResizeEvt("#popImgBox");
 }
 
 popupBox.showPopup = function (target, obj, callback) {
 	//basic setting
-	jQuery(function() {
-		jQuery(target).hide().fadeIn(200);
-	});
-
 	jQuery('body').css({
 		overflow: 'hidden',
 	});
@@ -36,13 +26,35 @@ popupBox.showPopup = function (target, obj, callback) {
 		overflow: 'hidden',
 	});
 
-	if (typeof obj == 'undefined') {
-		return;
-	}
+	//set body scrollbar offset
+	popupBox._skipBodyScrollBar();
 
-	popupBox._addBlur();
 
-	callback();
+
+	jQuery(function() {
+		jQuery.when(jQuery(target).hide().fadeIn(300)).done(function() {
+			if (typeof obj == 'undefined') {
+				return;
+			}
+
+			popupBox._addBlur();
+
+			callback();
+		});
+	});
+
+}
+
+popupBox.bindSmallPopup = function () {
+	jQuery(".loginBtn").off('click').on("click", function() {
+		popupBox._showLoginPopup();
+	});
+
+	jQuery(".signupBtn").off('click').on("click", function() {
+		popupBox._showSignupPopup();
+	});
+
+	popupBox.voidSmallBoxClose();
 }
 
 popupBox.showImgBoxPopup = function (target, obj) {
@@ -54,7 +66,7 @@ popupBox.showImgBoxPopup = function (target, obj) {
 	});
 }
 
-popupBox.showLoginPopup = function () {
+popupBox._showLoginPopup = function () {
 	var target = jQuery('#loginBox');
 	popupBox.showPopup(target, null, function () {
 
@@ -62,7 +74,7 @@ popupBox.showLoginPopup = function () {
 
 }
 
-popupBox.showSignupPopup = function () {
+popupBox._showSignupPopup = function () {
 	var target = jQuery('#signupBox');
 	popupBox.showPopup(target, null, function () {
 
@@ -71,35 +83,98 @@ popupBox.showSignupPopup = function () {
 }
 
 popupBox.voidSmallBoxClose = function() {
-	jQuery('.mainBox').click(function (event) {
+	jQuery('.mainBox').off('click').on('click', function(event) {
 		event.stopPropagation();
 	});
 }
 
-popupBox.hideSignPopup = function (targetArray) {
-	popupBox.hidePopup(targetArray, function() {
-		///clear
-		popupBox._clearImgdetail();
+//popupBox.hideSignPopup = function (targetArray) {
+//	popupBox.hidePopup(targetArray, function() {
+//		///clear
+//		popupBox._clearImgdetail();
+//	});
+//}
+
+popupBox.bindSwitchSignPopUp = function() {
+	var target = null;
+
+	jQuery('a[href="switchtosignin"]').off('click').on('click', function (event) {
+		event.preventDefault();
+
+		target = jQuery('#signupBox');
+
+		popupBox.hideImgBoxPopup(['.smallPopup']);
+
+		popupBox.showPopup(target, null, function () {});
 	});
+
+	jQuery('a[href="switchtosignup"]').off('click').on('click', function (event) {
+		event.preventDefault();
+
+		target = jQuery('#loginBox');
+
+		popupBox.hideImgBoxPopup(['.smallPopup']);
+
+		popupBox.showPopup(target, null, function () {});
+	});
+
+	if (target == null) {
+		return;
+	}
+
+
+
 }
 
+//popupBox.hidePopup = function (targetArray, callback) {
+//	//basic setting
+//	targetArray.forEach(function (entry) {
+//		jQuery(entry).fadeOut(200);
+//	});
+//
+//	jQuery('body').css({
+//		overflow: 'auto',
+//	});
+//
+//	jQuery('html').css({
+//		overflow: 'auto',
+//	});
+//
+//	popupBox._removeBlur();
+//
+//	callback();
+//}
+
 popupBox.hidePopup = function (targetArray, callback) {
-	//basic setting
-	targetArray.forEach(function (entry) {
-		jQuery(entry).fadeOut(200);
-	});
-
-	jQuery('body').css({
-		overflow: 'auto',
-	});
-
-	jQuery('html').css({
-		overflow: 'auto',
-	});
 
 	popupBox._removeBlur();
+	//basic setting
+	targetArray.forEach(function (entry) {
+		var target = jQuery(entry);
 
-	callback();
+		if (target.is(":visible")) {
+
+
+			jQuery.when(target.fadeOut(300)).done(function() {
+
+				//remove body scrollbar offset
+				popupBox._recoverBodyScrollBar();
+
+				jQuery('body').css({
+					overflow: 'auto',
+				});
+
+				jQuery('html').css({
+					overflow: 'auto',
+				});
+
+				callback();
+
+			});
+		}
+	});
+
+
 }
 
 popupBox.hideImgBoxPopup = function (targetArray) {
@@ -157,24 +232,26 @@ popupBox._displayImgdetail = function (data) {
 
 	var container = "#popImgBox";
 
+
+	if (popupBox.isEditPopup())  {
+		jQuery('#imgTitle >input').val('asdasd');
+	} else {
+		jQuery('.baseLayer > #imgTitle').html("我就是图片标题怎么了");
+	}
+	
+	jQuery('#imgBox > #authorBox').html("North Fan<br>2016-01-12");
+	
+	jQuery('.innerBox > #imgTags').html("<div class='itag'><a href='#'>Drink</a></div><div class='itag'><a href='#'>Smoothy</a></div><div class='itag'><a href='#'>Interior</a></div><div class='itag'><a href='#'>Light</a></div><div class='itag'><a href='#'>Night</a></div>");
+	
+	
+	if (popupBox.isEditPopup()) {
+		jQuery('#imgText > textarea').css('overflow', 'hidden').autogrow();
+	} else {
+		jQuery('#popImgText > #imgText').html("微软推出了诺基亚230，这款只要399元的手机采用了铝制机身，不仅双卡双待，而且一次充电待机长达22天，这款手机于1月19日正式开卖。其实不只是在船上。一切封闭的场所，最后都会导致这种文明准则丧失、大家弱肉强食的事。历史上的围城战，人相食者有多少？历史上的大饥荒，村子里互相杀戮的有多少？海难则争夺食物，雪灾则互相撕咬。");
+	}
+
 	jQuery('<img/>').attr('src', imgUrl).load(function () {
 		jQuery(this).remove(); // prevent memory leaks as @benweet suggested
-		//setTimeout(function () {
-        //
-		//	if(popupBox._POPUP_IMG_URL == imgUrl) {
-		//		jQuery(container).css({
-		//			'background-image': "url(" + imgUrl + ")",
-		//		});
-		//		popupBox._setPopImgBoxHeight();
-        //
-        //
-		//		jQuery(container).removeClass("loadingBg");
-		//		jQuery(container).addClass("displayBg");
-        //
-		//		jQuery(container).fadeIn(200);
-		//	}
-        //
-		//}, 3000);
 
 		if(popupBox._POPUP_IMG_URL == imgUrl) {
 
@@ -189,31 +266,11 @@ popupBox._displayImgdetail = function (data) {
 
 			//jQuery(container).fadeIn(200);
 			jQuery(function() {
-				jQuery(container).hide().fadeIn(200);
+				jQuery(container).hide().fadeIn(300);
 			});
 		}
 
 	});
-
-
-	if (jQuery('#imgTitle > input').length > 0)  {
-		jQuery('#imgTitle >input').val('asdasd');
-	} else {
-		jQuery('.baseLayer > #imgTitle').html("我就是图片标题怎么了");
-	}
-	
-	jQuery('#imgBox > #authorBox').html("North Fan<br>2016-01-12");
-	
-	jQuery('.innerBox > #imgTags').html("<div class='itag'><a href='#'>Drink</a></div><div class='itag'><a href='#'>Smoothy</a></div><div class='itag'><a href='#'>Interior</a></div><div class='itag'><a href='#'>Light</a></div><div class='itag'><a href='#'>Night</a></div>");
-	
-	
-	if (jQuery('#imgText  textarea').length > 0) {
-		jQuery('#imgText > textarea').css('overflow', 'hidden').autogrow();
-	} else {
-		jQuery('#popImgText > #imgText').html("微软推出了诺基亚230，这款只要399元的手机采用了铝制机身，不仅双卡双待，而且一次充电待机长达22天，这款手机于1月19日正式开卖。其实不只是在船上。一切封闭的场所，最后都会导致这种文明准则丧失、大家弱肉强食的事。历史上的围城战，人相食者有多少？历史上的大饥荒，村子里互相杀戮的有多少？海难则争夺食物，雪灾则互相撕咬。");
-	}
-
-
 	//display text
 }
 
@@ -221,7 +278,7 @@ popupBox._displayImgdetail = function (data) {
 
 popupBox._loadError = function () {
 	setTimeout(function () {
-		popupBox.hideImgBoxPopup(['#imgBox', '#uploadBox']);
+		popupBox.hideImgBoxPopup(['#imgBox', '#uploadBox', '.smallPopup']);
 	}, 1000);
 
 }
@@ -283,14 +340,12 @@ popupBox.bindCloseAction = function (func) {
 	});
 
 
-	jQuery('.popupImg').click(function (event) {
+	jQuery('.popupImg').off('click').on('click', function(event) {
 		event.stopPropagation();
-
-
 	});
 
 	//for mobile phone, click image to close
-	jQuery('#popImgBox').click(function (event) {
+	jQuery('#popImgBox').off('click').on('click', function(event) {
 		if (jQuery(window).width() < 512 && !popupBox.isEditPopup()) {
 			func();
 		} else {
@@ -298,11 +353,14 @@ popupBox.bindCloseAction = function (func) {
 		}
 	});
 
-	jQuery('.baseLayer').click(function (event) {
+	jQuery('.baseLayer').off('click').on('click', function(event) {
 		func();
 	});
 
-	//click on cross
+	//for smallPopup, if click on cancel
+	jQuery('.btn-smallpop-cancel').off('click').on('click', function(event) {
+		func();
+	});
 }
 
 
@@ -335,7 +393,6 @@ popupBox._bindResizeEvt = function (container) {
 			clearTimeout(obj._resizeEvt);
 			obj._resizeEvt = setTimeout(function () {
 				popupBox._setPopImgBoxHeight(container);
-				console.error('sadasd');
 			}, 10);
 		});
 	}
@@ -365,3 +422,30 @@ popupBox._removeBlur = function () {
 	jQuery(".headerNavBackground").removeClass('blurred');
 }
 
+//must check css for the details
+popupBox._skipBodyScrollBar = function(){
+	var percentage = popupBox._getCssWidthPercent('.textSection', 0);
+	percentage = percentage > 90 ? "100%" : "86%";
+	var offset = SCROLLBAR_WIDTH + "px";
+
+
+	jQuery('.textSection').css('width', "calc(" + percentage + " - " + offset + ")");
+
+	jQuery('.headerNav').css('width', "calc(" + percentage + " - " + offset + ")");
+
+}
+
+popupBox._recoverBodyScrollBar = function(){
+	var percentage = popupBox._getCssWidthPercent('.textSection', 0);
+	percentage = percentage > 90 ? "100%" : "86%";
+
+	jQuery('.textSection').css('width', percentage);
+	jQuery('.headerNav').css('width', percentage);
+}
+
+popupBox._getCssWidthPercent = function(targetStr, offset) {
+	var width = jQuery(targetStr).width();
+	var parentWidth = jQuery(targetStr).offsetParent().width() - offset;
+	var percent = 100*width/parentWidth;
+	return percent;
+}
