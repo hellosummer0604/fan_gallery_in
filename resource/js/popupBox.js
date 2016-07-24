@@ -422,14 +422,30 @@ popupBox._removeBlur = function () {
 	jQuery(".headerNavBackground").removeClass('blurred');
 }
 
+//must check css for the details
 popupBox._skipBodyScrollBar = function(){
-	var width = "-=" + SCROLLBAR_WIDTH + "px";
-	jQuery('.textSection').css('width', '100%').css('width', width);
-	jQuery('.headerNav').css('width', '100%').css('width', width);
-	//console.error(x);
+	var percentage = popupBox._getCssWidthPercent('.textSection', 0);
+	percentage = percentage > 90 ? "100%" : "86%";
+	var offset = SCROLLBAR_WIDTH + "px";
+
+
+	jQuery('.textSection').css('width', "calc(" + percentage + " - " + offset + ")");
+
+	jQuery('.headerNav').css('width', "calc(" + percentage + " - " + offset + ")");
+
 }
 
 popupBox._recoverBodyScrollBar = function(){
-	jQuery('.textSection').css('width', '100%');
-	jQuery('.headerNav').css('width', '100%');
+	var percentage = popupBox._getCssWidthPercent('.textSection', 0);
+	percentage = percentage > 90 ? "100%" : "86%";
+
+	jQuery('.textSection').css('width', percentage);
+	jQuery('.headerNav').css('width', percentage);
+}
+
+popupBox._getCssWidthPercent = function(targetStr, offset) {
+	var width = jQuery(targetStr).width();
+	var parentWidth = jQuery(targetStr).offsetParent().width() - offset;
+	var percent = 100*width/parentWidth;
+	return percent;
 }

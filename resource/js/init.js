@@ -136,5 +136,7 @@ Init._getScrollBarWidth = function() {
 
 	document.body.removeChild (outer);
 
-	SCROLLBAR_WIDTH = (w1 - w2);
+	SCROLLBAR_WIDTH = (w1 - w2) == 0 ? 0 : (w1 - w2) - 2;
+
+
 }
