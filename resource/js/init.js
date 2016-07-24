@@ -114,6 +114,9 @@ Init._detect_mobile = function () {
 
 
 Init._getScrollBarWidth = function() {
+	var offset = -1;
+
+
 	var inner = document.createElement('p');
 	inner.style.width = "100%";
 	inner.style.height = "200px";
@@ -136,7 +139,7 @@ Init._getScrollBarWidth = function() {
 
 	document.body.removeChild (outer);
 
-	SCROLLBAR_WIDTH = (w1 - w2) == 0 ? 0 : (w1 - w2) - 2;
+	SCROLLBAR_WIDTH = (w1 - w2) == 0 ? 0 : (w1 - w2) + offset;
 
 
 }
