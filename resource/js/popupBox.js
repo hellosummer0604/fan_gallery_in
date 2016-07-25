@@ -6,8 +6,14 @@ popupBox._resizeEvt;
 popupBox._BACKGROUND_IMAGE_HEIGHT = -1;
 popupBox._BACKGROUND_IMAGE_WIDTH = -1;
 popupBox._POPUP_IMG_URL = -1;
+popupBox._FADE_TIME = 300;
+
 
 popupBox.activate = function () {
+	if (GLOBAL_IS_MOBILE) {
+		popupBox._FADE_TIME = 0;
+	}
+
 	popupBox.bindSmallPopup();
 
 
@@ -32,7 +38,7 @@ popupBox.showPopup = function (target, obj, callback) {
 
 
 	jQuery(function() {
-		jQuery.when(jQuery(target).hide().fadeIn(300)).done(function() {
+		jQuery.when(jQuery(target).hide().fadeIn(popupBox._FADE_TIME)).done(function() {
 			if (typeof obj == 'undefined') {
 				return;
 			}
@@ -155,7 +161,7 @@ popupBox.hidePopup = function (targetArray, callback) {
 		if (target.is(":visible")) {
 
 
-			jQuery.when(target.fadeOut(300)).done(function() {
+			jQuery.when(target.fadeOut(popupBox._FADE_TIME)).done(function() {
 
 				//remove body scrollbar offset
 				popupBox._recoverBodyScrollBar();
@@ -266,7 +272,7 @@ popupBox._displayImgdetail = function (data) {
 
 			//jQuery(container).fadeIn(200);
 			jQuery(function() {
-				jQuery(container).hide().fadeIn(300);
+				jQuery(container).hide().fadeIn(popupBox._FADE_TIME);
 			});
 		}
 
@@ -399,6 +405,10 @@ popupBox._bindResizeEvt = function (container) {
 }
 
 popupBox._addBlur = function () {
+	if (GLOBAL_IS_MOBILE) {
+		return true;
+	}
+
 	jQuery("section").each(function(){
 		jQuery(this).addClass('blurred');
 	});
