@@ -276,12 +276,12 @@ popupBox.hidePopup = function (targetArray, callback) {
 				popupBox._recoverBodyScrollBar();
 
 				jQuery('body').css({
-					overflowX: 'scroll',
-                    overflowY: 'auto'
+					overflowY: 'scroll',
+                    overflowX: 'auto'
 				});
 
 				jQuery('html').css({
-					overflow: 'auto',
+					overflow: '',
 				});
 
 				callback();
