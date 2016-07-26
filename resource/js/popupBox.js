@@ -7,6 +7,7 @@ popupBox._BACKGROUND_IMAGE_HEIGHT = -1;
 popupBox._BACKGROUND_IMAGE_WIDTH = -1;
 popupBox._POPUP_IMG_URL = -1;
 popupBox._FADE_TIME = 300;
+popupBox._canClose = true;
 
 
 popupBox.activate = function () {
@@ -35,7 +36,7 @@ popupBox.showPopup = function (target, obj, callback) {
 	//set body scrollbar offset
 	popupBox._skipBodyScrollBar();
 
-
+    callback();
 
 	jQuery(function() {
 		jQuery.when(jQuery(target).hide().fadeIn(popupBox._FADE_TIME)).done(function() {
@@ -45,7 +46,6 @@ popupBox.showPopup = function (target, obj, callback) {
 
 			popupBox._addBlur();
 
-			callback();
 		});
 	});
 
@@ -60,7 +60,14 @@ popupBox.bindSmallPopup = function () {
 		popupBox._showSignupPopup();
 	});
 
+    //for remember me checkbox
+    popupBox._handleRememberMe();
+
+
+
 	popupBox.voidSmallBoxClose();
+
+    popupBox._bindSubmit();
 }
 
 popupBox.showImgBoxPopup = function (target, obj) {
@@ -92,6 +99,108 @@ popupBox.voidSmallBoxClose = function() {
 	jQuery('.mainBox').off('click').on('click', function(event) {
 		event.stopPropagation();
 	});
+}
+
+popupBox._bindSubmit = function () {
+    var btnClicked = jQuery('.btn-smallpop-submit');
+
+    btnClicked.off('click').on('click', function () {
+        popupBox._canClose = false;
+
+        var self = this;
+        var baseUrl = document.location.origin;
+        var targetForm = jQuery(self).closest('form');
+        var actionUrl = baseUrl + targetForm.attr("action");
+//console.log(actionUrl);
+        //loading notice
+        popupBox._popupMsgBanner("notice", "Loading");
+
+        //get all input
+        var uploadData = {};
+        jQuery("#" + targetForm.attr("id") + " :input").each(function(){
+            var temp = jQuery(this);
+
+            if (typeof temp.attr("name") != 'undefined') {
+                uploadData[temp.attr("name")] = temp.val();
+            }
+        });
+
+        jQuery.ajax({
+            method: 'POST',
+            url: actionUrl,
+            data: uploadData,
+            dataType: 'json',
+            success: function (data) {
+                popupBox._canClose = true;
+
+                switch (jQuery(self).id) {
+                    case "logInBtn":
+                        popupBox._login(data);
+                        break;
+                    case "signUpBtn":
+                        popupBox._signUp(data);
+                        break;
+                    default:
+
+                }
+            },
+            error: function (data) {
+                popupBox._canClose = true;
+                popupBox._popupMsgBanner("error", "Server error, please retry later.");
+            }
+        });
+    });
+}
+
+popupBox._signUp = function(data) {
+
+}
+
+popupBox._login = function(data) {
+
+}
+
+popupBox._handleRememberMe = function() {
+    jQuery("#remembermeChk").click(function() {
+        var checkbox = jQuery("input[name=rememberme]");
+        if (checkbox.prop("checked")) {
+            checkbox.prop("checked", false);
+            checkbox.val(false);
+        } else {
+            checkbox.prop("checked", true);
+            checkbox.val(true);
+        }
+    });
+}
+
+popupBox._popupMsgBanner = function(type, msg) {
+    if (typeof type == 'undefined') {
+        type = "close";
+    }
+
+    if (typeof msg == 'undefined') {
+        msg = type;
+    }
+
+    var className = "ajaxNotice";
+    var banner = jQuery("." + className);
+    banner.removeClass();
+    banner.html('');
+    banner.addClass(className);
+
+    switch (type) {
+        case "notice":
+        case "warning":
+        case "success":
+        case "error":
+            banner.html(msg);
+            banner.addClass(type);
+            banner.fadeIn(popupBox._FADE_TIME);
+            break;
+        default:
+            banner.hide();
+            break;
+    }
 }
 
 //popupBox.hideSignPopup = function (targetArray) {
@@ -187,6 +296,8 @@ popupBox.hideImgBoxPopup = function (targetArray) {
 	popupBox.hidePopup(targetArray, function() {
 		///clear
 		popupBox._clearImgdetail();
+
+        popupBox._popupMsgBanner('close');
 	});
 }
 
@@ -272,7 +383,8 @@ popupBox._displayImgdetail = function (data) {
 
 			//jQuery(container).fadeIn(200);
 			jQuery(function() {
-				jQuery(container).hide().fadeIn(popupBox._FADE_TIME);
+				//jQuery(container).hide().fadeIn(popupBox._FADE_TIME);
+				jQuery(container).hide().show();
 			});
 		}
 
@@ -339,6 +451,10 @@ popupBox.isEditPopup = function () {
 
 
 popupBox.bindCloseAction = function (func) {
+    if (!popupBox._canClose) {
+        return;
+    }
+
 	jQuery(document).keyup(function (e) {
 		if (e.keyCode === 27) {
 			func();

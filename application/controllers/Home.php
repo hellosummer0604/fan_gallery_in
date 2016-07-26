@@ -6,8 +6,8 @@ class Home extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 
-		$cssArray = ['default', 'index'];
-		$jsArray = ['jquery1.11.3.min',
+		$this->cssArray = ['default', 'index'];
+		$this->jsArray = ['jquery1.11.3.min',
 			'prototype1.7.3.0_1',
 			'jquery-color',
 			'init',
@@ -21,7 +21,7 @@ class Home extends MY_Controller {
 			'img_grid_manager',
 		];
 		
-		$this->setHeader(array('css' => $cssArray, 'js' => $jsArray));
+
 		
 		
 	}
@@ -30,15 +30,35 @@ class Home extends MY_Controller {
 	
 	public function index()
 	{
+        //must be the first line
+        $this->setHeader(array('css' => $this->cssArray, 'js' => $this->jsArray));
+
 		$this->loadView('/include/popup/imgPopup');
 		
 		$this->loadView('/include/poster');
 		
 		$data['cateList'] = $this->getCategoryLink();
-		
-		
+
 		$this->loadView('home', $data);
 	}
+
+	public function login() {
+		$res = $this->input->post();
+
+        echo json_encode($res);
+	}
+
+	public function signup() {
+
+	}
+
+	public function logout() {
+
+	}
+
+    public function retrieve() {
+
+    }
 }
 
 ?>
