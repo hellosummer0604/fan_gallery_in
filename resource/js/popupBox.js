@@ -113,7 +113,7 @@ popupBox._bindSubmit = function () {
         var actionUrl = baseUrl + targetForm.attr("action");
 //console.log(actionUrl);
         //loading notice
-        popupBox._popupMsgBanner("notice", "Loading");
+        popupBox._popupMsgBanner("notice", "Processing...");
 
         //get all input
         var uploadData = {};
@@ -146,7 +146,7 @@ popupBox._bindSubmit = function () {
             },
             error: function (data) {
                 popupBox._canClose = true;
-                popupBox._popupMsgBanner("error", "Server error, please retry later.");
+                popupBox._popupMsgBanner("error", "Server error, please retry again.");
             }
         });
     });
@@ -276,7 +276,8 @@ popupBox.hidePopup = function (targetArray, callback) {
 				popupBox._recoverBodyScrollBar();
 
 				jQuery('body').css({
-					overflow: 'auto',
+					overflowX: 'scroll',
+                    overflowY: 'auto'
 				});
 
 				jQuery('html').css({
