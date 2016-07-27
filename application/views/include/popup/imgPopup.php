@@ -20,10 +20,9 @@
         </div>
 
         <div class="popupImg" id="popImgText">
-					<span class="innerBox">
-                    <div id="imgAuthorTags" class="itag"><a href="#">North Fan</a></div>
-                    <span id="imgTags"></span>
-                </span>
+            <span class="innerBox">
+                <div id="imgAuthorTags" class="itag"><a id="authorTag" href="#">North Fan</a></div><span id="imgTags"></span>
+            </span>
             <div class="innerBox" id="imgText"></div>
 
         </div>
