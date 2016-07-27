@@ -58,8 +58,6 @@ popupBox.bindSmallPopup = function () {
     //for remember me checkbox
     popupBox._handleRememberMe();
 
-
-
 	popupBox.voidSmallBoxClose();
 
     popupBox._bindSubmit();
@@ -106,7 +104,9 @@ popupBox._bindSubmit = function () {
         var baseUrl = document.location.origin;
         var targetForm = jQuery(self).closest('form');
         var actionUrl = baseUrl + targetForm.attr("action");
-//console.log(actionUrl);
+
+        //disable button
+        jQuery(self).prop("disabled",true);
         //loading notice
         popupBox._popupMsgBanner("notice", "Processing...");
 
@@ -125,10 +125,10 @@ popupBox._bindSubmit = function () {
             url: actionUrl,
             data: uploadData,
             dataType: 'json',
+            async: 'false',
             success: function (data) {
-                popupBox._canClose = true;
 
-                switch (jQuery(self).id) {
+                switch (jQuery(self).attr('id')) {
                     case "logInBtn":
                         popupBox._login(data);
                         break;
@@ -140,18 +140,34 @@ popupBox._bindSubmit = function () {
                 }
             },
             error: function (data) {
-                popupBox._canClose = true;
                 popupBox._popupMsgBanner("error", "Server error, please retry again.");
             }
         });
+
+        popupBox._canClose = true;
+        jQuery(self).prop("disabled", false);
     });
 }
 
 popupBox._signUp = function(data) {
+    if (data.result) {
+
+    } else {
+        popupBox._popupMsgBanner("warning", data.msg);
+    }
+
 
 }
 
 popupBox._login = function(data) {
+    if (data.result) {
+
+
+        popupBox._hideSmallPopup();
+    } else {
+        popupBox._popupMsgBanner("warning", data.msg);
+    }
+
 
 }
 
@@ -213,7 +229,7 @@ popupBox.bindSwitchSignPopUp = function() {
 
 		target = jQuery('#signupBox');
 
-		popupBox.hideImgBoxPopup(['.smallPopup']);
+        popupBox._hideSmallPopup();
 
 		popupBox.showPopup(target, null, function () {});
 	});
@@ -223,7 +239,7 @@ popupBox.bindSwitchSignPopUp = function() {
 
 		target = jQuery('#loginBox');
 
-		popupBox.hideImgBoxPopup(['.smallPopup']);
+        popupBox._hideSmallPopup();
 
 		popupBox.showPopup(target, null, function () {});
 	});
@@ -234,6 +250,10 @@ popupBox.bindSwitchSignPopUp = function() {
 
 
 
+}
+
+popupBox._hideSmallPopup = function() {
+    popupBox.hideImgBoxPopup(['.smallPopup']);
 }
 
 popupBox.hidePopup = function (targetArray, callback) {
@@ -385,7 +405,6 @@ popupBox._clearImgdetail = function () {
 
 	jQuery(container).removeClass("displayBg");
 	jQuery(container).addClass("loadingBg");
-	console.log('closing');
 
 	popupBox._BACKGROUND_IMAGE_HEIGHT = -1;
 	popupBox._BACKGROUND_IMAGE_WIDTH = -1;

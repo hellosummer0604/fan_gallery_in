@@ -43,9 +43,29 @@ class Home extends MY_Controller {
 	}
 
 	public function login() {
-		$res = $this->input->post();
+		$username = trim($this->input->post('username', true));
+        $password = trim($this->input->post('password', true));
+        $rememberme = $this->input->post('rememberme', true) ? true : false;
 
-        echo json_encode($res);
+        if (empty($username)) {
+            $this->returnFailure('Need username.');
+            return;
+        }
+
+        if (empty($password)) {
+            $this->returnFailure('Need password.');
+            return;
+        }
+
+        $this->load->model('User');
+        $user = $this->User->login($username, $password);
+
+        if (!empty($user)) {
+            $this->returnSuccess("", array('username' => $user->getUsername(), 'id' => $user->getId()));
+        } else {
+            $this->returnFailure("Wrong Password.");
+        }
+
 	}
 
 	public function signup() {
