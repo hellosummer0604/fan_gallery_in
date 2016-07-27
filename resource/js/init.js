@@ -4,7 +4,6 @@ jQuery.noConflict();
 //GLOBAL VAR
 
 //scrollbar width
-SCROLLBAR_WIDTH = 0;
 GLOBAL_IS_MOBILE = false;
 
 
@@ -97,7 +96,6 @@ Init.Act_popupBox = function () {
 Init.Init_Global_Variable = function () {
 	Init._detect_mobile();
 
-	Init._getScrollBarWidth();
 }
 
 Init._detect_mobile = function () {
@@ -108,38 +106,6 @@ Init._detect_mobile = function () {
 				GLOBAL_IS_MOBILE = true;
 				//GLOBAL_IS_MOBILE = false;
 			}
-
-
-}
-
-
-Init._getScrollBarWidth = function() {
-	var offset = -1;
-
-
-	var inner = document.createElement('p');
-	inner.style.width = "100%";
-	inner.style.height = "200px";
-
-	var outer = document.createElement('div');
-	outer.style.position = "absolute";
-	outer.style.top = "0px";
-	outer.style.left = "0px";
-	outer.style.visibility = "hidden";
-	outer.style.width = "200px";
-	outer.style.height = "150px";
-	outer.style.overflow = "hidden";
-	outer.appendChild (inner);
-
-	document.body.appendChild (outer);
-	var w1 = inner.offsetWidth;
-	outer.style.overflow = 'scroll';
-	var w2 = inner.offsetWidth;
-	if (w1 == w2) w2 = outer.clientWidth;
-
-	document.body.removeChild (outer);
-
-	SCROLLBAR_WIDTH = (w1 - w2) == 0 ? 0 : (w1 - w2) + offset;
 
 
 }

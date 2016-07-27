@@ -24,21 +24,16 @@ popupBox.activate = function () {
 }
 
 popupBox.showPopup = function (target, obj, callback) {
-	//basic setting
-	jQuery('body').css({
-		overflow: 'hidden',
-	});
-
-	jQuery('html').css({
-		overflow: 'hidden',
-	});
-
-	//set body scrollbar offset
-	popupBox._skipBodyScrollBar();
 
     callback();
 
 	jQuery(function() {
+
+        //basic setting
+        jQuery('body').css({
+            overflowY: 'hidden',
+        });
+
 		jQuery.when(jQuery(target).hide().fadeIn(popupBox._FADE_TIME)).done(function() {
 			if (typeof obj == 'undefined') {
 				return;
@@ -241,25 +236,6 @@ popupBox.bindSwitchSignPopUp = function() {
 
 }
 
-//popupBox.hidePopup = function (targetArray, callback) {
-//	//basic setting
-//	targetArray.forEach(function (entry) {
-//		jQuery(entry).fadeOut(200);
-//	});
-//
-//	jQuery('body').css({
-//		overflow: 'auto',
-//	});
-//
-//	jQuery('html').css({
-//		overflow: 'auto',
-//	});
-//
-//	popupBox._removeBlur();
-//
-//	callback();
-//}
-
 popupBox.hidePopup = function (targetArray, callback) {
 
 	popupBox._removeBlur();
@@ -272,17 +248,10 @@ popupBox.hidePopup = function (targetArray, callback) {
 
 			jQuery.when(target.fadeOut(popupBox._FADE_TIME)).done(function() {
 
-				//remove body scrollbar offset
-				popupBox._recoverBodyScrollBar();
-
-				jQuery('body').css({
-					overflowY: 'scroll',
-                    overflowX: 'auto'
-				});
-
-				jQuery('html').css({
-					overflow: '',
-				});
+                jQuery('body').css({
+                    overflowY: 'scroll',
+                    overflowX: 'auto',
+                });
 
 				callback();
 
@@ -549,30 +518,3 @@ popupBox._removeBlur = function () {
 	jQuery(".headerNavBackground").removeClass('blurred');
 }
 
-//must check css for the details
-popupBox._skipBodyScrollBar = function(){
-	var percentage = popupBox._getCssWidthPercent('.textSection', 0);
-	percentage = percentage > 90 ? "100%" : "86%";
-	var offset = SCROLLBAR_WIDTH + "px";
-
-
-	jQuery('.textSection').css('width', "calc(" + percentage + " - " + offset + ")");
-
-	jQuery('.headerNav').css('width', "calc(" + percentage + " - " + offset + ")");
-
-}
-
-popupBox._recoverBodyScrollBar = function(){
-	var percentage = popupBox._getCssWidthPercent('.textSection', 0);
-	percentage = percentage > 90 ? "100%" : "86%";
-
-	jQuery('.textSection').css('width', percentage);
-	jQuery('.headerNav').css('width', percentage);
-}
-
-popupBox._getCssWidthPercent = function(targetStr, offset) {
-	var width = jQuery(targetStr).width();
-	var parentWidth = jQuery(targetStr).offsetParent().width() - offset;
-	var percent = 100*width/parentWidth;
-	return percent;
-}
