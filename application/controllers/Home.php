@@ -22,7 +22,7 @@ class Home extends MY_Controller {
 		];
 		
 
-		
+		$this->load->library('Utils');
 		
 	}
 	
@@ -58,6 +58,7 @@ class Home extends MY_Controller {
         }
 
         $this->load->model('User');
+		$userModel = new $this->User();
         $user = $this->User->login($username, $password);
 
         if (!empty($user)) {
@@ -69,7 +70,13 @@ class Home extends MY_Controller {
 	}
 
 	public function signup() {
+        $email = trim($this->input->post('email', true));
+        $username = trim($this->input->post('username', true));
+        $password = trim($this->input->post('password', true));
+        $passwordConfirm = trim($this->input->post('password', true));
 
+//		$memcache = new Memcache ();
+		$this->returnFailure("Wrong Password.");
 	}
 
 	public function logout() {

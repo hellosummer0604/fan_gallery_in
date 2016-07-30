@@ -53,7 +53,7 @@ class MY_Controller extends CI_Controller {
 		return $headJS;
 	}
 	
-	protected function loadView($view, $data) {
+	protected function loadView($view, $data = null) {
 		
 		
 		$this->load->view($view, $data);

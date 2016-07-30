@@ -1,5 +1,7 @@
 <?php
-extract($data);
+if (!empty($data)) {
+	extract($data);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

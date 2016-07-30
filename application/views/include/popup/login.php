@@ -44,6 +44,8 @@
                         <li>Forgot password? <a href="#">Retrieve</a></li>
                     </ul>
 
+					<div class="captcha" id="RecaptchaField1"></div>
+
                     <button id="logInBtn" class="btn-submit btn-smallpop-submit" type="button">Sign in</button>
 
                     <button class="btn-reset btn-smallpop-cancel" type="reset">Cancel</button>
@@ -62,7 +64,7 @@
 
 
     <div class="baseLayer">
-        <form name="registerForm" id="registerForm" action="signup" method="post">
+        <form name="registerForm" id="registerForm" action="/signup" method="post">
             <div class="mainBox">
                 <div class="colorBanner">
                     <table cellpadding="0" cellspacing="0">
@@ -90,12 +92,13 @@
                     <input name = "password" type="password" maxlength="36" placeholder="insert your password">
                     <label>#Confirm Password:</label>
                     <input name = "passwordConfirm" type="password" maxlength="36" placeholder="confirm your password">
-
                 </div>
                 <div class="registerFooter">
                     <ul>
                         <li>Have an Account? <a href="switchtosignup">Sign in</a></li>
                     </ul>
+
+					<div class="captcha" id="RecaptchaField2"></div>
 
                     <button id="signUpBtn" class="btn-submit btn-smallpop-submit" type="button">Sign up</button>
                     <button class="btn-reset btn-smallpop-cancel" type="reset">Cancel</button>

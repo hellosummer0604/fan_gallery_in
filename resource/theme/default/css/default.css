@@ -404,6 +404,12 @@ div.error {
 	padding-bottom: 30px;
 }
 
+.smallPopup .captcha {
+    background-color: #00CC00;
+    margin-left: 30px;
+    width: calc(100% - 30px);
+}
+
 .registerFooter ul{
 	color: #666666;
 	list-style-type: none;

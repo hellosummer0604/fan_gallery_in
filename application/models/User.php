@@ -25,9 +25,10 @@ class User extends MY_Model
 
     }
 
-    public function loadByPassword($username, $password)
+	//$identifier can be email or username
+    public function loadByPassword($identifier = null, $password = null)
     {
-
+		return true;
     }
 
     public function login($username, $password)

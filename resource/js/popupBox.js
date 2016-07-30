@@ -76,7 +76,7 @@ popupBox._showLoginPopup = function () {
 	var target = jQuery('#loginBox');
 	popupBox.showPopup(target, null, function () {
 
-	});
+    });
 
 }
 
