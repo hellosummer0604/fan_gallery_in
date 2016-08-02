@@ -27,9 +27,9 @@
                 </div>
                 <div class="registerFormBox">
                     <label>#Username/Email:</label>
-                    <input name = "username" type="text" maxlength="36" placeholder="insert your email/username">
+                    <input name = "username" type="text" maxlength="30" placeholder="insert your email/username">
                     <label>#Password:</label>
-                    <input name = "password" type="password" maxlength="36" placeholder="insert your password">
+                    <input name = "password" type="password" maxlength="30" placeholder="insert your password">
 
                     <div id="rememberme">
                         <input type="checkbox" id="remembermeChk">
@@ -85,13 +85,13 @@
                 <div class="registerFormBox">
 
                     <label>#Email:</label>
-                    <input name = "email" type="text" maxlength="36" placeholder="insert your email">
+                    <input name = "email" type="text" maxlength="30" placeholder="insert your email">
                     <label>#Username:</label>
-                    <input name = "username" type="text" maxlength="36" placeholder="username should ...">
+                    <input name = "username" type="text" maxlength="30" placeholder="username should ...">
                     <label>#Password:</label>
-                    <input name = "password" type="password" maxlength="36" placeholder="insert your password">
+                    <input name = "password" type="password" maxlength="30" placeholder="insert your password">
                     <label>#Confirm Password:</label>
-                    <input name = "passwordConfirm" type="password" maxlength="36" placeholder="confirm your password">
+                    <input name = "passwordConfirm" type="password" maxlength="30" placeholder="confirm your password">
                 </div>
                 <div class="registerFooter">
                     <ul>

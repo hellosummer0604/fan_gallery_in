@@ -1,6 +1,3 @@
-
-
-
 <!--img category nav start-->
 <section class="imgNavContainer imgNavContainerBackground">
 
