@@ -6,8 +6,15 @@ popupBox._resizeEvt;
 popupBox._BACKGROUND_IMAGE_HEIGHT = -1;
 popupBox._BACKGROUND_IMAGE_WIDTH = -1;
 popupBox._POPUP_IMG_URL = -1;
+popupBox._FADE_TIME = 300;
+popupBox._canClose = true;
+
 
 popupBox.activate = function () {
+	if (GLOBAL_IS_MOBILE) {
+		popupBox._FADE_TIME = 0;
+	}
+
 	popupBox.bindSmallPopup();
 
 
@@ -17,29 +24,23 @@ popupBox.activate = function () {
 }
 
 popupBox.showPopup = function (target, obj, callback) {
-	//basic setting
-	jQuery('body').css({
-		overflow: 'hidden',
-	});
 
-	jQuery('html').css({
-		overflow: 'hidden',
-	});
-
-	//set body scrollbar offset
-	popupBox._skipBodyScrollBar();
-
-
+    callback();
 
 	jQuery(function() {
-		jQuery.when(jQuery(target).hide().fadeIn(300)).done(function() {
+
+        //basic setting
+        jQuery('body').css({
+            overflowY: 'hidden',
+        });
+
+		jQuery.when(jQuery(target).hide().fadeIn(popupBox._FADE_TIME)).done(function() {
 			if (typeof obj == 'undefined') {
 				return;
 			}
 
 			popupBox._addBlur();
 
-			callback();
 		});
 	});
 
@@ -54,7 +55,12 @@ popupBox.bindSmallPopup = function () {
 		popupBox._showSignupPopup();
 	});
 
+    //for remember me checkbox
+    popupBox._handleRememberMe();
+
 	popupBox.voidSmallBoxClose();
+
+    popupBox._bindSubmit();
 }
 
 popupBox.showImgBoxPopup = function (target, obj) {
@@ -70,7 +76,7 @@ popupBox._showLoginPopup = function () {
 	var target = jQuery('#loginBox');
 	popupBox.showPopup(target, null, function () {
 
-	});
+    });
 
 }
 
@@ -88,6 +94,126 @@ popupBox.voidSmallBoxClose = function() {
 	});
 }
 
+popupBox._bindSubmit = function () {
+    var btnClicked = jQuery('.btn-smallpop-submit');
+
+    btnClicked.off('click').on('click', function () {
+        popupBox._canClose = false;
+
+        var self = this;
+        var baseUrl = document.location.origin;
+        var targetForm = jQuery(self).closest('form');
+        var actionUrl = baseUrl + targetForm.attr("action");
+
+        //disable button
+        jQuery(self).prop("disabled",true);
+        //loading notice
+        popupBox._popupMsgBanner("notice", "Processing...");
+
+        //get all input
+        var uploadData = {};
+        jQuery("#" + targetForm.attr("id") + " :input").each(function(){
+            var temp = jQuery(this);
+
+            if (typeof temp.attr("name") != 'undefined') {
+                uploadData[temp.attr("name")] = temp.val();
+            }
+        });
+
+        jQuery.ajax({
+            method: 'POST',
+            url: actionUrl,
+            data: uploadData,
+            dataType: 'json',
+            async: 'false',
+            success: function (data) {
+
+                switch (jQuery(self).attr('id')) {
+                    case "logInBtn":
+                        popupBox._login(data);
+                        break;
+                    case "signUpBtn":
+                        popupBox._signUp(data);
+                        break;
+                    default:
+
+                }
+            },
+            error: function (data) {
+                popupBox._popupMsgBanner("error", "Server error, please retry again.");
+            }
+        });
+
+        popupBox._canClose = true;
+        jQuery(self).prop("disabled", false);
+    });
+}
+
+popupBox._signUp = function(data) {
+    if (data.result) {
+
+    } else {
+        popupBox._popupMsgBanner("warning", data.msg);
+    }
+
+
+}
+
+popupBox._login = function(data) {
+    if (data.result) {
+
+
+        popupBox._hideSmallPopup();
+    } else {
+        popupBox._popupMsgBanner("warning", data.msg);
+    }
+
+
+}
+
+popupBox._handleRememberMe = function() {
+    jQuery("#remembermeChk").click(function() {
+        var checkbox = jQuery("input[name=rememberme]");
+        if (checkbox.prop("checked")) {
+            checkbox.prop("checked", false);
+            checkbox.val(false);
+        } else {
+            checkbox.prop("checked", true);
+            checkbox.val(true);
+        }
+    });
+}
+
+popupBox._popupMsgBanner = function(type, msg) {
+    if (typeof type == 'undefined') {
+        type = "close";
+    }
+
+    if (typeof msg == 'undefined') {
+        msg = type;
+    }
+
+    var className = "ajaxNotice";
+    var banner = jQuery("." + className);
+    banner.removeClass();
+    banner.html('');
+    banner.addClass(className);
+
+    switch (type) {
+        case "notice":
+        case "warning":
+        case "success":
+        case "error":
+            banner.html(msg);
+            banner.addClass(type);
+            banner.fadeIn(popupBox._FADE_TIME);
+            break;
+        default:
+            banner.hide();
+            break;
+    }
+}
+
 //popupBox.hideSignPopup = function (targetArray) {
 //	popupBox.hidePopup(targetArray, function() {
 //		///clear
@@ -103,7 +229,7 @@ popupBox.bindSwitchSignPopUp = function() {
 
 		target = jQuery('#signupBox');
 
-		popupBox.hideImgBoxPopup(['.smallPopup']);
+        popupBox._hideSmallPopup();
 
 		popupBox.showPopup(target, null, function () {});
 	});
@@ -113,7 +239,7 @@ popupBox.bindSwitchSignPopUp = function() {
 
 		target = jQuery('#loginBox');
 
-		popupBox.hideImgBoxPopup(['.smallPopup']);
+        popupBox._hideSmallPopup();
 
 		popupBox.showPopup(target, null, function () {});
 	});
@@ -126,24 +252,9 @@ popupBox.bindSwitchSignPopUp = function() {
 
 }
 
-//popupBox.hidePopup = function (targetArray, callback) {
-//	//basic setting
-//	targetArray.forEach(function (entry) {
-//		jQuery(entry).fadeOut(200);
-//	});
-//
-//	jQuery('body').css({
-//		overflow: 'auto',
-//	});
-//
-//	jQuery('html').css({
-//		overflow: 'auto',
-//	});
-//
-//	popupBox._removeBlur();
-//
-//	callback();
-//}
+popupBox._hideSmallPopup = function() {
+    popupBox.hideImgBoxPopup(['.smallPopup']);
+}
 
 popupBox.hidePopup = function (targetArray, callback) {
 
@@ -155,18 +266,12 @@ popupBox.hidePopup = function (targetArray, callback) {
 		if (target.is(":visible")) {
 
 
-			jQuery.when(target.fadeOut(300)).done(function() {
+			jQuery.when(target.fadeOut(popupBox._FADE_TIME)).done(function() {
 
-				//remove body scrollbar offset
-				popupBox._recoverBodyScrollBar();
-
-				jQuery('body').css({
-					overflow: 'auto',
-				});
-
-				jQuery('html').css({
-					overflow: 'auto',
-				});
+                jQuery('body').css({
+                    overflowY: 'scroll',
+                    overflowX: 'auto',
+                });
 
 				callback();
 
@@ -181,6 +286,8 @@ popupBox.hideImgBoxPopup = function (targetArray) {
 	popupBox.hidePopup(targetArray, function() {
 		///clear
 		popupBox._clearImgdetail();
+
+        popupBox._popupMsgBanner('close');
 	});
 }
 
@@ -266,7 +373,8 @@ popupBox._displayImgdetail = function (data) {
 
 			//jQuery(container).fadeIn(200);
 			jQuery(function() {
-				jQuery(container).hide().fadeIn(300);
+				//jQuery(container).hide().fadeIn(popupBox._FADE_TIME);
+				jQuery(container).hide().show();
 			});
 		}
 
@@ -297,7 +405,6 @@ popupBox._clearImgdetail = function () {
 
 	jQuery(container).removeClass("displayBg");
 	jQuery(container).addClass("loadingBg");
-	console.log('closing');
 
 	popupBox._BACKGROUND_IMAGE_HEIGHT = -1;
 	popupBox._BACKGROUND_IMAGE_WIDTH = -1;
@@ -333,6 +440,10 @@ popupBox.isEditPopup = function () {
 
 
 popupBox.bindCloseAction = function (func) {
+    if (!popupBox._canClose) {
+        return;
+    }
+
 	jQuery(document).keyup(function (e) {
 		if (e.keyCode === 27) {
 			func();
@@ -399,6 +510,10 @@ popupBox._bindResizeEvt = function (container) {
 }
 
 popupBox._addBlur = function () {
+	if (GLOBAL_IS_MOBILE) {
+		return true;
+	}
+
 	jQuery("section").each(function(){
 		jQuery(this).addClass('blurred');
 	});
@@ -422,30 +537,3 @@ popupBox._removeBlur = function () {
 	jQuery(".headerNavBackground").removeClass('blurred');
 }
 
-//must check css for the details
-popupBox._skipBodyScrollBar = function(){
-	var percentage = popupBox._getCssWidthPercent('.textSection', 0);
-	percentage = percentage > 90 ? "100%" : "86%";
-	var offset = SCROLLBAR_WIDTH + "px";
-
-
-	jQuery('.textSection').css('width', "calc(" + percentage + " - " + offset + ")");
-
-	jQuery('.headerNav').css('width', "calc(" + percentage + " - " + offset + ")");
-
-}
-
-popupBox._recoverBodyScrollBar = function(){
-	var percentage = popupBox._getCssWidthPercent('.textSection', 0);
-	percentage = percentage > 90 ? "100%" : "86%";
-
-	jQuery('.textSection').css('width', percentage);
-	jQuery('.headerNav').css('width', percentage);
-}
-
-popupBox._getCssWidthPercent = function(targetStr, offset) {
-	var width = jQuery(targetStr).width();
-	var parentWidth = jQuery(targetStr).offsetParent().width() - offset;
-	var percent = 100*width/parentWidth;
-	return percent;
-}

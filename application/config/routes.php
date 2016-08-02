@@ -53,6 +53,13 @@ $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+
+//for signup, login, logout, retrieve
+$route['signup'] = 'Home/signup';
+$route['login'] = 'Home/login';
+$route['logout'] = 'Home/logout';
+$route['retrieve'] = 'Home/retrieve';
+
 //for current user
 $route['m/(:any)'] = 'Currentuser/$1';
 $route['m/(:any)/(:any)'] = 'Currentuser/$1/$2';

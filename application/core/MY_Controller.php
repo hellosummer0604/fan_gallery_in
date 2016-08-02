@@ -53,7 +53,7 @@ class MY_Controller extends CI_Controller {
 		return $headJS;
 	}
 	
-	protected function loadView($view, $data) {
+	protected function loadView($view, $data = null) {
 		
 		
 		$this->load->view($view, $data);
@@ -104,5 +104,27 @@ class MY_Controller extends CI_Controller {
 			return false;
 		}
 	}
+
+    public function returnSuccess($text = null, $data = null) {
+        $response = array();
+
+        $response['result'] = true;
+        $response['msg'] = empty($text) ? "Success." : $text;
+        $response['data'] = $data;
+
+        echo json_encode($response);
+    }
+
+    public function returnFailure($text = null, $data = null) {
+        $response = array();
+
+        $response['result'] = false;
+        $response['msg'] = empty($text) ? "Failed." : $text;
+        $response['data'] = $data;
+
+        echo json_encode($response);
+    }
+
+
 }
 ?>

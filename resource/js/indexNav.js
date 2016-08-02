@@ -93,7 +93,7 @@ headNav._adjustOpacity = function () {
 
 headNav._getTrack = function () {
 	var prev = jQuery(".imgNavContainerBackground").prev();
-	console.log(prev);
+	//console.log(prev);
 	var prevTop = prev.offset().top;
 	var prevHeight = prev.outerHeight(true);
 
@@ -249,7 +249,7 @@ headNav._bindResizeEvt = function () {
 			obj._resizeEvt = setTimeout(function () {
 				obj.track = obj._getTrack();
 				
-				console.log(obj.track);
+				//console.log(obj.track);
 
 				obj._setLinkList();
 
