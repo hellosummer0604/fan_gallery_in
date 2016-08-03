@@ -112,4 +112,8 @@ class Utils {
 	public function removeCookie() {
 		//todo
 	}
+
+	public function addLoginSession($user) {
+
+	}
 }

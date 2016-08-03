@@ -96,3 +96,5 @@ define('IMG_SECTION_SIZE', 24);
 define('IMG_SECTION_LAST_SIZE', 20);
 
 define('SESSION_USER_ID', 'userId');
+
+define('TYPE_USER', 1);

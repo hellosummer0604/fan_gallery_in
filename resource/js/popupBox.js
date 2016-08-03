@@ -214,6 +214,12 @@ popupBox._popupMsgBanner = function(type, msg) {
     }
 }
 
+//clear all input in smallbox
+popupBox._clearInput = function () {
+    jQuery(".smallPopup input:text, .smallPopup input:password").each(function(){
+        jQuery(this).val("");
+    });
+}
 //popupBox.hideSignPopup = function (targetArray) {
 //	popupBox.hidePopup(targetArray, function() {
 //		///clear
@@ -286,6 +292,7 @@ popupBox.hideImgBoxPopup = function (targetArray) {
 	popupBox.hidePopup(targetArray, function() {
 		///clear
 		popupBox._clearImgdetail();
+        popupBox._clearInput();
 
         popupBox._popupMsgBanner('close');
 	});

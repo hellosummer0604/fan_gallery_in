@@ -122,8 +122,23 @@ class Home extends MY_Controller {
 
 		if (!empty($error)) {
 			$this->returnFailure($error);
+			return;
+		}
+
+		$data = array(
+			'username' => $username,
+			'email' => $email,
+			'password' => $password
+		);
+
+		if(!$this->User->signup($data)) {
+			$error = "Server Error, please try later.";
+		}
+
+		if (!empty($error)) {
+			$this->returnFailure($error);
 		} else {
-			$this->returnSuccess();
+			$this->returnSuccess('haha');
 		}
 
 	}
