@@ -563,17 +563,27 @@ div.error {
 	z-index: 500;
 }
 
+
 .bigLogo {
 	margin: 0px 20px 0px 20px;
 }
 
+.headerNav .userBanner {
+    background-color: rgba(0,0,0, 0.5);
+    display: none;
+    float: right;
+}
+
+.headerNav #currentUser {
+    display: block;
+}
+
 .loginBtn, .signupBtn {
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    padding-left: 10px;
+    padding-right: 10px;
 	cursor: pointer;
 	float: right;
-}
-.loginBtn, .signupBtn {
-	padding-left: 15px;
-	padding-right: 15px;
 }
 
 .loginBtn:hover {
@@ -586,7 +596,7 @@ div.error {
 
 @media only screen and (max-width: 400px) {
 	.headerNav span {
-		margin: 0px 10px 0px 10px;
+		margin: 0px 0px 0px 5px;
 	}
 
 }
