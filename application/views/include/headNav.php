@@ -10,6 +10,6 @@
 	</span>
 	<span class="userBanner"  id="currentUser">
     	<span class="font_size_14 signupBtn" id="upload">Log out</span>
-    	<span class="font_size_14 loginBtn">Hello Summery</span>
+    	<span class="font_size_14 loginBtn">My account</span>
 	</span>
 </nav>

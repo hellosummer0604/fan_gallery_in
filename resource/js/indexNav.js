@@ -50,12 +50,6 @@ headNav._adjustOpacity = function () {
 		jQuery(".headerNavBackground").css({
 			"opacity": (opacity > 0.9 ? 0.9 : opacity)
 		});
-
-        //var panelOpacity = opacity < 0.3 ? (0.5 * (1 - opacity)) : 0;
-        //
-        //jQuery(".userBanner").css({
-        //    "background-color": "rgba(0,0,0, " + panelOpacity + ")"
-        //});
 	}
 }
 
