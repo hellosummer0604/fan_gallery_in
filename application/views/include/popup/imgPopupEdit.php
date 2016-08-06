@@ -21,8 +21,7 @@
 
             <div class="popupImg" id="popImgText">
                 <span class="innerBox">
-                    <div id="imgAuthorTags" class="buttonDiv itag"><a href="#">North Fan</a></div>
-                    <span id="imgTags" class="buttonDiv"></span>
+                    <div id="imgAuthorTags" class="buttonDiv itag"><a href="#">North Fan</a></div><span id="imgTags" class="buttonDiv"></span>
                 </span>
                 <br>
                 <span class="innerBox" id="imgTagNameAutoComplete">
@@ -73,4 +72,10 @@
 
 </form>
 
-<?php $this->load->view('include/headNav')?>
+<div id="headContainer">
+	<?php
+	$flag = ONLINE_FLAG;
+	$data[ONLINE_FLAG] = $$flag;
+	$this->load->view('include/headNav', $data);
+	?>
+</div>

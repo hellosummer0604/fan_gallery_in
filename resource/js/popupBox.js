@@ -149,27 +149,61 @@ popupBox._bindSubmit = function () {
     });
 }
 
-popupBox._signUp = function(data) {
-    if (data.result) {
+//update the nav bar after successful login/signup
+popupBox._updateNav = function() {
+    var baseUrl = document.location.origin;
+    var actionUrl = baseUrl + "/head";
 
-    } else {
-        popupBox._popupMsgBanner("warning", data.msg);
-    }
+    jQuery.ajax({
+        method: 'POST',
+        url: actionUrl,
+        dataType: 'html',
+        async: 'false',
+        success: function (data) {
+            try {
+                data = data.trim();
+                if (data.substring(0, 33) != '<div class="headerNavBackground">') {//need rewrite this validate function
+                    location.reload();
+                }
 
-
+                var opacityVal = jQuery("#headContainer .headerNavBackground").css("opacity");
+                jQuery("#headContainer").html(data);
+                jQuery("#headContainer .headerNavBackground").css({
+                    opacity: opacityVal
+                });
+            }
+            catch(err) {
+                console.error(JSON.stringify(err));
+                console.error(JSON.stringify(data));
+                location.reload();
+            }
+        },
+        error: function (data) {
+            console.error(JSON.stringify(data));
+            location.reload();
+        }
+    });
 }
 
-popupBox._login = function(data) {
+popupBox._signUp = function(data) {
     if (data.result) {
-
-
+        popupBox._updateNav();
         popupBox._hideSmallPopup();
     } else {
         popupBox._popupMsgBanner("warning", data.msg);
     }
-
-
 }
+
+popupBox._login = function(data) {
+    if (data.result) {
+        popupBox._updateNav();
+        popupBox._hideSmallPopup();
+    } else {
+        popupBox._popupMsgBanner("warning", data.msg);
+    }
+}
+
+
 
 popupBox._handleRememberMe = function() {
     jQuery("#remembermeChk").click(function() {
@@ -419,7 +453,7 @@ popupBox._clearImgdetail = function () {
 
 	//CLEAR TEXT HERE
 	
-	if (jQuery('#imgTitle > input').length > 0)  {
+	if (popupBox.isEditPopup())  {
 		jQuery('#imgTitle >input').val('');
 	} else {
 		jQuery('.baseLayer > #imgTitle').html("");
@@ -427,8 +461,9 @@ popupBox._clearImgdetail = function () {
 	
 	jQuery('#imgBox > #authorBox').html("");
 	
-	if (jQuery('#imgText  textarea').length > 0) {
-		jQuery('#imgText > textarea').css('overflow', 'hidden').autogrow();
+	if (popupBox.isEditPopup()) {
+		jQuery('#imgText > textarea').css('overflow', 'hidden');
+        jQuery('#imgText > textarea').css('height', '220px').autogrow();
 		jQuery('#imgText > textarea').val('');
 	} else {
 		jQuery('#popImgText > #imgText').html("");
