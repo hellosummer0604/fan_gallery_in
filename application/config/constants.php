@@ -74,6 +74,10 @@ define('SHOW_DEBUG_BACKTRACE', TRUE);
 |       http://tldp.org/LDP/abs/html/exitcodes.html
 |
 */
+define('WEN_INDEX', 'http://north.gallery/');
+define('WEN_LOGIN', 'http://north.gallery/login');
+define('WEN_NO_REDIRECT', 'none');
+
 define('EXIT_SUCCESS', 0); // no errors
 define('EXIT_ERROR', 1); // generic error
 define('EXIT_CONFIG', 3); // configuration error
@@ -84,3 +88,14 @@ define('EXIT_USER_INPUT', 7); // invalid user input
 define('EXIT_DATABASE', 8); // database error
 define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+
+define('IMG_SECTION_PAGE_NO', 1);
+define('IMG_SECTION_PAGE_SIZE', 150);
+define('IMG_SECTION_SIZE', 24);
+define('IMG_SECTION_LAST_SIZE', 20);
+
+define('SESSION_USER', 'onlineUser');
+define('ONLINE_FLAG', 'xxIsOnline');
+
+define('TYPE_USER', 1);

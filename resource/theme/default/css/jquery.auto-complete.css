@@ -1,0 +1,32 @@
+
+
+/*customize css start*/
+#imgTagNameAutoComplete .tt-dataset {
+    max-height: 180px;
+    height: auto;
+    min-width: 223px;
+    margin-left: 5px;
+    /*padding:6px;*/
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 2px #333;
+    border:1px solid #eee;
+    border-radius: 2px;
+}
+
+#imgTagNameAutoComplete .tt-hint {
+    color: #aaa;
+}
+
+#imgTagNameAutoComplete .tt-highlight {
+    color: rgb(0, 171, 230);
+}
+
+#imgTagNameAutoComplete .tt-selectable {
+    padding:1px 13px 1px 13px;
+}
+
+#imgTagNameAutoComplete .tt-selectable:hover{
+    background-color: #f7f7f7;
+}

@@ -1,0 +1,110 @@
+1. EXIF
+	需要存入数据库的信息
+	- FileName
+	- DateTime
+	- ExifImageWidth
+	- ExifImageLength
+
+	需要重点提取的信息
+	- MimeType
+	- Make
+	- Model
+	- ApertureValue
+	- FocalLength
+	- ExposureTime
+	- ISOSpeedRatings
+	
+
+	
+	- Example
+
+		{"data":{  
+			  "FileName":"L1001642.jpg",
+			  "FileDateTime":1453004294,
+			  "FileSize":119017,
+			  "FileType":2,
+			  "MimeType":"image/jpeg",
+			  "SectionsFound":"ANY_TAG, IFD0, EXIF, GPS",
+			  "COMPUTED":{  
+				 "html":"width=\"800\" height=\"222\"",
+				 "Height":222,
+				 "Width":800,
+				 "IsColor":1,
+				 "ByteOrderMotorola":1,
+				 "CCDWidth":"4mm",
+				 "ApertureFNumber":"f/16.0",
+				 "Copyright":"NORTH PHOTOGRAPHY"
+			  },
+			  "Make":"Leica Camera AG",
+			  "Model":"LEICA M (Typ 240)",
+			  "Orientation":1,
+			  "XResolution":"300/1",
+			  "YResolution":"300/1",
+			  "ResolutionUnit":2,
+			  "Software":"Adobe Photoshop CC (Windows)",
+			  "DateTime":"2015:12:19 20:32:09",
+			  "Artist":"NORTH FAN",
+			  "Copyright":"NORTH PHOTOGRAPHY",
+			  "Exif_IFD_Pointer":286,
+			  "GPS_IFD_Pointer":982,
+			  "ExposureTime":"1/90",
+			  "FNumber":"16/1",
+			  "ExposureProgram":1,
+			  "ISOSpeedRatings":100,
+			  "ExifVersion":"0230",
+			  "DateTimeOriginal":"2015:11:05 17:42:20",
+			  "DateTimeDigitized":"2015:11:05 17:42:20",
+			  "ShutterSpeedValue":"6375/982",
+			  "ApertureValue":"8/1",
+			  "ExposureBiasValue":"0/1",
+			  "MaxApertureValue":"16777215/1",
+			  "MeteringMode":4,
+			  "LightSource":0,
+			  "Flash":0,
+			  "FocalLength":"50/1",
+			  "ColorSpace":65535,
+			  "ExifImageWidth":800,
+			  "ExifImageLength":222,
+			  "FocalPlaneXResolution":"4960/3",
+			  "FocalPlaneYResolution":"4960/3",
+			  "FocalPlaneResolutionUnit":3,
+			  "FileSource":"\u0003",
+			  "SceneType":"\u0001",
+			  "CustomRendered":0,
+			  "ExposureMode":1,
+			  "WhiteBalance":0,
+			  "DigitalZoomRatio":"0/1",
+			  "SceneCaptureType":0,
+			  "Contrast":2,
+			  "Saturation":2,
+			  "Sharpness":2,
+			  "ImageUniqueID":"00000000000000000000000001780763",
+			  "UndefinedTag:0xA431":"4809327",
+			  "UndefinedTag:0xA432":[  
+				 "50/1",
+				 "50/1",
+				 "0/1",
+				 "16/1"
+			  ],
+			  "UndefinedTag:0xA433":"Leica Camera AG",
+			  "UndefinedTag:0xA434":"Noctilux-M 1:0.95/50 ASPH.",
+			  "UndefinedTag:0xA435":"-------",
+			  "GPSVersion":"\u0002\u0002\u0000\u0000",
+			  "GPSAltitudeRef":"\u0000",
+			  "GPSAltitude":"0/1",
+			  "GPSTimeStamp":[  
+				 "0/1",
+				 "0/1",
+				 "0/1"
+			  ],
+			  "GPSStatus":"V",
+			  "GPSDOP":"0/1",
+			  "GPSSpeed":"0/1",
+			  "GPSTrack":"0/1",
+			  "GPSDateStamp":"0000:00:00"
+		   }
+		}
+
+
+//下拉+自己输入
+http://labs.abeautifulsite.net/jquery-dropdown/#2
