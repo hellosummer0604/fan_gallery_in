@@ -6,10 +6,17 @@ class Home extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 
-		$this->cssArray = ['default', 'index'];
-		$this->jsArray = ['jquery1.11.3.min',
+		$this->cssArray = [
+			'default',
+			'index',
+			'jquery.dropdown',
+		];
+
+		$this->jsArray = [
+			'jquery1.11.3.min',
 			'prototype1.7.3.0_1',
 			'jquery-color',
+			'lib/jquery.dropdown',
 			'init',
 			'indexNav',
 			'poster_manager',
@@ -23,7 +30,11 @@ class Home extends MY_Controller {
 
 		$this->load->model('User');
 	}
-	
+
+	public function headNav() {
+		$data[ONLINE_FLAG] = $this->isOnline() ? true : false;
+		$this->load->view('include/headNav', $data);
+	}
 	
 	
 	public function index()
@@ -31,9 +42,9 @@ class Home extends MY_Controller {
         //must be the first line
         $this->setHeader(array('css' => $this->cssArray, 'js' => $this->jsArray));
 
-		$this->loadView('/include/popup/imgPopup');
-		
-		$this->loadView('/include/poster');
+		$this->loadImgPopView();
+
+		$this->loadPosterView();
 		
 		$data['cateList'] = $this->getCategoryLink();
 
@@ -143,15 +154,14 @@ class Home extends MY_Controller {
 
 	}
 
-	public function logout() {
-		$this->utils->removeCookie();
 
-		//todo
-	}
+
 
     public function retrieve() {
 
     }
+
+
 }
 
 ?>

@@ -59,6 +59,7 @@ $route['signup'] = 'Home/signup';
 $route['login'] = 'Home/login';
 $route['logout'] = 'Home/logout';
 $route['retrieve'] = 'Home/retrieve';
+$route['head'] = 'Home/headNav';
 
 //for current user
 $route['m/(:any)'] = 'Currentuser/$1';

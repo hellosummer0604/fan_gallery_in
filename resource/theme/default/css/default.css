@@ -563,30 +563,45 @@ div.error {
 	z-index: 500;
 }
 
+
 .bigLogo {
 	margin: 0px 20px 0px 20px;
 }
 
+.headerNav .userBanner {
+    float: right;
+}
+
+.headerNav #currentUser {
+
+}
+
 .loginBtn, .signupBtn {
+    max-width: 120px;
+    padding-left: 12px;
+    padding-right: 12px;
+    overflow: hidden;
 	cursor: pointer;
 	float: right;
-}
-.loginBtn, .signupBtn {
-	padding-left: 15px;
-	padding-right: 15px;
+    /*text-shadow: -1px 0 #333, 0 1px #333, 1px 0 #333, 0 -1px #333;*/
 }
 
-.loginBtn:hover {
-	color: rgb(0, 171, 230);
+.loginBtn {
+    background-color: rgba(0, 171, 230, 0.9);
 }
+
+/*.signupBtn {*/
+    /*background-color: rgba(255, 51, 153, 0.9);*/
+/*}*/
 
 .signupBtn:hover{
-	color: rgb(255, 51, 153);
+	background-color: rgba(255, 51, 153, 0.9);
+    text-shadow: none;
 }
 
 @media only screen and (max-width: 400px) {
 	.headerNav span {
-		margin: 0px 10px 0px 10px;
+		margin: 0px 0px 0px 5px;
 	}
 
 }

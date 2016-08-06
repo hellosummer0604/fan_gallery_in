@@ -25,13 +25,14 @@ class Infocenter extends MY_Controller {
 			'lib/typeahead.bundle.min'
 		];
 
-		$this->setHeader(array('css' => $cssArray, 'js' => $jsArray));
 	}
 
 	public function index() {
-		$this->loadView('/include/popup/imgPopupEdit');
+		$this->setHeader(array('css' => $this->cssArray, 'js' => $this->jsArray));
+
+		$this->loadImgPopEditView();
 		
-		$this->loadView('/include/poster_empty');
+		$this->loadPosterView(false);
 		
 		$data['cateList'] = $res = ['Repository' => 'repo_id'];
 		

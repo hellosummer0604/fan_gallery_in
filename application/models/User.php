@@ -171,6 +171,7 @@ class User extends MY_Model
 		$user = $this->loadByPassword($identifier, $password);
 
 		if (!empty($user)) {
+			$this->utils->addLoginSession($user);
 			return $user;
 		} else {
 			return null;

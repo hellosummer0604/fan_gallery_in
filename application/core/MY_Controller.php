@@ -76,33 +76,32 @@ class MY_Controller extends CI_Controller {
 	}
 	
 	public function needLogin($destination = WEN_LOGIN) {
-		if(!$this->isLogin() && $destination != WEN_NO_REDIRECT) {
+		if(!$this->isOnline() && $destination != WEN_NO_REDIRECT) {
 //			redirect($destination);
 		}
 	}
 
-	public function isLogin() {
-		$sessUserId = $this->session->userdata(SESSION_USER_ID);
-
-		if(empty($sessUserId)) {
-			return false;
-		} else{
-			return $sessUserId;
-		}
+	public function isOnline() {
+		return $this->utils->isOnline();
 	}
+
 	//check if this userid is the current/login user
 	public function isActiveUser($userId = null) {
 		if(empty($userId)) {
 			return false;
 		}
 
-		$loggedUserId = $this->session->userdata(SESSION_USER_ID);
+		$sessionUser = $this->isOnline();
 
-		if(!empty($loggedUserId) && $loggedUserId == $userId) {
+		if ($sessionUser && $sessionUser->getId() == $userId) {
 			return true;
-		} else {
-			return false;
 		}
+
+		return false;
+	}
+
+	public function logout() {
+		$this->utils->removeAllSession();
 	}
 
     public function returnSuccess($text = null, $data = null) {
@@ -125,6 +124,22 @@ class MY_Controller extends CI_Controller {
         echo json_encode($response);
     }
 
+	public function loadImgPopView() {
+		$data[ONLINE_FLAG] = $this->isOnline() ? true : false;
+		$this->loadView('/include/popup/imgPopup', $data);
+	}
 
+	public function loadImgPopEditView() {
+		$data[ONLINE_FLAG] = $this->isOnline() ? true : false;
+		$this->loadView('/include/popup/imgPopupEdit', $data);
+	}
+
+	public function loadPosterView($enable = true) {
+		if ($enable) {
+			$this->loadView('/include/poster');
+		} else {
+			$this->loadView('/include/poster_empty');
+		}
+	}
 }
 ?>

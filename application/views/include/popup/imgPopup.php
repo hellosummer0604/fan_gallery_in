@@ -57,5 +57,11 @@
 <!--		<div id="generalPopup">
 
         </div>-->
-<?php $this->load->view('include/headNav')?>
+<div id="headContainer">
+	<?php
+		$flag = ONLINE_FLAG;
+		$data[ONLINE_FLAG] = $$flag;
+		$this->load->view('include/headNav', $data);
+	?>
+</div>
 

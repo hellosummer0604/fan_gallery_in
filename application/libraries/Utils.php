@@ -113,7 +113,23 @@ class Utils {
 		//todo
 	}
 
-	public function addLoginSession($user) {
+	public function isOnline() {
+		$sessionUser = $this->_CI->session->userdata(SESSION_USER);
 
+		if(empty($sessionUser)) {
+			return false;
+		} else{
+			return $sessionUser;
+		}
+	}
+
+	public function addLoginSession($user) {
+		unset($user->password);
+		$this->_CI->session->set_userdata(SESSION_USER, $user);
+
+	}
+
+	public function removeAllSession() {
+		$this->_CI->session->sess_destroy();
 	}
 }
