@@ -101,7 +101,14 @@
     font-size: 1px;
     border-top: solid 1px #e5e5e5;
     padding: 0;
-    margin: 5px 0;
+    margin: 0px;
+}
+
+.jq-dropdown .jq-dropdown-panel-narrow .jq-dropdown-divider {
+    font-size: 1px;
+    border-top: solid 1px #e5e5e5;
+    padding: 0;
+    margin: 0px;
 }
 
 .jq-dropdown .jq-dropdown-panel-narrow {

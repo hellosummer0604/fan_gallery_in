@@ -37,7 +37,7 @@ class MY_Controller extends CI_Controller {
 		
 		foreach($data as $item) {
 			
-			$headCSS = $headCSS."<link rel='stylesheet' href='resource/theme/".$this->theme_path."/css/".$item.".css'>";
+			$headCSS = $headCSS."<link rel='stylesheet' href='".base_url()."/resource/theme/".$this->theme_path."/css/".$item.".css'>";
 		}
 		
 		return $headCSS;
@@ -47,7 +47,7 @@ class MY_Controller extends CI_Controller {
 		$headJS = "";
 		
 		foreach($data as $item) {
-			$headJS = $headJS." <script src='resource/js/".$item.".js'></script>";
+			$headJS = $headJS." <script src='".base_url()."/resource/js/".$item.".js'></script>";
 		}
 		
 		return $headJS;
@@ -62,6 +62,7 @@ class MY_Controller extends CI_Controller {
 
 	//generate link items in nav
 	public function getCategoryLink() {
+//		$res = ['all' => 'repo_id', 'Popular' =>'pop_id', 'Nature' => 'nature_id'];
 		$res = ['all' => 'repo_id', 'Popular' =>'pop_id', 'Nature' => 'nature_id'];
 		
 		$result = array();

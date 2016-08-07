@@ -95,5 +95,36 @@ class Currentuser extends User_Controller {
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
     }
+
+	public function infocenter_get() {
+		$cssArray = ['default', 'index', 'jquery.auto-complete', 'jquery.dropdown'];
+		$jsArray = ['jquery1.11.3.min',
+			'prototype1.7.3.0_1',
+			'autogrow.min',
+			'jquery-color',
+			'lib/jquery.dropdown',
+			'init',
+			'indexNav',
+			'popupBox',
+			'popupBoxEdit',
+			'poster_manager',
+			'color_manager',
+			'grid_manager',
+			'img_grid_manager',
+			'temp_test',
+			'img_grid_manager',
+			'lib/typeahead.bundle.min'
+		];
+
+		$this->setHeader(array('css' => $cssArray, 'js' => $jsArray));
+
+		$this->loadImgPopEditView();
+
+		$this->loadPosterView(false);
+
+		$data['cateList'] = $res = ['Repository' => 'repo_id'];
+
+		$this->loadView('img_repository', $data);
+	}
     
 }

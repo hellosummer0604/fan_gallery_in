@@ -3,17 +3,16 @@
 class File_manipulation extends MY_Model {
 	
 	private $path = './resource/gallery/img_repository/';
-	
+
 	public function getPath() {
-		return $this->path;;
+		return $this->path;
 	}
 
 	public function __construct() {
 		parent::__construct();
-
 		$this->load->helper('directory');
 	}
-	
+
 
 	public function getRepositoryImgs($path, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
 		$path = $this->getPath();
@@ -67,7 +66,7 @@ class File_manipulation extends MY_Model {
 		$detail = array('MimeType' => $exif['MimeType'], 'Make' => $exif['Make'], 'Model' => $exif['Model'],
 			'ApertureValue' =>  $exif['ApertureValue'], 'FocalLength' => $exif['FocalLength'], 'ExposureTime' => $exif['ExposureTime'],  'ISOSpeedRatings' => $exif['ISOSpeedRatings'], 'exif' => $exif);
 		
-		$res =  array('path' => $imgPath, 'filename' => $fileName, 'createTime' => $createTime, 'orgWidth' => $orgWidth, 'orgHeight' => $orgHeight, 'details' => $detail);
+		$res =  array('path' => base_url($imgPath), 'filename' => $fileName, 'createTime' => $createTime, 'orgWidth' => $orgWidth, 'orgHeight' => $orgHeight, 'details' => $detail);
 		
 		return $res;
 	}
@@ -90,7 +89,7 @@ class File_manipulation extends MY_Model {
 
 		for ($i = $range[0]; $i < $range[1]; $i++) {
 			if ($full) {
-				$res[] = $path . $fileList[$i];
+				$res[] = base_url($path) . $fileList[$i];
 			} else {
 				$res[] = $fileList[$i];
 			}

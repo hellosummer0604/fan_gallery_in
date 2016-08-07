@@ -594,13 +594,13 @@ div.error {
     /*background-color: rgba(255, 51, 153, 0.9);*/
 /*}*/
 
-.signupBtn:hover, .logoutBtn:hover {
+.signupBtn:hover {
 	background-color: rgba(255, 51, 153, 0.9);
     text-shadow: none;
 }
 
 #jq-dropdown-logout .jq-dropdown-panel-narrow {
-    width:70px;
+    width:82px;
 }
 
 #jq-dropdown-logout .jq-dropdown-panel-narrow a {
@@ -608,7 +608,7 @@ div.error {
 }
 
 #jq-dropdown-account .jq-dropdown-menu {
-    width:170px;
+    width:180px;
 }
 
 @media only screen and (max-width: 400px) {

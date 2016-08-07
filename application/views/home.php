@@ -5,7 +5,6 @@
 
 <section class="imgNavContainer imgNavContainerForeground">
     <span class="linkContainer">
-		<li><a href="infocenter">Info</a></li>
 		<?php
 		foreach ($cateList as $key => $item) {
 			echo "<li id='nav_$item' class='nav_li'>" . ucfirst($key) . "</li>";
