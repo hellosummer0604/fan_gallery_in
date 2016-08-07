@@ -47,13 +47,7 @@ popupBox.showPopup = function (target, obj, callback) {
 }
 
 popupBox.bindSmallPopup = function () {
-	jQuery(".loginBtn").off('click').on("click", function() {
-		popupBox._showLoginPopup();
-	});
-
-	jQuery(".signupBtn").off('click').on("click", function() {
-		popupBox._showSignupPopup();
-	});
+    popupBox.bindNavButtons();
 
     //for remember me checkbox
     popupBox._handleRememberMe();
@@ -61,6 +55,23 @@ popupBox.bindSmallPopup = function () {
 	popupBox.voidSmallBoxClose();
 
     popupBox._bindSubmit();
+}
+
+popupBox.bindNavButtons = function () {
+    jQuery(".loginBtn").off('click').on("click", function(event) {
+        event.preventDefault();
+        popupBox._showLoginPopup();
+    });
+
+    jQuery(".signupBtn").off('click').on("click", function(event) {
+        event.preventDefault();
+        popupBox._showSignupPopup();
+    });
+
+    jQuery("#logoutBtn").off('click').on("click", function(event) {
+        event.preventDefault();
+        popupBox._logout();
+    });
 }
 
 popupBox.showImgBoxPopup = function (target, obj) {
@@ -171,6 +182,8 @@ popupBox._updateNav = function() {
                 jQuery("#headContainer .headerNavBackground").css({
                     opacity: opacityVal
                 });
+
+                popupBox.bindNavButtons();
             }
             catch(err) {
                 console.error(JSON.stringify(err));
@@ -201,6 +214,25 @@ popupBox._login = function(data) {
     } else {
         popupBox._popupMsgBanner("warning", data.msg);
     }
+}
+
+popupBox._logout = function(data) {
+    var baseUrl = document.location.origin;
+    var actionUrl = baseUrl + "/logout";
+
+    jQuery.ajax({
+        method: 'POST',
+        url: actionUrl,
+        dataType: 'html',
+        async: 'false',
+        success: function (data) {
+            popupBox._updateNav();
+        },
+        error: function (data) {
+            console.error(JSON.stringify(data));
+            location.reload();
+        }
+    });
 }
 
 

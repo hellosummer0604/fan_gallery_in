@@ -9,7 +9,7 @@ class Ajax_controller extends MY_Controller
         parent::__construct();
 
         $this->load->model('Photograph');
-        $this->load->model('File_manipulation');
+        $this->load->model('Repository');
     }
 
     public function index()
@@ -39,7 +39,7 @@ class Ajax_controller extends MY_Controller
         }
 
         //secondly check repository
-        $imgObj = $this->File_manipulation->getImgDetailInfo($imgId);
+        $imgObj = $this->Repository->getImgDetailInfo($imgId);
 
         if ($imgObj != null) {
             echo json_encode(array('data' => $imgObj, 'type' => 'repository'));
@@ -94,7 +94,7 @@ class Ajax_controller extends MY_Controller
         $typeId = strtolower($typeId);
 
         if ($typeId == 'repo_id') {
-            $imgSection = $this->File_manipulation->getRepositoryImgs('resource/img_repository', $pageNo, $pageSize, $last);
+            $imgSection = $this->Repository->getRepositoryImgs('resource/gallery/img_repository', $pageNo, $pageSize, $last);
         } else {
             $imgSection = $this->Photograph->getSectionImg($typeId, $pageNo, $pageSize, $last);
         }

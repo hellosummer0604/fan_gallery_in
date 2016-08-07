@@ -576,7 +576,7 @@ div.error {
 
 }
 
-.loginBtn, .signupBtn {
+.navBtn {
     max-width: 120px;
     padding-left: 12px;
     padding-right: 12px;
@@ -586,7 +586,7 @@ div.error {
     /*text-shadow: -1px 0 #333, 0 1px #333, 1px 0 #333, 0 -1px #333;*/
 }
 
-.loginBtn {
+.loginBtn, .accountBtn {
     background-color: rgba(0, 171, 230, 0.9);
 }
 
@@ -594,22 +594,36 @@ div.error {
     /*background-color: rgba(255, 51, 153, 0.9);*/
 /*}*/
 
-.signupBtn:hover{
+.signupBtn:hover {
 	background-color: rgba(255, 51, 153, 0.9);
     text-shadow: none;
 }
 
-@media only screen and (max-width: 400px) {
-	.headerNav span {
-		margin: 0px 0px 0px 5px;
-	}
+#jq-dropdown-logout .jq-dropdown-panel-narrow {
+    width:82px;
+}
 
+#jq-dropdown-logout .jq-dropdown-panel-narrow a {
+    color: #666666;
+}
+
+#jq-dropdown-account .jq-dropdown-menu {
+    width:180px;
+}
+
+@media only screen and (max-width: 400px) {
+    .headerNav {
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
 }
 
 @media only screen and (max-width: 1024px) {
 	.headerNav {
-		width: 100%;
+		width: calc(100% - 20px);
 		margin-left: 0px;
+        margin-right:20px;
 	}
 
 }
@@ -631,7 +645,7 @@ div.error {
 
 .poster {
 	/*background-image: url("../img/header.jpg");*/
-	background-image: url("../img/8206-8.jpg");
+	/*background-image: url("../img/8206-8.jpg");*/
 	background-repeat: no-repeat;
 	height: 620px;
 	width: 100%;
