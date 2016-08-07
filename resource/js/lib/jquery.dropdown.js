@@ -62,16 +62,15 @@ if (jQuery) (function ($) {
         position();
 
         // Trigger the show callback
-        jqDropdown
-            .trigger('show', {
-                jqDropdown: jqDropdown,
-                trigger: trigger
-            });
+        //jqDropdown
+        //    .trigger('show', {
+        //        jqDropdown: jqDropdown,
+        //        trigger: trigger
+        //    });
 
     }
 
     function hide(event) {
-
         // In some cases we don't hide them
         var targetGroup = event ? $(event.target).parents().addBack() : null;
 
@@ -83,7 +82,7 @@ if (jQuery) (function ($) {
                 if (!targetGroup.is('A')) return;
             } else {
                 // Nope, it's a panel. Leave it open.
-                return;
+                //return;
             }
         }
 
@@ -116,7 +115,7 @@ if (jQuery) (function ($) {
                 left: jqDropdown.hasClass('jq-dropdown-anchor-right') ?
                     trigger.position().left - (jqDropdown.outerWidth(true) - trigger.outerWidth(true)) - parseInt(trigger.css('margin-right'), 10) + hOffset :
                     trigger.position().left + parseInt(trigger.css('margin-left'), 10) + hOffset,
-                top: trigger.position().top + trigger.outerHeight(true) - parseInt(trigger.css('margin-top'), 10) + vOffset
+                top: trigger.position().top + trigger.outerHeight(true) - parseInt(trigger.css('margin-top'), 10) + vOffset,
             });
         } else {
             // ...or relative to document
