@@ -1,8 +1,15 @@
 var Image_adjuster = Class.create({
-	initialize: function (selector, imgWidth, imgHeight) {
-		this._img_width = imgWidth;
-		this._img_height = imgHeight;
-		this.container = jQuery(selector);
+	initialize: function (selector) {
+        this.container = jQuery(selector);
+        var tempWidth = this.container.attr('data-width');
+        var tempHeight = this.container.attr('data-height');
+        if (tempWidth <= 0 || tempHeight <= 0) {
+            return;
+        }
+
+		this._img_width = tempWidth;
+		this._img_height = tempHeight;
+        this.container.css('background-image', 'url(' + this.container.attr('data-src') + ')');
 		this.resizeEvt;
 	},
 	_resize_background: function () {

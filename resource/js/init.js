@@ -34,7 +34,7 @@ var Init = Init || {}
  */
 Init.act_Poster = function () {
 	if (typeof Image_adjuster != "undefined") {
-		var poster = new Image_adjuster(".poster", 2048, 1367);
+		var poster = new Image_adjuster(".poster");
 		poster.activate();
 		console.log("Loading poster_manager.js");
 	} else {

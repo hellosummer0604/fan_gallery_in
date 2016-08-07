@@ -135,9 +135,15 @@ class MY_Controller extends CI_Controller {
 		$this->loadView('/include/popup/imgPopupEdit', $data);
 	}
 
-	public function loadPosterView($enable = true) {
+	public function loadPosterView($enable = true, $data = null) {
 		if ($enable) {
-			$this->loadView('/include/poster');
+			if (empty($data)) {
+				$data['url'] = "http://north.gallery/resource/theme/default/img/8206-8.jpg";
+				$data['width'] = 2880;
+				$data['height'] = 1800;
+			}
+
+			$this->loadView('/include/poster', $data);
 		} else {
 			$this->loadView('/include/poster_empty');
 		}

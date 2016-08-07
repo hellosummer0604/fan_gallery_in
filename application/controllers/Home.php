@@ -44,11 +44,28 @@ class Home extends MY_Controller {
 
 		$this->loadImgPopView();
 
-		$this->loadPosterView();
+		$this->tempLoadPosterView();//todo will replace by real functions
 		
 		$data['cateList'] = $this->getCategoryLink();
 
 		$this->loadView('home', $data);
+	}
+
+	//todo temporary, remove it
+	private function tempLoadPosterView() {
+		$path = "./resource/gallery/img_publish/img_poster/";
+
+		$imgNames = $this->filehelper->getFolderFiles($path);
+		$img = $path.$imgNames[array_rand($imgNames)];//get random img
+
+		$imgInfo = $this->filehelper->getImgSize($img);
+
+		$data['src'] = base_url($img);
+		$data['width'] = $imgInfo['width'];
+		$data['height'] = $imgInfo['height'];
+
+
+		$this->loadPosterView(true, $data);
 	}
 
 	public function login() {

@@ -1,4 +1,4 @@
-<section id="indexPoster" class="poster">
+<section id="indexPoster" class="poster" data-src="<?php echo $src;?>" data-width="<?php echo $width;?>" data-height="<?php echo $height;?>">
 
 </section>
 

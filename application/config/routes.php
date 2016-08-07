@@ -62,10 +62,10 @@ $route['retrieve'] = 'Home/retrieve';
 $route['head'] = 'Home/headNav';
 
 //for current user
-$route['m/(:any)'] = 'Currentuser/$1';
-$route['m/(:any)/(:any)'] = 'Currentuser/$1/$2';
-$route['m/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3';
-$route['m/(:any)/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3/$4';
+$route['u/(:any)'] = 'Currentuser/$1';
+$route['u/(:any)/(:any)'] = 'Currentuser/$1/$2';
+$route['u/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3';
+$route['u/(:any)/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3/$4';
 
 
 
