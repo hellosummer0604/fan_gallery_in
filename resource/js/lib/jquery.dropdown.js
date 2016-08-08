@@ -117,6 +117,8 @@ if (jQuery) (function ($) {
                     trigger.position().left + parseInt(trigger.css('margin-left'), 10) + hOffset,
                 top: trigger.position().top + trigger.outerHeight(true) - parseInt(trigger.css('margin-top'), 10) + vOffset,
             });
+        } else if (jqDropdown.hasClass('jq-dropdown-escape')) { // let other js to handle position
+
         } else {
             // ...or relative to document
             jqDropdown.css({
