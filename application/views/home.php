@@ -16,7 +16,10 @@
 		<ul class="jq-dropdown-panel">
 			<table cellspacing="0" cellpadding="0">
 				<tr>
-					<td colspan="3"><h3>All tags</h3></td>
+					<td colspan="3" class="disHover"><h3>All tags</h3></td>
+				</tr>
+				<tr>
+					<td colspan="3" class="disHover"><hr></td>
 				</tr>
 				<tr>
 					<td><a href="#">North Fan</a></td>
