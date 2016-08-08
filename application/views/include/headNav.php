@@ -9,7 +9,7 @@
 		if ($isOnline) {
 	?>
 			<span class="userBanner">
-				<span class="font_size_14 navBtn accountBtn" data-jq-dropdown="#jq-dropdown-account">Hello, Summery</span>
+				<span class="font_size_16 navBtn accountBtn" data-jq-dropdown="#jq-dropdown-account">Hello, Summery</span>
 
 				<div id="jq-dropdown-account"
 					 class="jq-dropdown jq-dropdown-tip jq-dropdown-anchor-right jq-dropdown-relative">
