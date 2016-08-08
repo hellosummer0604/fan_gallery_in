@@ -295,7 +295,7 @@ headNav._setMorePanelPos = function () {
         return;
     }
 
-    var right = jQuery(window).width() - trigger.offset().left - 210;
+    var right = jQuery(window).width() - trigger.offset().left - 308;
     right = right < 6 ? 6 : right;
 
     jDropDown.css({
