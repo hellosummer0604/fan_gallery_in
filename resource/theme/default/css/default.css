@@ -777,6 +777,12 @@ div.error {
     font-size: 16px;
 }
 
+.imgNavContainer #jq-dropdown-more .jq-dropdown-panel hr {
+    margin: 10px 0px 10px 0px;
+    border: 0;
+    border-top: 1px solid #ccc;
+}
+
 .imgNavContainer #jq-dropdown-more .jq-dropdown-panel table{
     width: 100%;
     text-align: center;
@@ -788,7 +794,7 @@ div.error {
     overflow: hidden;
 }
 
-.imgNavContainer #jq-dropdown-more .jq-dropdown-panel table td:hover {
+.imgNavContainer #jq-dropdown-more .jq-dropdown-panel table td:hover:not(.disHover) {
     background-color: #eee;
 }
 
