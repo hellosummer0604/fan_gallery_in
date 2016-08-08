@@ -30,8 +30,8 @@
 		} else {
 	?>
 			<span class="userBanner">
-    		<span class="font_size_14 navBtn signupBtn" id="upload">Sign up</span>
-    		<span class="font_size_14 navBtn loginBtn">Sign in</span>
+    		<span class="font_size_16 navBtn signupBtn" id="upload">Sign up</span>
+    		<span class="font_size_16 navBtn loginBtn">Sign in</span>
 	</span>
 	<?php
 		}

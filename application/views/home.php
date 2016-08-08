@@ -13,7 +13,7 @@
         <li id="moreBtn" data-jq-dropdown="#jq-dropdown-more">More</li>
     </span>
 	<div id="jq-dropdown-more" class="jq-dropdown jq-dropdown-scroll jq-dropdown-escape">
-		<ul class="jq-dropdown-panel">
+		<ul class="jq-dropdown-panel-narrow">
 			<table cellspacing="0" cellpadding="0">
 				<tr>
 					<td colspan="3" class="disHover"><h3>All tags</h3></td>
