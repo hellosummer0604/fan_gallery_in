@@ -36,6 +36,8 @@ headNav.activate = function () {
 	headNav._bindClickEvt();
 
 	headNav._setFirstCateActive();
+
+    headNav._bindMorePaneTriggered();
 }
 
 
@@ -200,6 +202,7 @@ headNav._setLinkList = function () {
 		"left": (windowWidth - width) / 2
 	});
 
+    headNav._setMorePanelPos();
 }
 
 headNav._bindResizeEvt = function () {
@@ -282,4 +285,33 @@ headNav._bindClickEvt = function () {
 
 	//remove last one button  -- More
 //	jQuery(".linkContainer ").last().off('click');
+}
+
+headNav._setMorePanelPos = function () {
+    var trigger = jQuery('[data-jq-dropdown="#jq-dropdown-more"]');
+    var jDropDown = jQuery('#jq-dropdown-more');
+
+    if (typeof trigger.attr('id') == 'undefined' || typeof jDropDown.attr('id') == 'undefined') {
+        return;
+    }
+
+    var right = jQuery(window).width() - trigger.offset().left - 210;
+    right = right < 6 ? 6 : right;
+
+    jDropDown.css({
+        right: right + 'px'
+    });
+}
+
+headNav._bindMorePaneTriggered = function () {
+    var trigger = jQuery('[data-jq-dropdown="#jq-dropdown-more"]');
+    var jDropDown = jQuery('#jq-dropdown-more');
+
+    trigger.off('click').on("click", function(event) {
+        headNav._setMorePanelPos();
+    });
+
+    jDropDown.css({
+        top: '50px'
+    });
 }

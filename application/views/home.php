@@ -10,8 +10,32 @@
 			echo "<li id='nav_$item' class='nav_li'>" . ucfirst($key) . "</li>";
 		}
 		?>
-        <li>More</li>
+        <li id="moreBtn" data-jq-dropdown="#jq-dropdown-more">More</li>
     </span>
+	<div id="jq-dropdown-more" class="jq-dropdown jq-dropdown-scroll jq-dropdown-escape">
+		<ul class="jq-dropdown-panel">
+			<table cellspacing="0" cellpadding="0">
+				<tr>
+					<td colspan="3"><h3>All tags</h3></td>
+				</tr>
+				<tr>
+					<td><a href="#">North Fan</a></td>
+					<td><a href="#">Drink</a></td>
+					<td><a href="#">Interior</a></td>
+				</tr>
+				<tr>
+					<td><a href="#">Smoothy</a></td>
+					<td><a href="#">Interior</a></td>
+					<td><a href="#">Drink</a></td>
+				</tr>
+				<tr>
+					<td><a href="#">Light</a></td>
+					<td><a href="#">Drink</a></td>
+					<td></td>
+				</tr>
+			</table>
+		</ul>
+	</div>
 </section>
 <!--img category nav end-->
 
@@ -22,7 +46,7 @@
 <!--</div>-->
 <!--</section>-->
 <!-- loading gif end -->
-<section class="bodySection" style="background-color: #fcff93">
+<section class="bodySection">
 
 </section>
 

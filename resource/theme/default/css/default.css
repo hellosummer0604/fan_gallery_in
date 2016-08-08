@@ -240,7 +240,7 @@ div.error {
 }
 
 .baseLayer input[type="text"]#imgTitle:focus{
-	color: rgb(243, 120, 52);
+    color: rgb(0, 171, 230);
 }
 
 #imgText textarea{
@@ -587,7 +587,7 @@ div.error {
 }
 
 .loginBtn, .accountBtn {
-    background-color: rgba(0, 171, 230, 0.9);
+    /*background-color: rgba(0, 171, 230, 0.9);*/
 }
 
 /*.signupBtn {*/
@@ -608,6 +608,7 @@ div.error {
 }
 
 #jq-dropdown-account .jq-dropdown-menu {
+    font-size: 16px;
     width:180px;
 }
 
@@ -739,6 +740,7 @@ div.error {
 .linkContainer {
 	position: relative;
 	/*background-color: red;*/
+    overflow: visible;
 }
 
 .imgNavContainer li {
@@ -762,6 +764,40 @@ div.error {
 	height: 46px;
 	color: rgb(0, 171, 230);
 	border-bottom: solid 4px;
+}
+
+.imgNavContainer #jq-dropdown-more {
+    width: 320px;
+    opacity: 0.9;
+}
+
+.imgNavContainer #jq-dropdown-more .jq-dropdown-panel{
+    padding: 10px 10px 20px 10px;
+    max-height: 450px;
+    font-size: 16px;
+}
+
+.imgNavContainer #jq-dropdown-more .jq-dropdown-panel table{
+    width: 100%;
+    text-align: center;
+    line-height: 34px;
+}
+
+.imgNavContainer #jq-dropdown-more .jq-dropdown-panel table td {
+    width: 33.3%;
+    overflow: hidden;
+}
+
+.imgNavContainer #jq-dropdown-more .jq-dropdown-panel table td:hover {
+    background-color: #eee;
+}
+
+.imgNavContainer #jq-dropdown-more .jq-dropdown-panel table td a {
+    color: #666666;
+}
+
+.imgNavContainer #jq-dropdown-more .jq-dropdown-panel table td:hover a{
+    color: rgb(0, 171, 230);
 }
 
 /* img nav container section end*/
