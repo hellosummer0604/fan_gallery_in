@@ -563,6 +563,9 @@ div.error {
 	z-index: 500;
 }
 
+.headerNav .jq-dropdown-open {
+    background-color: rgb(0, 171, 230);
+}
 
 .bigLogo {
 	margin: 0px 20px 0px 20px;
@@ -593,9 +596,12 @@ div.error {
 /*.signupBtn {*/
     /*background-color: rgba(255, 51, 153, 0.9);*/
 /*}*/
+.loginBtn:hover {
+    background-color: rgb(0, 171, 230);
+}
 
 .signupBtn:hover {
-	background-color: rgba(255, 51, 153, 0.9);
+	background-color: rgb(255, 51, 153);
     text-shadow: none;
 }
 
@@ -738,6 +744,10 @@ div.error {
 	position: relative;
 	/*background-color: red;*/
     overflow: visible;
+}
+
+.linkContainer .jq-dropdown-open {
+    color: rgb(0, 171, 230);
 }
 
 .imgNavContainer li {
