@@ -798,11 +798,16 @@ div.error {
 
 .imgNavContainer #jq-dropdown-more .jq-dropdown-panel-narrow table td {
     width: 33.3%;
+    border: 1px solid #ffffff;
     overflow: hidden;
 }
 
 .imgNavContainer #jq-dropdown-more .jq-dropdown-panel-narrow table td:hover:not(.disHover) {
-    background-color: #eee;
+    background-color: #fefefe;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #f0f0f0;
 }
 
 .imgNavContainer #jq-dropdown-more .jq-dropdown-panel-narrow table td a {
