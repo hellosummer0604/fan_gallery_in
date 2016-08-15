@@ -15,7 +15,7 @@
 					 class="jq-dropdown jq-dropdown-tip jq-dropdown-anchor-right jq-dropdown-relative">
 					<ul class="jq-dropdown-menu">
 						<li><a href="#1">My Account</a></li>
-						<li><a href="#3">Quick Upload</a></li>
+						<li><a href="#" data-popup-view="/upload">Quick Upload</a></li>
 						<li class="jq-dropdown-divider"></li>
 						<li><a href="<?php echo base_url()?>">Homepage</a></li>
 						<li><a href="<?php echo base_url("/u/infocenter")?>">Photographs</a></li>

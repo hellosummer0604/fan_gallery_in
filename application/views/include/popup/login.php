@@ -108,3 +108,15 @@
     </div>
 </div>
 
+
+<div id="genericBox" class="shadowWrapper genericPopup">
+
+	<div class="shadowLayer baseLayer">
+
+	</div>
+
+
+	<div class="baseLayer">
+		asdasdsad
+	</div>
+</div>

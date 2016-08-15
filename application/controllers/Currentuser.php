@@ -126,5 +126,11 @@ class Currentuser extends User_Controller {
 
 		$this->loadView('img_repository', $data);
 	}
-    
+
+	public function moduleUpload_get() {
+		$viewPath = $this->basePath."/module/upload";
+		$data = array();
+
+		$this->load->view($viewPath, $data);
+	}
 }

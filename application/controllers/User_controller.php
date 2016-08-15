@@ -10,6 +10,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 abstract class User_Controller extends REST_Controller {
 
+	protected $basePath = "User";
+
     public function __construct()
     {
         parent::__construct();
