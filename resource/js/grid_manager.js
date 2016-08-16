@@ -47,7 +47,7 @@ var ImgGrid = Class.create({
 		this.imgData = null;
 
 		popupBox.bindCloseAction(function () {
-			popupBox.hideImgBoxPopup(['#imgBox', '#uploadBox', '.smallPopup']);
+			popupBox.hideImgBoxPopup(['#imgBox', '#uploadBox', '.smallPopup', '#genericBox']);
 		});
 	},
 	

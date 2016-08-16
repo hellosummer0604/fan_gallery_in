@@ -50,5 +50,5 @@ jQuery(document).ready(function(){
     //register functions here
     popupBoxEdit.autoComplete();
 
-    popupBoxEdit;
+    //popupBoxEdit;
 });

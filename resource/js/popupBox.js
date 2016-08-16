@@ -361,6 +361,8 @@ popupBox.hideImgBoxPopup = function (targetArray) {
         popupBox._clearInput();
 
         popupBox._popupMsgBanner('close');
+
+        popupBox._hideGenericPopup();
     });
 }
 
@@ -458,7 +460,7 @@ popupBox._displayImgdetail = function (data) {
 
 popupBox._loadError = function () {
     setTimeout(function () {
-        popupBox.hideImgBoxPopup(['#imgBox', '#uploadBox', '.smallPopup']);
+        popupBox.hideImgBoxPopup(['#imgBox', '#uploadBox', '.smallPopup', '#genericBox']);
     }, 1000);
 
 }
@@ -618,7 +620,10 @@ popupBox._bindAClick = function () {
         if (typeof popupView !== typeof undefined && popupView !== false) {
 
             jQuery(this).off('click').on("click", function () {
+                popupBox._showGenericPopup(popupView);
+
                 popupBox._loadPopupView(popupView);
+
             });
         }
     });
@@ -626,24 +631,34 @@ popupBox._bindAClick = function () {
 
 popupBox._loadPopupView = function (viewUrl) {
     //start popup
-
-
     var viewUrl = document.location.origin + viewUrl;
 
-    jQuery.ajax({
-        method: 'GET',
-        url: viewUrl,
-        dataType: 'html',
-        //async: 'false',
-        success: function (data) {
-            console.error(JSON.stringify(data))
-        },
-        error: function (data) {
-            //close popup
+    jQuery('#genericBox .mainBox').load(viewUrl, function (responseTxt, statusTxt, xhr) {
+        //todo callback function needs to be rewritten
 
-            console.error('load generic popup error');
-        }
+        if (statusTxt == "success")
+            console.log("External content loaded successfully!");
+        if (statusTxt == "error")
+            console.error("Error: " + xhr.status + ": " + xhr.statusText);
     });
+}
+
+popupBox._showGenericPopup = function(styleClass) {
+    if (typeof styleClass != 'undefined') {
+        var className = styleClass.replace('/', '_');
+        jQuery('#genericBox .mainBox').removeClass('defaultBox').addClass(className);
+    }
+
+    var target = jQuery('#genericBox');
+
+    popupBox.showPopup(target, null, function () {
+
+    });
+}
+
+popupBox._hideGenericPopup = function() {
+    jQuery('#genericBox .mainBox').removeClass().addClass('mainBox').addClass('defaultBox');
+    jQuery('#genericBox .mainBox').html();
 }
 
 /************************* end generic popup box ****************************/
