@@ -184,6 +184,7 @@ popupBox._updateNav = function () {
                 });
 
                 popupBox.bindNavButtons();
+                popupBox._bindAClick();
             }
             catch (err) {
                 console.error(JSON.stringify(err));
@@ -362,7 +363,7 @@ popupBox.hideImgBoxPopup = function (targetArray) {
 
         popupBox._popupMsgBanner('close');
 
-        popupBox._hideGenericPopup();
+        popupBox._resetGenericPopup();
     });
 }
 
@@ -616,39 +617,43 @@ popupBox._removeBlur = function () {
 popupBox._bindAClick = function () {
     jQuery("a").each(function () {
         var popupView = jQuery(this).attr('data-popup-view');
+        var popupStyle = jQuery(this).attr('data-popup-style');
 
         if (typeof popupView !== typeof undefined && popupView !== false) {
 
             jQuery(this).off('click').on("click", function () {
-                popupBox._showGenericPopup(popupView);
-
-                popupBox._loadPopupView(popupView);
-
+                popupBox._loadPopupView(popupView, popupStyle);
             });
         }
     });
 }
 
-popupBox._loadPopupView = function (viewUrl) {
-    //start popup
+popupBox._loadPopupView = function (viewUrl, className) {
+    //default loading popup
+    popupBox._showGenericPopup();
+
+    //start loading popup
     var viewUrl = document.location.origin + viewUrl;
 
     jQuery('#genericBox .mainBox').load(viewUrl, function (responseTxt, statusTxt, xhr) {
         //todo callback function needs to be rewritten
+        if (statusTxt == "success") {
+            if (typeof className != 'undefined') {
+                jQuery('#genericBox .mainBox').removeClass('defaultBox').addClass(className);
+            }
 
-        if (statusTxt == "success")
             console.log("External content loaded successfully!");
-        if (statusTxt == "error")
+        }
+
+        if (statusTxt == "error") {
+            popupBox._resetGenericPopup();
+
             console.error("Error: " + xhr.status + ": " + xhr.statusText);
+        }
     });
 }
 
-popupBox._showGenericPopup = function(styleClass) {
-    if (typeof styleClass != 'undefined') {
-        var className = styleClass.replace('/', '_');
-        jQuery('#genericBox .mainBox').removeClass('defaultBox').addClass(className);
-    }
-
+popupBox._showGenericPopup = function() {
     var target = jQuery('#genericBox');
 
     popupBox.showPopup(target, null, function () {
@@ -656,7 +661,7 @@ popupBox._showGenericPopup = function(styleClass) {
     });
 }
 
-popupBox._hideGenericPopup = function() {
+popupBox._resetGenericPopup = function() {
     jQuery('#genericBox .mainBox').removeClass().addClass('mainBox').addClass('defaultBox');
     jQuery('#genericBox .mainBox').html();
 }

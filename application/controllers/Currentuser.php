@@ -131,6 +131,9 @@ class Currentuser extends User_Controller {
 		$viewPath = $this->basePath."/module/upload";
 		$data = array();
 
+		//todo each hour create new folder, delete the folder before 2 hours ago, timestamp as fold name. Only read and write access
+
+
 		$this->load->view($viewPath, $data);
 	}
 }
