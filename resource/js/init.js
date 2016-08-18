@@ -22,7 +22,7 @@ jQuery(window).ready(function () {
 
 	Init.Act_popupBox();
 
-
+    Init.MonitorEvents();
 });
 
 
@@ -89,6 +89,14 @@ Init.Act_popupBox = function () {
 	} else {
 		console.error("Haven't load popupBox.js");
 	}
+}
+
+
+/**
+ * monitor <a> customize data
+ */
+Init.MonitorEvents = function () {
+    popupBox._bindAClick();
 }
 
 ////global var

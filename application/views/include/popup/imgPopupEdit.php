@@ -1,48 +1,53 @@
 <div id="imgBox" class="shadowWrapper">
 
-    <span id="authorBox">ssss</span>
+	<span id="authorBox">ssss</span>
 
-    <div class="shadowLayer baseLayer">
+	<div class="shadowLayer baseLayer">
 
-    </div>
+	</div>
 
-    <div class="baseLayer">
-        <form action="/publish" method="post">
-            <!--				<div class="closeBanner">
-                                <div class="closeButton">This is </div>
-                            </div>-->
-			<span class="popupImg" id="imgTitle">
-				<input type="text" id="imgTitle" name="imgTitle">
-			</span>
+	<div class="baseLayer">
+		<div class="mainBox">
+			<form action="/publish" method="post">
+				<!--				<div class="closeBanner">
+									<div class="closeButton">This is </div>
+								</div>-->
+				<div class="popupImg" id="imgTitle">
+					<input type="text" id="imgTitle" name="imgTitle">
+				</div>
 
-            <div class="popupImg loadingBg" id="popImgBox">
+				<div class="popupImg loadingBg" id="popImgBox">
 
-            </div>
+				</div>
 
-            <div class="popupImg" id="popImgText">
+				<div class="popupImg" id="popImgText">
                 <span class="innerBox">
-                    <div id="imgAuthorTags" class="buttonDiv itag"><a href="#">North Fan</a></div><span id="imgTags" class="buttonDiv"></span>
+                    <div id="imgAuthorTags" class="buttonDiv itag"><a href="#">North Fan</a></div><span id="imgTags"
+																										class="buttonDiv"></span>
                 </span>
-                <br>
+					<br>
                 <span class="innerBox" id="imgTagNameAutoComplete">
                     <input class="imgTagName typeahead" type="text" maxlength="20" placeholder="Tagging this photo"/>
                 </span>
-<!--                &nbsp;&nbsp;&nbsp;-->
-<!--                <span>[Tagging this photo]</span>-->
+					<!--                &nbsp;&nbsp;&nbsp;-->
+					<!--                <span>[Tagging this photo]</span>-->
 
-                <div class="innerBox" id="imgText">
-                    <textarea name="imgDescription" id="imgDescription" placeholder="请在此输入内容..."></textarea>
-                </div>
-                <div class="innerBox">
-                    <button class="btn-submit" type="button">Submit</button>
-                    <button class="btn-reset" type="reset">Cancel</button>
-                </div>
-            </div>
+					<div class="innerBox" id="imgText">
+						<textarea name="imgDescription" id="imgDescription" placeholder="请在此输入内容..."></textarea>
+					</div>
+					<div class="innerBox">
+						<button class="btn-submit" type="button">Submit</button>
+						<button class="btn-reset" type="reset">Cancel</button>
+					</div>
+				</div>
 
-            <!--		<div class="popupImg" id="popImgDescription">
-                            EXIF info here
-                    </div>-->
-    </div>
+<!--				<div class="popupImg" id="popImgDescription">-->
+<!--					EXIF info here-->
+<!--				</div>-->
+
+			</form>
+		</div>
+	</div>
 </div>
 <!---->
 <!--<div id="uploadBox" class="shadowWrapper">-->
@@ -70,7 +75,6 @@
 				
 		</div>-->
 
-</form>
 
 <div id="headContainer">
 	<?php
