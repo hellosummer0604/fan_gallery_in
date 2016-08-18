@@ -229,14 +229,26 @@ div.error {
 	z-index:650;
 }
 
-.baseLayer #imgTitle{
-	background:none;
-	color: #ffffff;
+/*start img box*/
+
+#imgBox .mainBox{
+    background: none;
+    width:90%;
+    min-width: 380px;
+    max-width: 1024px;
+    margin-bottom: 70px;
+}
+
+.mainBox #imgTitle{
+    padding-top:0px;
+    padding-bottom: 0px;
+    width: auto;
 	height:50px;
 	line-height: 50px;
 	font-size: 22px;
-	padding-top:0px;
-	padding-bottom: 0px;
+    text-align: justify;
+    background: none;
+    color: #ffffff;
 }
 
 .baseLayer input[type="text"]#imgTitle{
@@ -281,12 +293,21 @@ div.error {
 	padding: 15px 30px 30px 30px;
 	background-color: #f9f9f9;
 	height: auto;
-	width: 964px;
+	width: calc(100% - 60px);
 	/*margin-left: calc(50% - 512px);*/
-	margin-left: calc(50% - 512px);
+	/*margin-left: calc(50% - 512px);*/
 	text-align:  justify;
 	
 }
+
+#imgText {
+    text-align: justify;
+    display: block;
+}
+
+
+/*end img box*/
+
 
 .smallPopup .ajaxNotice{
     width:100%;
@@ -511,8 +532,7 @@ div.error {
 #popImgText{
 	-moz-border-radius: 0px;
 	-webkit-border-radius: 0px 0px 3px 3px ;
-	border-radius: 0px 0px 3px 3px ; 
-	margin-bottom: 50px;
+	border-radius: 0px 0px 3px 3px ;
 }
 
 #popImgDescription{
@@ -520,49 +540,6 @@ div.error {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px ;
 	border-radius: 3px ; 
-}
-
-@media only screen and (max-width: 1280px) {
-	.popupImg{
-		width: 900px;
-		margin-left: calc(50% - 480px);
-	}
-
-
-}
-
-
-@media only screen and (max-width: 1024px) {
-	.popupImg{
-		width: calc(100% - 160px);
-		margin-left: 50px;
-	}
-
-}
-
-@media only screen and (max-width: 768px) {
-	.popupImg{
-		width: calc(100% - 130px);
-		margin-left: 35px;
-	}
-
-
-}
-
-@media only screen and (max-width: 512px) {
-	.popupImg{
-		width: calc(100% - 100px);
-		margin-left: 20px;
-	}
-}
-
-
-
-@media only screen and (max-width: 420px) {
-	.popupImg{
-		width: calc(100% - 66px);
-		margin-left: 0px;
-	}
 }
 
 /* popup end*/
@@ -596,7 +573,7 @@ div.error {
 }
 
 .genericPopup .popup_upload #uploadDropbox #imgSection {
-    text-align: left;
+    text-align: justify;
     background-color: #fcff50;
 }
 

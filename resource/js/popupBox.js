@@ -419,7 +419,7 @@ popupBox._displayImgdetail = function (data) {
     if (popupBox.isEditPopup()) {
         jQuery('#imgTitle >input').val('asdasd');
     } else {
-        jQuery('.baseLayer > #imgTitle').html("我就是图片标题怎么了");
+        jQuery('.mainBox > #imgTitle').html("我就是图片标题怎么了");
     }
 
     jQuery('#imgBox > #authorBox').html("North Fan<br>2016-01-12");
@@ -490,7 +490,7 @@ popupBox._clearImgdetail = function () {
     if (popupBox.isEditPopup()) {
         jQuery('#imgTitle >input').val('');
     } else {
-        jQuery('.baseLayer > #imgTitle').html("");
+        jQuery('.mainBox > #imgTitle').html("");
     }
 
     jQuery('#imgBox > #authorBox').html("");

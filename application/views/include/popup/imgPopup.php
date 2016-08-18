@@ -1,36 +1,36 @@
 <div id="imgBox" class="shadowWrapper">
 
-    <span id="authorBox">ssss</span>
+	<span id="authorBox">ssss</span>
 
-    <div class="shadowLayer baseLayer">
+	<div class="shadowLayer baseLayer">
 
-    </div>
+	</div>
 
-    <div class="baseLayer">
+	<div class="baseLayer">
 
-        <!--				<div class="closeBanner">
-                            <div class="closeButton">This is </div>
-                        </div>-->
-				<span class="popupImg" id="imgTitle">
+		<!--				<div class="closeBanner">
+							<div class="closeButton">This is </div>
+						</div>-->
+		<div class="mainBox">
+			<div class="popupImg" id="imgTitle">
+			</div>
+
+			<div class="popupImg loadingBg" id="popImgBox">
+
+			</div>
+
+			<div class="popupImg" id="popImgText">
+				<span class="innerBox">
+					<div id="imgAuthorTags" class="itag"><a id="authorTag" href="#">North Fan</a></div><span
+						id="imgTags"></span>
 				</span>
-
-
-        <div class="popupImg loadingBg" id="popImgBox">
-
-        </div>
-
-        <div class="popupImg" id="popImgText">
-            <span class="innerBox">
-                <div id="imgAuthorTags" class="itag"><a id="authorTag" href="#">North Fan</a></div><span id="imgTags"></span>
-            </span>
-            <div class="innerBox" id="imgText"></div>
-
-        </div>
-
-        <!--		<div class="popupImg" id="popImgDescription">
-                        EXIF info here
-                </div>-->
-    </div>
+				<div class="innerBox" id="imgText"></div>
+			</div>
+<!--			<div class="popupImg" id="popImgDescription">-->
+<!--				EXIF info here-->
+<!--			</div>-->
+		</div>
+	</div>
 </div>
 
 <!--<div id="uploadBox" class="shadowWrapper">-->
