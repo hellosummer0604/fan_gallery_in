@@ -621,7 +621,8 @@ popupBox._bindAClick = function () {
 
         if (typeof popupView !== typeof undefined && popupView !== false) {
 
-            jQuery(this).off('click').on("click", function () {
+            jQuery(this).off('click').on("click", function (event) {
+                event.preventDefault();
                 popupBox._loadPopupView(popupView, popupStyle);
             });
         }
