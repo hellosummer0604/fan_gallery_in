@@ -586,7 +586,6 @@ div.error {
     background-color: #ffffff;
     text-align: justify;
 
-    display: flex;
     align-items: center;
     justify-content: left;
 }
