@@ -99,3 +99,6 @@ define('SESSION_USER', 'onlineUser');
 define('ONLINE_FLAG', 'xxIsOnline');
 
 define('TYPE_USER', 1);
+
+define('DROP_ZONE_FILE_MAX_SIZE', 5);
+define('DROP_ZONE_FILE_MAX_COUNT', 15);
