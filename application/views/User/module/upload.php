@@ -28,13 +28,16 @@
 
 <div id="btnSection">
 	<button class="btn-submit" type="button">Upload</button>
-	<button class="btn-reset" type="button">Cancel</button>
+	<button id="closeUpload" class="btn-reset" type="button">Cancel</button>
 </div>
 
 <script>
+	jQuery('#genericBox').data("disableClose", true);
 	Dropzone.autoDiscover = false;
 
 	jQuery(document).ready(function () {
+		bindUploadClose();
+
 		jQuery("#myDropzone").dropzone({
 			init: function () {
 				var self = this;
@@ -53,6 +56,17 @@
 
 
 	});
+
+	function bindUploadClose() {
+		jQuery('#closeUpload').on('click', function() {
+			//must turn off before close
+			jQuery('#genericBox').data("disableClose", false);
+
+			popupBox.hideImgBoxPopup(['#genericBox']);
+		});
+	}
+
+
 
 
 </script>

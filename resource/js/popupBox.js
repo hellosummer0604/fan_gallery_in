@@ -330,14 +330,13 @@ popupBox._hideSmallPopup = function () {
 }
 
 popupBox.hidePopup = function (targetArray, callback) {
-
-    popupBox._removeBlur();
     //basic setting
     targetArray.forEach(function (entry) {
         var target = jQuery(entry);
 
-        if (target.is(":visible")) {
+        if (target.is(":visible") && !target.data("disableClose")) {
 
+            popupBox._removeBlur();
 
             jQuery.when(target.fadeOut(popupBox._FADE_TIME)).done(function () {
 

@@ -598,6 +598,14 @@ div.error {
     width: 100%;
 }
 
+.genericPopup .popup_upload #uploadDropbox #myDropzone .dz-progress .dz-upload{
+    background: rgb(0, 171, 230);
+}
+
+/*.genericPopup .popup_upload #uploadDropbox #myDropzone .dz-preview .dz-error-message{*/
+    /*background-color: rgb(243, 120, 52);*/
+
+/*}*/
 
 .genericPopup .popup_upload #btnSection {
     margin: 10px 30px 30px 30px;
