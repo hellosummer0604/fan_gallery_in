@@ -92,9 +92,9 @@ class MY_Controller extends CI_Controller {
 			return false;
 		}
 
-		$sessionUser = $this->isOnline();
+		$sessUserId = $this->isOnline();
 
-		if ($sessionUser && $sessionUser->getId() == $userId) {
+		if ($sessUserId) {
 			return true;
 		}
 

@@ -653,7 +653,7 @@ popupBox._loadPopupView = function (viewUrl, className) {
     });
 }
 
-popupBox._showGenericPopup = function() {
+popupBox._showGenericPopup = function () {
     var target = jQuery('#genericBox');
 
     popupBox.showPopup(target, null, function () {
@@ -661,9 +661,10 @@ popupBox._showGenericPopup = function() {
     });
 }
 
-popupBox._resetGenericPopup = function() {
-    jQuery('#genericBox .mainBox').removeClass().addClass('mainBox').addClass('defaultBox');
-    jQuery('#genericBox .mainBox').html();
+popupBox._resetGenericPopup = function () {
+    var mainBox = jQuery('#genericBox .mainBox');
+    mainBox.removeClass().addClass('mainBox').addClass('defaultBox');
+    mainBox.html();
 }
 
 /************************* end generic popup box ****************************/

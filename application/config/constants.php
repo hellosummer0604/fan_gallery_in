@@ -95,10 +95,14 @@ define('IMG_SECTION_PAGE_SIZE', 150);
 define('IMG_SECTION_SIZE', 24);
 define('IMG_SECTION_LAST_SIZE', 20);
 
-define('SESSION_USER', 'onlineUser');
+define('SESSION_USER_ID', 'onlineUserId');
 define('ONLINE_FLAG', 'xxIsOnline');
 
 define('TYPE_USER', 1);
 
 define('DROP_ZONE_FILE_MAX_SIZE', 5);
 define('DROP_ZONE_FILE_MAX_COUNT', 15);
+define('FILE_UPLOAD_TEMP_PATH', 'tmp/img_upload/');
+define('FILE_UPLOAD_TYPE', 'gif|jpg|jpeg|png');
+define('FILE_UPLOAD_SECTION_DAYS', '10');//split month by sections, section has 10 days
+define('FILE_UPLOAD_FOLDER_PERMISSION', 0755);// to be decided

@@ -565,7 +565,7 @@ div.error {
 /* generic(upload) popup start*/
 .genericPopup .popup_upload{
     min-width: 380px;
-    width:80%;
+    max-width:80%;
     height:auto;
     position: relative;
 }
@@ -602,10 +602,12 @@ div.error {
     background: rgb(0, 171, 230);
 }
 
-/*.genericPopup .popup_upload #uploadDropbox #myDropzone .dz-preview .dz-error-message{*/
-    /*background-color: rgb(243, 120, 52);*/
+.genericPopup .popup_upload #uploadDropbox #myDropzone .dz-preview .dz-error-message{
+    text-align: justify;
+    max-height: 200px;
+    overflow-y: hidden;
 
-/*}*/
+}
 
 .genericPopup .popup_upload #btnSection {
     margin: 10px 30px 30px 30px;
