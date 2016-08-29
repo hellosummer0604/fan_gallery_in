@@ -142,9 +142,52 @@ class Currentuser extends User_Controller {
 
 	}
 
+	private function getValidUploadImgList($jsonStr) {
+		if (empty($jsonStr)) {
+			return null;
+		}
+
+		$result = null;
+
+		try{
+			$fileList = json_decode($jsonStr);
+
+			if (empty($fileList)) {
+				return $result;
+			}
+
+			foreach ($fileList as $file) {
+				if (property_exists($file, "status")
+					&& $file->status == "success"
+					&& property_exists($file, "serverFileName")
+					&& !empty($file->serverFileName)) {
+					$result[] = $file->serverFileName;
+				}
+
+			}
+
+		} catch (Exception $e) {
+
+		}
+
+		return $result;
+	}
+
 	public function completeUpload_post() {
-		$fileList = $this->input->post('file_list');
-		$this->response($fileList, 200);
+		$jsonStr = $this->input->post('fileList');
+
+		$fileList = $this->getValidUploadImgList($jsonStr);
+
+		if (empty($fileList)) {
+			$this->response("No valid file to upload", 500);
+			return;
+		}
+
+		$num = $this->utils->moveTmpImageToRepo();
+
+		$str = $num." image(s) uploaded";
+
+//		$this->response($str, 200);
 
 		//http://stackoverflow.com/questions/15088666/generating-image-thumbnails-using-php-without-running-out-of-memory
 	}

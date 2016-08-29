@@ -2,7 +2,7 @@
 
 class User extends MY_Model
 {
-	private $tbl = "User";
+	protected static $tbl = "User";
 
 	public $id = null;
 	public $username = null;
@@ -160,7 +160,7 @@ class User extends MY_Model
     public function loadByPassword($identifier = null, $password = null)
     {
 		$password = md5($password);
-		$sql = "SELECT * FROM ".$this->tbl." WHERE password = ? AND (email = ? OR username = ?)";
+		$sql = "SELECT * FROM ".static::$tbl." WHERE password = ? AND (email = ? OR username = ?)";
 		$obj = $this->db->query($sql, array($password, $identifier, $identifier))->row(0, "User");
 
 		return $obj;
@@ -207,7 +207,7 @@ class User extends MY_Model
 			return false;
 		}
 
-		$this->id = md5(uniqid(rand(), true));
+		$this->id = $this->utils->rndId();
 		$this->created = date("Y-m-d H:i:s");
 
 		$res = $this->save();

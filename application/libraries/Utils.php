@@ -5,12 +5,73 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Utils {
 
 	private $_CI;
-	private $_uploadTbl = "Upload_temp";
 
 	public function __construct($data = NULL, $from_type = NULL) {
 		// Get the CodeIgniter reference
 		$this->_CI = &get_instance();
+		$this->_CI->load->model('Temp_img');
 
+	}
+
+	private function randomKey($type = null) {
+		$this->_CI->db->db_debug = FALSE;
+
+		$this->_CI->load->helper('string');
+
+		$tbl = null;
+		$encrypt = null;
+		$strLen = null;
+
+		switch ($type) {
+			case "general":
+				$tbl = "Unique_id_general";
+				$encrypt = "md5";
+				$strLen = "32";
+				break;
+			case "img":
+				$tbl = "Unique_id_img";
+				$encrypt = "sha1";
+				$strLen = "40";
+				break;
+			default:
+				$tbl = "Unique_id_general";
+				$encrypt = "md5";
+				$strLen = "32";
+		}
+
+		$i = RND_KEY_RETRY;
+
+		while ($i-- > 0) {
+			$insertRes = false;
+			$uniqueKey = random_string($encrypt, $strLen);
+
+			try{
+				$this->_CI->db->trans_start();
+				$this->_CI->db->insert($tbl, array('str' => $uniqueKey, 'created' => date('Y-m-d H:i:s')));
+				$insertRes = $this->_CI->db->affected_rows() > 0 ? true : false;
+				$this->_CI->db->trans_complete();
+			} catch (Exception $e) {
+
+			}
+
+			if ($insertRes) {
+				break;
+			}
+		}
+
+		if($i == -1) {
+			throw new Exception('cannot get unique id');
+		}
+
+		return $uniqueKey;
+	}
+
+	public function rndId() {
+		return $this->randomKey('general');
+	}
+
+	public function rndImgId() {
+		return $this->randomKey('img');
 	}
 
 	private function validateInputFormat($pattern = null, $str = null) {
@@ -191,7 +252,7 @@ class Utils {
 		$config['upload_path'] = $path;
 		$config['allowed_types'] = FILE_UPLOAD_TYPE;
 		$config['max_size'] = DROP_ZONE_FILE_MAX_SIZE * 1024;
-		$config['encrypt_name'] = true;
+		$config['file_name'] = $this->rndImgId();
 		$config['file_ext_tolower'] = true;
 
 		$this->_CI->load->library('upload', $config);
@@ -224,23 +285,16 @@ class Utils {
 
 		//write to database
 		if ($result['result']) {
-			$insertData = array(
-				'user_id'  => $curUserId,
-				'path'     => $path,
-				'filename' => $fileName,
-				'type'     => trim($fileType),
-				'size'     => $uploadData['file_size'],
-				'width'    => $uploadData['image_width'],
-				'height'   => $uploadData['image_height'],
-				'created'  => date('Y-m-d H:i:s'),
-			);
+			$tempImg = new $this->_CI->Temp_img;
+			$tempImg->setUserId($curUserId);
+			$tempImg->setPath($path);
+			$tempImg->setFilename($fileName);
+			$tempImg->setType(trim($fileType));
+			$tempImg->setSize($uploadData['file_size']);
+			$tempImg->setWidth($uploadData['image_width']);
+			$tempImg->setHeight($uploadData['image_height']);
 
-			try {
-				$res = $this->_CI->db->insert($this->_uploadTbl, $insertData);
-			} catch (Exception $e) {
-
-			}
-
+			$res = $tempImg->save();
 
 			if (!$res) {
 				unlink($path . $fileName);
@@ -257,33 +311,40 @@ class Utils {
 	 * Remove both in folder and database
 	 */
 	public function removeUploadedFile($fileName = null, $userId = null) {
-		$data = array();
-
-		if (!empty($fileName)) {
-			$data['filename'] = $fileName;
-		}
-
-		if (!empty($userId)) {
-			$data['user_id'] = $userId;
-		}
-
-		if (empty($data)) {
-			return;
-		}
-
-		$imgs = $this->_CI->db->select("id, path")->where($data)->get($this->_uploadTbl)->result_array();
+		$imgs = $this->_CI->Temp_img->loadByFileAndUser($fileName, $userId);
 
 		if (empty($imgs)) {
 			return;
 		}
 
-		$fullPath = $imgs[0]['path'].$fileName;
+		$fullPath = $imgs->getPath().$fileName;
 
 		//delete file
 		unlink($fullPath);
 
 		//delete database record
-		$this->_CI->db->delete($this->_uploadTbl, array('id' => $imgs[0]['id']));
+		$imgs->delete();
+	}
+
+	/*
+	 * Move img from temp folder to img folder
+	 *
+	 * 1. get exif info
+	 * 2. insert to img table
+	 * 3. mv to img folder, if error, delete new item created by step 2
+	 * 4. delete img and db record in tmp folder
+	 */
+
+	public function moveTmpImageToRepo($imgList) {
+		$num = 0;
+
+		if(empty($imgList)) {
+			return $num;
+		}
+
+		foreach ($imgList as $item) {
+
+		}
 
 	}
 
