@@ -330,14 +330,13 @@ popupBox._hideSmallPopup = function () {
 }
 
 popupBox.hidePopup = function (targetArray, callback) {
-
-    popupBox._removeBlur();
     //basic setting
     targetArray.forEach(function (entry) {
         var target = jQuery(entry);
 
-        if (target.is(":visible")) {
+        if (target.is(":visible") && !target.data("disableClose")) {
 
+            popupBox._removeBlur();
 
             jQuery.when(target.fadeOut(popupBox._FADE_TIME)).done(function () {
 
@@ -621,7 +620,8 @@ popupBox._bindAClick = function () {
 
         if (typeof popupView !== typeof undefined && popupView !== false) {
 
-            jQuery(this).off('click').on("click", function () {
+            jQuery(this).off('click').on("click", function (event) {
+                event.preventDefault();
                 popupBox._loadPopupView(popupView, popupStyle);
             });
         }
@@ -653,7 +653,7 @@ popupBox._loadPopupView = function (viewUrl, className) {
     });
 }
 
-popupBox._showGenericPopup = function() {
+popupBox._showGenericPopup = function () {
     var target = jQuery('#genericBox');
 
     popupBox.showPopup(target, null, function () {
@@ -661,9 +661,10 @@ popupBox._showGenericPopup = function() {
     });
 }
 
-popupBox._resetGenericPopup = function() {
-    jQuery('#genericBox .mainBox').removeClass().addClass('mainBox').addClass('defaultBox');
-    jQuery('#genericBox .mainBox').html();
+popupBox._resetGenericPopup = function () {
+    var mainBox = jQuery('#genericBox .mainBox');
+    mainBox.removeClass().addClass('mainBox').addClass('defaultBox');
+    mainBox.html();
 }
 
 /************************* end generic popup box ****************************/

@@ -68,5 +68,8 @@ $route['u/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3';
 $route['u/(:any)/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3/$4';
 
 $route['upload'] = 'Currentuser/moduleUpload/';
+$route['upload/file'] = 'Currentuser/uploadFile/';
+$route['upload/complete'] = 'Currentuser/completeUpload/';
+$route['upload/delete'] = 'Currentuser/deleteTmpFile/';
 
 

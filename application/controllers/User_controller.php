@@ -12,10 +12,9 @@ abstract class User_Controller extends REST_Controller {
 
 	protected $basePath = "User";
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+	public function __construct() {
+		parent::__construct();
+	}
 
 
 }
