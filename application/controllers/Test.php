@@ -65,6 +65,10 @@ class Test extends MY_Controller {
 
 //		$img->save();
 	}
+
+	public function test7() {
+		$this->load->model('User');
+	}
 }
 
 ?>

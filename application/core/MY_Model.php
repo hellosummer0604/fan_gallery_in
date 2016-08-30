@@ -2,6 +2,7 @@
 
 class MY_Model extends CI_Model {
 	protected static $tbl = "";
+	protected static $util = null;
 
 	protected $_id = null;
 	protected $_created = null;
@@ -22,6 +23,7 @@ class MY_Model extends CI_Model {
 
 	public function __construct() {
 		parent::__construct();
+		self::$util = &get_instance()->utils;
 	}
 
 	/********** start static function **********/
@@ -41,7 +43,7 @@ class MY_Model extends CI_Model {
 
 	public static function loadByTerm($data) {
 		if (empty($data)) {
-			return false;
+			return null;
 		}
 
 		$res = &get_instance()->db->get_where(static::$tbl, $data)->result_array();
