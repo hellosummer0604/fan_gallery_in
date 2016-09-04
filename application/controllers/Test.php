@@ -69,6 +69,20 @@ class Test extends MY_Controller {
 	public function test7() {
 		$this->load->model('User');
 	}
+
+	public function test8() {
+		$path = getcwd()."/".FILE_UPLOAD_TEMP_PATH."/2016_08_3";
+
+		print_r($path);
+		$out=array();
+		$err = 0;
+		$run = exec("/usr/bin/convert $path/0b292114421d105af180a1c41772372768e814f7.png  $path/new.png",$out,$err);
+		echo implode ("<br>",$out);
+		print_r($err);
+		print_r($run);
+	}
+
+
 }
 
 ?>

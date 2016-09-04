@@ -10,7 +10,14 @@ class Utils {
 		// Get the CodeIgniter reference
 		$this->_CI = &get_instance();
 		$this->_CI->load->model('Temp_img');
+		$this->_CI->load->model('Img');
 
+	}
+
+	public function tmpRandomKey() {
+		$this->_CI->load->helper('string');
+
+		return random_string("md5", "32");
 	}
 
 	private function randomKey($type = null) {
@@ -197,25 +204,18 @@ class Utils {
 	/***************** start image uploading *****************/
 	public function createFolder($path) {
 		mkdir($path, FILE_UPLOAD_FOLDER_PERMISSION);
+
+		if (is_dir($path)) {
+			return $path;
+		} else {
+			return null;
+		}
 	}
 
-	public function getUploadTempPath() {
-		$basePath = FILE_UPLOAD_TEMP_PATH;
-
-		//split month by sections, section has 10 days
-		$sectionNum = (int)(date('d') / FILE_UPLOAD_SECTION_DAYS);
-
-		$subFolderName = $basePath.date('Y_m_').$sectionNum."/";
-
-		$this->prepareUploadFolder($subFolderName);
-
-		return $subFolderName;
-	}
-
-	public function prepareUploadFolder($path, $force = true) {
+	public function createUploadFolder($path, $force = true) {
 		if (file_exists($path)) {
 			if (is_dir($path)) {
-				return;
+				return $path;
 			} else {
 				if ($force) {
 					unlink($path);
@@ -223,7 +223,18 @@ class Utils {
 			}
 		}
 
-		$this->createFolder($path);
+		return $this->createFolder($path);
+	}
+
+	public function getUploadTempPath() {
+		$basePath = FILE_UPLOAD_TEMP_PATH;
+
+		//split month by sections, section has 7 days
+		$sectionNum = (int)(date('d') / FILE_UPLOAD_SECTION_DAYS);
+
+		$subFolderName = $basePath.date('Y_m_').$sectionNum."/";
+
+		return $this->createUploadFolder($subFolderName);
 	}
 
 
@@ -293,6 +304,7 @@ class Utils {
 			$tempImg->setSize($uploadData['file_size']);
 			$tempImg->setWidth($uploadData['image_width']);
 			$tempImg->setHeight($uploadData['image_height']);
+			$tempImg->setSession($this->_CI->session->userdata(SESSION_UPLOAD));
 
 			$res = $tempImg->save();
 
@@ -311,19 +323,17 @@ class Utils {
 	 * Remove both in folder and database
 	 */
 	public function removeUploadedFile($fileName = null, $userId = null) {
-		$imgs = $this->_CI->Temp_img->loadByFileAndUser($fileName, $userId);
+		$img = $this->_CI->Temp_img->loadByFileAndUser($fileName, $userId);
 
-		if (empty($imgs)) {
+		if (empty($img)) {
 			return;
 		}
 
-		$fullPath = $imgs->getPath().$fileName;
-
 		//delete file
-		unlink($fullPath);
+		unlink($img->getFullPath());
 
 		//delete database record
-		$imgs->delete();
+		$img->delete();
 	}
 
 	/*
@@ -335,18 +345,199 @@ class Utils {
 	 * 4. delete img and db record in tmp folder
 	 */
 
-	public function moveTmpImageToRepo($imgList) {
+	public function moveTmpImageToRepo($imgList, $userId) {
 		$num = 0;
 
-		if(empty($imgList)) {
+		if(empty($imgList) || empty($userId)) {
 			return $num;
 		}
 
-		foreach ($imgList as $item) {
+		foreach ($imgList as $fileName) {
+			//get exif
+			$tmpImg = $this->_CI->Temp_img->loadByFileAndUser($fileName, $userId);
+
+			//get exif infomation
+			$exif = exif_read_data($tmpImg->getFullPath());
+
+			//insert to img table
+			$Img =  new $this->_CI->Img;
+
+
+			$Img->setUserId($tmpImg->getUserId());
+			$Img->setFilename($this->rndImgId().".jpg");
+			$Img->setType("jpeg");
+			$Img->setSize($tmpImg->getSize());
+			$Img->setWidth($tmpImg->getWidth());
+			$Img->setHeight($tmpImg->getHeight());
+			if($exif) {
+				$Img->setExif(json_encode($exif));
+			}
+			$Img->setStatus(IMG_STATE_REPO);
+//			$Img->setThumb("test");
+
+			//move file
+			$persist = $this->persistTmpImg($tmpImg, $Img);
+
+			if ($persist) {
+				$num++;
+				//remove tmp file and record
+				$this->removeUploadedFile($fileName, $userId);
+			}
 
 		}
 
+		return $num;
 	}
+
+	//todo need to add this to cron
+	/*
+	 * 1. delete item in Unique_id_img and Upload_temp
+	 * 2. delete item in folder
+	 * 3. delete folder if needed
+	 */
+	public function removeExpiredTmpImg() {
+
+	}
+
+	/************************ start compress image ************************/
+
+	/*********** start get image size***********/
+	private function compressImgSize($height, $width, $size, $targetSize) {
+		if (empty($height) || empty($width) || empty($size) || empty($targetSize)) {
+			return array('width' => $width, 'height' => $height);
+		}
+
+		if ($height <= THUMB_MIN_HEIGHT || $width <= THUMB_MIN_WIDTH || $targetSize >= $size) {
+			return array('width' => $width, 'height' => $height);
+		}
+
+		$coarseRatio = floatval($size / $targetSize);
+
+		$newHeight = $height / $coarseRatio;
+		$newWidth = $width / $coarseRatio;
+
+		//find proper ratio
+		if ($newHeight < THUMB_MIN_HEIGHT || $newWidth < THUMB_MIN_WIDTH) {
+			$ratioH = $height / THUMB_MIN_HEIGHT;
+			$ratioW = $width / THUMB_MIN_WIDTH;
+
+			$ratio = min($ratioH, $ratioW);
+
+			$newHeight = $height / $ratio;
+			$newWidth = $width / $ratio;
+		}
+
+		return array('width' => round($newWidth), 'height' => round($newHeight));
+	}
+
+	public function bigImgSize($height, $width, $size) {
+		//will return original
+		return $this->compressImgSize($height, $width, $size, 10000);
+	}
+
+	public function thumbImgSize($height, $width, $size) {
+		return $this->compressImgSize($height, $width, $size, THUMB_SIZE);
+	}
+	/*********** end get image size***********/
+
+
+	/*********** start move tmp img to gallery ***********/
+	private function convertImg($orgPath, $targetPath, $width = null, $height = null) {
+		if (empty($orgPath) || empty($targetPath)) {
+			return false;
+		}
+
+		print_r($width);
+		print_r($height);
+
+		if (is_numeric($width) && is_numeric($height)) {
+			$cmdStr = "/usr/bin/convert $orgPath -resize ".$width."x".$height." ".$targetPath;
+			print_r($cmdStr);
+		} else {
+			$cmdStr = "/usr/bin/convert $orgPath $targetPath";
+		}
+
+		$run = exec($cmdStr, $out, $err);
+
+		if (!$run) {
+			return array('res' => false, 'errorMsg' => $err, 'msg' => $out);
+		} else {
+			return array('res' => true, 'errorMsg' => '', 'msg' => $out);
+		}
+	}
+
+	private function prepareImgFolder() {
+		$subFolder = date("Y_m_d")."/";
+
+		$hdPath = FILE_HD_PATH.$subFolder;
+		$thumbPath = FILE_THUMB_PATH.$subFolder;
+
+		$hdPath = $this->createUploadFolder($hdPath);
+		$thumbPath = $this->createUploadFolder($thumbPath);
+
+		if (empty($hdPath) || empty($thumbPath)) {
+			return null;
+		} else {
+			return array('hd' => $hdPath, 'thumb' => $thumbPath);
+		}
+	}
+
+
+	public function persistTmpImg($tmpImg, $img) {
+		//calc img size
+		$thumbSizeArr = $this->thumbImgSize($tmpImg->getHeight(), $tmpImg->getWidth(), $tmpImg->getSize());
+		if (!empty($thumbSizeArr)) {
+			$success = true;
+		} else {
+			$success = false;
+		}
+
+		//prepare img folder
+		if ($success) {
+			$folderArr = $this->prepareImgFolder();
+
+			if (empty($folderArr)) {
+				$success = false;
+			} else {
+				$img->setPath($folderArr['hd']);
+				$img->setThumb($folderArr['thumb']);
+
+				$success = true;
+			}
+		}
+
+		//convert img
+		if ($success) {
+			$orgPath = getcwd()."/".$tmpImg->getFullPath();
+			$targetHDPath = getcwd()."/".$img->getFullPath();
+			$targetThumbPath = getcwd()."/".$img->getThumb().$img->getFilename();
+
+			$hdImg = $this->convertImg($orgPath, $targetHDPath)['res'];
+			$thumbImg = $this->convertImg($orgPath, $targetThumbPath, $thumbSizeArr['width'], $thumbSizeArr['height'])['res'];
+
+			if ($hdImg && $thumbImg) {
+
+
+				$success = true;
+			} else {
+				$success = false;
+			}
+		}
+
+		//save to database
+		if ($success) {
+			$success = $img->save();
+		}
+
+
+		return $success;
+	}
+	/*********** end move tmp img to gallery***********/
+
+	/************************ end compress image ************************/
+
+
+
 
 	/***************** end image uploading *****************/
 

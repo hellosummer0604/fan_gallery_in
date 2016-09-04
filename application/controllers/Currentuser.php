@@ -122,7 +122,7 @@ class Currentuser extends User_Controller {
 
 
 		if ($this->isOnline()) {
-
+			$this->session->set_userdata(SESSION_UPLOAD, $this->utils->tmpRandomKey());
 			$this->load->view($viewPath, $data);
 		} else {
 			$this->response("Need login", 403);
@@ -175,6 +175,7 @@ class Currentuser extends User_Controller {
 
 	public function completeUpload_post() {
 		$jsonStr = $this->input->post('fileList');
+		$userId = $this->isOnline();
 
 		$fileList = $this->getValidUploadImgList($jsonStr);
 
@@ -183,9 +184,11 @@ class Currentuser extends User_Controller {
 			return;
 		}
 
-		$num = $this->utils->moveTmpImageToRepo();
+		$num = $this->utils->moveTmpImageToRepo($fileList, $userId);
 
 		$str = $num." image(s) uploaded";
+
+		print_r($fileList);
 
 //		$this->response($str, 200);
 
@@ -195,9 +198,15 @@ class Currentuser extends User_Controller {
 	public function deleteTmpFile_post() {
 		//delete from input box through ajax when delete in dropzone form
 		$userId = $this->isOnline();
+
+		if (!$userId) {
+			$this->returnFailure("Need login");
+			return;
+		}
+
 		$fileName = $this->input->post('rmvFile');
 
-		if ($userId && !empty($fileName)) {
+		if (!empty($fileName)) {
 			$this->utils->removeUploadedFile($fileName, $userId);
 		}
 	}

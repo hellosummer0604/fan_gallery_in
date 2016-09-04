@@ -96,6 +96,7 @@ define('IMG_SECTION_SIZE', 24);
 define('IMG_SECTION_LAST_SIZE', 20);
 
 define('SESSION_USER_ID', 'onlineUserId');
+define('SESSION_UPLOAD', 'sessUpload');
 define('ONLINE_FLAG', 'xxIsOnline');
 
 define('TYPE_USER', 1);
@@ -109,3 +110,13 @@ define('FILE_UPLOAD_TYPE', 'gif|jpg|jpeg|png');
 define('FILE_UPLOAD_SECTION_DAYS', '10');//split month by sections, section has 10 days
 define('FILE_UPLOAD_FOLDER_PERMISSION', 0755);// to be decided
 
+
+define('IMG_STATE_REPO', 1);//In repository, only owner can find it in repository page
+define('IMG_STATE_PRIVATE', 2);//only owner
+define('IMG_STATE_PUBLIC', 3);//all the user
+
+define('FILE_HD_PATH', 'resource/gallery/img_publish/img_hd/');
+define('FILE_THUMB_PATH', 'resource/gallery/img_publish/img_thumb/');
+define('THUMB_MIN_WIDTH', 500);
+define('THUMB_MIN_HEIGHT', 500);
+define('THUMB_SIZE', 500);

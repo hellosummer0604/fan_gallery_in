@@ -26,10 +26,12 @@ var ImgGrid = Class.create({
 		this._imgThumbPath = location.protocol + "//" + location.host ;
 
 		this.imgBorder = 5;
+        this.imgFatBorder = 5;
+        this.imgThinBorder = 2;
 		this.imgMinWidth = 150;
 		this.imgMinHeight = 150;
 		this.imgMaxHeight = 600;
-		this.imgBestHeight = 280;
+        this.imgBestHeight = 300;
 
 		//
 		//this.firstLoad = 50;
@@ -58,9 +60,9 @@ var ImgGrid = Class.create({
 		this.containerWidth = jQuery("#" + curId).innerWidth();
 		
 		if (this.containerWidth < 1024) {
-			this.imgBorder = 3;
+			this.imgBorder = this.imgThinBorder;
 		} else {
-			this.imgBorder = 5;
+			this.imgBorder = this.imgFatBorder;
 		}
 	},
 	
