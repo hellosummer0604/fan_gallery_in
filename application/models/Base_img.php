@@ -8,11 +8,11 @@ abstract class Base_img extends MY_Model
 	protected $_user_id = null;
 	protected $_path = null;
 	protected $_filename = null;
+	protected $_title = null;
 	protected $_type = null;
 	protected $_size = null;
 	protected $_width = null;
 	protected $_height = null;
-
 
 	/**
 	 * @return null
@@ -54,6 +54,20 @@ abstract class Base_img extends MY_Model
 	 */
 	public function setFilename($filename) {
 		$this->_filename = $filename;
+	}
+
+	/**
+	 * @return null
+	 */
+	public function getTitle() {
+		return $this->_title;
+	}
+
+	/**
+	 * @param null $title
+	 */
+	public function setTitle($title) {
+		$this->_title = $title;
 	}
 
 	/**
@@ -159,7 +173,7 @@ abstract class Base_img extends MY_Model
 
 	public function delete() {
 		$uniqueKey = str_replace(".".$this->getType(), "", $this->getFilename());
-		print_r($uniqueKey);
+
 		$res = parent::delete();
 
 		if ($res) {

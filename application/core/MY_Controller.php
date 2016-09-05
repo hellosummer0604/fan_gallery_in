@@ -105,26 +105,6 @@ class MY_Controller extends CI_Controller {
 		$this->utils->removeAllSession();
 	}
 
-    public function returnSuccess($text = null, $data = null) {
-        $response = array();
-
-        $response['result'] = true;
-        $response['msg'] = empty($text) ? "Success." : $text;
-        $response['data'] = $data;
-
-        echo json_encode($response);
-    }
-
-    public function returnFailure($text = null, $data = null) {
-        $response = array();
-
-        $response['result'] = false;
-        $response['msg'] = empty($text) ? "Failed." : $text;
-        $response['data'] = $data;
-
-        echo json_encode($response);
-    }
-
 	public function loadImgPopView() {
 		$data[ONLINE_FLAG] = $this->isOnline() ? true : false;
 		$this->loadView('/include/popup/imgPopup', $data);

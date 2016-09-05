@@ -204,7 +204,7 @@ popupBox._signUp = function (data) {
         popupBox._updateNav();
         popupBox._hideSmallPopup();
     } else {
-        popupBox._popupMsgBanner("warning", data.msg);
+        popupBox._popupMsgBanner("warning", data);
     }
 }
 
@@ -213,7 +213,7 @@ popupBox._login = function (data) {
         popupBox._updateNav();
         popupBox._hideSmallPopup();
     } else {
-        popupBox._popupMsgBanner("warning", data.msg);
+        popupBox._popupMsgBanner("warning", data);
     }
 }
 
@@ -250,14 +250,21 @@ popupBox._handleRememberMe = function () {
     });
 }
 
-popupBox._popupMsgBanner = function (type, msg) {
+popupBox._popupMsgBanner = function (type, data) {
+    var msg = "";
+
     if (typeof type == 'undefined') {
         type = "close";
     }
 
-    if (typeof msg == 'undefined') {
+    if (typeof data == 'undefined') {
         msg = type;
+    } else if (typeof data == 'string') {
+        msg = data;
+    } else {
+        msg = data.errorMsg;
     }
+
 
     var className = "ajaxNotice";
     var banner = jQuery("." + className);

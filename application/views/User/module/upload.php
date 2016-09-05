@@ -16,12 +16,14 @@
 <div class="titleBox">
 	<h2>UPLOAD YOUR PHOTOS</h2>
 </div>
-
+<div class="ajaxNotice">
+	Loading...
+</div>
 <div id="uploadDropbox">
 	<form class="dropzone" id="myDropzone">
 		<div class="dz-message" data-dz-message>
 			<img src="<?php echo base_url('/resource/theme/default/img/upload_imgs21.png') ?>"/>
-			<div>Choose files or Drag them here<br>Double Click Img to remove</div>
+			<div>Choose files or Drag them here<br>Double Click to remove</div>
 		</div>
 	</form>
 </div>
@@ -74,11 +76,11 @@
 
 				self.on("success", function (file, serverFileName) {
 					file.serverFileName = serverFileName;
-					console.log('add img: ' + serverFileName);
+//					console.log('add img: ' + serverFileName);
 				});
 
 				self.on("removedfile", function (file) {
-					console.log('deleting file' + file.toString());
+//					console.log('deleting file' + file.toString());
 				});
 
 			},
@@ -118,14 +120,14 @@
 
 	function bindSubmit() {
 		jQuery('#submitUpload').off('click').on('click', function () {
+			popupBox._popupMsgBanner("notice", "Uploading...");
+
 			var closeBtn = jQuery("#closeUpload");
+			var submitBtn = jQuery("#submitUpload");
 			closeBtn.prop("disabled", true);
+			submitBtn.prop("disabled", true);
 
 			var tempData = {'fileList': JSON.stringify(DZ_DROPZONE.files)};
-
-			console.log('Submitting... ' + typeof DZ_DROPZONE.files);
-			console.error(JSON.stringify(tempData));
-
 			jQuery.ajax({
 				method: 'POST',
 				url: '<?php echo base_url('/upload/complete')?>',
@@ -133,22 +135,22 @@
 				dataType: 'json',
 				async: 'false',
 				success: function (data) {
-					console.log(JSON.stringify(data));
-					console.log('server response');
-
-
-					// if finished, close popup.
-					//		popupBox.hideImgBoxPopup(['#genericBox']);
+					if (data.result) {
+						popupBox._popupMsgBanner("success", data.msg + ", redirecting to photo repository.");
+						//
+					} else {
+						popupBox._popupMsgBanner("warning", data);
+					}
 				},
 				error: function (data) {
-//					popupBox._popupMsgBanner("error", "Server error, please retry again.");
-//					console.error(data);
-
+					popupBox._popupMsgBanner("error", "Server error, please reload this page and retry again.");
+					console.error(data);
 				}
 			});
 
 			//enable cancel button
 			closeBtn.prop("disabled", false);
+			submitBtn.prop("disabled", false);
 		});
 
 
@@ -159,7 +161,7 @@
 			return;
 		}
 
-		console.log('deleting server file' + serverFileNames);
+//		console.log('deleting server file' + serverFileNames);
 		jQuery.ajax({
 			method: 'POST',
 			url: '<?php echo base_url('/upload/delete')?>',
@@ -179,6 +181,3 @@
 
 
 </script>
-
-
-<!--http://stackoverflow.com/questions/24859005/dropzone-js-how-to-change-file-name-before-uploading-to-folder-->

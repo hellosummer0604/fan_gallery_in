@@ -2,14 +2,14 @@
 
 </div>
 <nav class="headerNav">
-    <span class="float_left bigLogo">North Gallery</span>
+    <div class="float_left bigLogo">North Gallery</div>
 	<?php
 		$temp = ONLINE_FLAG;
 		$isOnline = $$temp;
 		if ($isOnline) {
 	?>
-			<span class="userBanner">
-				<span class="font_size_16 navBtn accountBtn" data-jq-dropdown="#jq-dropdown-account">Hello, Summery</span>
+			<div class="userBanner">
+				<div class="font_size_16 navBtn accountBtn" data-jq-dropdown="#jq-dropdown-account">Hello, <?php print_r(mb_strimwidth($this->utils->onlineUserName(), 0, 12, "..."))?></div>
 
 				<div id="jq-dropdown-account"
 					 class="jq-dropdown jq-dropdown-tip jq-dropdown-anchor-right jq-dropdown-relative">
@@ -25,7 +25,7 @@
 					</ul>
 				</div>
 
-			</span>
+			</div>
 	<?php
 		} else {
 	?>

@@ -193,6 +193,17 @@ class Utils {
 		}
 	}
 
+	public function onlineUserName() {
+		$this->_CI->load->model('User');
+		$user = $this->_CI->User->load($this->isOnline());
+
+		if (!empty($user)) {
+			return $user->getUsername();
+		} else {
+			return null;
+		}
+	}
+
 	public function addLoginSession($userId) {
 		$this->_CI->session->set_userdata(SESSION_USER_ID, $userId);
 	}
@@ -277,6 +288,7 @@ class Utils {
 		} else {
 			$uploadData = $this->_CI->upload->data();
 			$fileName = $uploadData['file_name'];
+			$title = $uploadData['client_name'];
 			$data = array('upload_data' => $uploadData);
 
 			//if it is img
@@ -300,6 +312,7 @@ class Utils {
 			$tempImg->setUserId($curUserId);
 			$tempImg->setPath($path);
 			$tempImg->setFilename($fileName);
+			$tempImg->setTitle($title);
 			$tempImg->setType(trim($fileType));
 			$tempImg->setSize($uploadData['file_size']);
 			$tempImg->setWidth($uploadData['image_width']);
@@ -374,7 +387,7 @@ class Utils {
 	public function moveTmpImageToRepo($imgList, $userId) {
 		$num = 0;
 
-		if(empty($imgList) || empty($userId)) {
+		if (empty($imgList) || empty($userId)) {
 			return $num;
 		}
 
@@ -387,19 +400,20 @@ class Utils {
 			}
 
 			//get exif infomation
-			$exif = exif_read_data($tmpImg->getFullPath());
+			$exif = null;
+			$exif = @exif_read_data($tmpImg->getFullPath());
 
 			//insert to img table
-			$Img =  new $this->_CI->Img;
-
+			$Img = new $this->_CI->Img;
 
 			$Img->setUserId($tmpImg->getUserId());
-			$Img->setFilename($this->rndImgId().".jpg");
+			$Img->setFilename($this->rndImgId() . ".jpg");
+			$Img->setTitle($tmpImg->getTitle());
 			$Img->setType("jpeg");
 			$Img->setSize($tmpImg->getSize());
 			$Img->setWidth($tmpImg->getWidth());
 			$Img->setHeight($tmpImg->getHeight());
-			if($exif) {
+			if ($exif) {
 				$Img->setExif(json_encode($exif));
 			}
 			$Img->setStatus(IMG_STATE_REPO);

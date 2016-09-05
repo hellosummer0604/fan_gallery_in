@@ -31,4 +31,19 @@ function getStartEndOfPage($fullLen, $pageNo = 1, $pageSize = 80, $lastMin = 30)
 	return [$startNo, $endNo];
 }
 
+function responseJson($result = false, $msg = null, $errorMsg = null, $action = null, $data = null) {
+	$VERSION = 0.1;
+
+	return json_encode(array(
+		'result'   => $result,
+		'msg'      => $msg,
+		'errorMsg' => $errorMsg,
+		'action'   => $action,
+		'data'     => $data,
+		'version'  => $VERSION
+	));
+}
+
+
+
 ?>

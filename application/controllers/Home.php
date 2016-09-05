@@ -81,7 +81,7 @@ class Home extends MY_Controller {
 		}
 
 		if (!empty($error)) {
-			$this->returnFailure($error);
+			echo responseJson(false, '', $error);
 			return;
 		}
 
@@ -92,7 +92,7 @@ class Home extends MY_Controller {
 		}
 
 		if (!empty($error)) {
-			$this->returnFailure($error);
+			echo responseJson(false, '', $error);
 			return;
 		}
 
@@ -103,11 +103,15 @@ class Home extends MY_Controller {
 				$this->utils->addCookie();//todo
 			}
 
-            $this->returnSuccess("Login Success, Loading...", array('username' => $user->getUsername(), 'id' => $user->getId()));
+			$msg = "Login Success, Loading...";
+			$data = array('username' => $user->getUsername(), 'id' => $user->getId());
+
+			echo responseJson(true, $msg, '', '', $data);
         } else {
-            $this->returnFailure("Wrong Password.");
+			echo responseJson(false, '', "Wrong Password.");
         }
 
+        return;
 	}
 
 	public function signup() {
@@ -129,7 +133,7 @@ class Home extends MY_Controller {
 		}
 
 		if (!empty($error)) {
-			$this->returnFailure($error);
+			echo responseJson(false, '', $error);
 			return;
 		}
 
@@ -148,7 +152,7 @@ class Home extends MY_Controller {
 		}
 
 		if (!empty($error)) {
-			$this->returnFailure($error);
+			echo responseJson(false, '', $error);
 			return;
 		}
 
@@ -163,11 +167,12 @@ class Home extends MY_Controller {
 		}
 
 		if (!empty($error)) {
-			$this->returnFailure($error);
+			echo responseJson(false, '', $error);
 		} else {
-			$this->returnSuccess('haha');
+			echo responseJson(true, 'Success!');
 		}
 
+		return;
 	}
 
 
