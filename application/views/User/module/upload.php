@@ -76,11 +76,11 @@
 
 				self.on("success", function (file, serverFileName) {
 					file.serverFileName = serverFileName;
-					console.log('add img: ' + serverFileName);
+//					console.log('add img: ' + serverFileName);
 				});
 
 				self.on("removedfile", function (file) {
-					console.log('deleting file' + file.toString());
+//					console.log('deleting file' + file.toString());
 				});
 
 			},
@@ -161,7 +161,7 @@
 			return;
 		}
 
-		console.log('deleting server file' + serverFileNames);
+//		console.log('deleting server file' + serverFileNames);
 		jQuery.ajax({
 			method: 'POST',
 			url: '<?php echo base_url('/upload/delete')?>',
