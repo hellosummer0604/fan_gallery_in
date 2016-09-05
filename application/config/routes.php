@@ -71,5 +71,6 @@ $route['upload'] = 'Currentuser/moduleUpload/';
 $route['upload/file'] = 'Currentuser/uploadFile/';
 $route['upload/complete'] = 'Currentuser/completeUpload/';
 $route['upload/delete'] = 'Currentuser/deleteTmpFile/';
+$route['upload/deleteAll'] = 'Currentuser/deleteAllTmpFile/';
 
 

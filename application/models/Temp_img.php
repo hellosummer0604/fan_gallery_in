@@ -21,6 +21,30 @@ class Temp_img extends Base_img
 		$this->_session = $session;
 	}
 
+	public static function loadBySessAndUser($session, $userId) {
+		$data = array();
+
+		if (!empty($session)) {
+			$data['session'] = $session;
+		} else {
+			return null;
+		}
+
+		if (!empty($userId)) {
+			$data['user_id'] = $userId;
+		} else {
+			return null;
+		}
+
+		$objs = self::loadByTerm($data);
+
+		if (empty($objs)) {
+			return null;
+		}
+
+		return $objs;
+	}
+
 }
 
 

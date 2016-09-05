@@ -102,13 +102,19 @@
 				return;
 			}
 
-			//must turn off before close
-			jQuery('#genericBox').data("disableClose", false);
-
-			popupBox.hideImgBoxPopup(['#genericBox']);
+			closeUploadBox();
 		});
 	}
 
+	function closeUploadBox() {
+		//must turn off before close
+		jQuery('#genericBox').data("disableClose", false);
+
+		popupBox.hideImgBoxPopup(['#genericBox']);
+
+		//delete uploaded tmp files
+		deleteAllUploads();
+	}
 
 	function bindSubmit() {
 		jQuery('#submitUpload').off('click').on('click', function () {
@@ -159,6 +165,15 @@
 			url: '<?php echo base_url('/upload/delete')?>',
 			data: {rmvFile: serverFileNames},
 			dataType: 'json'
+		});
+	}
+
+	function deleteAllUploads() {
+		jQuery.ajax({
+			method: 'POST',
+			url: '<?php echo base_url('/upload/deleteAll')?>',
+			data: '',
+			dataType: 'text'
 		});
 	}
 

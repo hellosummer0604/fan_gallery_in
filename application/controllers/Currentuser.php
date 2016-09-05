@@ -177,6 +177,11 @@ class Currentuser extends User_Controller {
 		$jsonStr = $this->input->post('fileList');
 		$userId = $this->isOnline();
 
+		if ($userId == false) {
+			//todo
+//			$this->response($str, 200);
+		}
+
 		$fileList = $this->getValidUploadImgList($jsonStr);
 
 		if (empty($fileList)) {
@@ -188,7 +193,7 @@ class Currentuser extends User_Controller {
 
 		$str = $num." image(s) uploaded";
 
-		print_r($fileList);
+		print_r($str);
 
 //		$this->response($str, 200);
 
@@ -210,4 +215,10 @@ class Currentuser extends User_Controller {
 			$this->utils->removeUploadedFile($fileName, $userId);
 		}
 	}
+
+	public function deleteAllTmpFile_post() {
+		$this->utils->removeAllUploadedFile();
+	}
+
+
 }

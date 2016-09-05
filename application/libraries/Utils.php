@@ -336,6 +336,32 @@ class Utils {
 		$img->delete();
 	}
 
+	public function removeAllUploadedFile() {
+		$userId = $this->_CI->session->userdata(SESSION_USER_ID);
+		$sessId = $this->_CI->session->userdata(SESSION_UPLOAD);
+
+		if (empty($userId) || empty($sessId)) {
+			return;
+		}
+
+		$imgs = $this->_CI->Temp_img->loadBySessAndUser($sessId, $userId);
+
+		if (empty($imgs)) {
+			return;
+		}
+
+		foreach ($imgs as $img) {
+			//delete file
+			unlink($img->getFullPath());
+
+			//delete database record
+			$img->delete();
+		}
+
+		//destroy upload session
+		$this->_CI->session->unset_userdata(SESSION_UPLOAD);
+	}
+
 	/*
 	 * Move img from temp folder to img folder
 	 *
@@ -356,6 +382,10 @@ class Utils {
 			//get exif
 			$tmpImg = $this->_CI->Temp_img->loadByFileAndUser($fileName, $userId);
 
+			if (empty($tmpImg)) {
+				continue;
+			}
+
 			//get exif infomation
 			$exif = exif_read_data($tmpImg->getFullPath());
 
@@ -373,7 +403,6 @@ class Utils {
 				$Img->setExif(json_encode($exif));
 			}
 			$Img->setStatus(IMG_STATE_REPO);
-//			$Img->setThumb("test");
 
 			//move file
 			$persist = $this->persistTmpImg($tmpImg, $Img);
@@ -447,19 +476,16 @@ class Utils {
 			return false;
 		}
 
-		print_r($width);
-		print_r($height);
-
 		if (is_numeric($width) && is_numeric($height)) {
 			$cmdStr = "/usr/bin/convert $orgPath -resize ".$width."x".$height." ".$targetPath;
-			print_r($cmdStr);
 		} else {
 			$cmdStr = "/usr/bin/convert $orgPath $targetPath";
 		}
 
-		$run = exec($cmdStr, $out, $err);
+		//trigger imageick
+		exec($cmdStr, $out, $err);
 
-		if (!$run) {
+		if (!empty($err)) {
 			return array('res' => false, 'errorMsg' => $err, 'msg' => $out);
 		} else {
 			return array('res' => true, 'errorMsg' => '', 'msg' => $out);
@@ -516,8 +542,6 @@ class Utils {
 			$thumbImg = $this->convertImg($orgPath, $targetThumbPath, $thumbSizeArr['width'], $thumbSizeArr['height'])['res'];
 
 			if ($hdImg && $thumbImg) {
-
-
 				$success = true;
 			} else {
 				$success = false;
