@@ -124,7 +124,6 @@
 			var tempData = {'fileList': JSON.stringify(DZ_DROPZONE.files)};
 
 			console.log('Submitting... ' + typeof DZ_DROPZONE.files);
-			console.error(JSON.stringify(tempData));
 
 			jQuery.ajax({
 				method: 'POST',
@@ -179,6 +178,3 @@
 
 
 </script>
-
-
-<!--http://stackoverflow.com/questions/24859005/dropzone-js-how-to-change-file-name-before-uploading-to-folder-->

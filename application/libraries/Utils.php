@@ -288,6 +288,7 @@ class Utils {
 		} else {
 			$uploadData = $this->_CI->upload->data();
 			$fileName = $uploadData['file_name'];
+			$title = $uploadData['client_name'];
 			$data = array('upload_data' => $uploadData);
 
 			//if it is img
@@ -311,6 +312,7 @@ class Utils {
 			$tempImg->setUserId($curUserId);
 			$tempImg->setPath($path);
 			$tempImg->setFilename($fileName);
+			$tempImg->setTitle($title);
 			$tempImg->setType(trim($fileType));
 			$tempImg->setSize($uploadData['file_size']);
 			$tempImg->setWidth($uploadData['image_width']);
@@ -406,6 +408,7 @@ class Utils {
 
 			$Img->setUserId($tmpImg->getUserId());
 			$Img->setFilename($this->rndImgId().".jpg");
+			$Img->setTitle($tmpImg->getTitle());
 			$Img->setType("jpeg");
 			$Img->setSize($tmpImg->getSize());
 			$Img->setWidth($tmpImg->getWidth());
