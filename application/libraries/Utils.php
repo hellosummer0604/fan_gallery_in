@@ -193,6 +193,17 @@ class Utils {
 		}
 	}
 
+	public function onlineUserName() {
+		$this->_CI->load->model('User');
+		$user = $this->_CI->User->load($this->isOnline());
+
+		if (!empty($user)) {
+			return $user->getUsername();
+		} else {
+			return null;
+		}
+	}
+
 	public function addLoginSession($userId) {
 		$this->_CI->session->set_userdata(SESSION_USER_ID, $userId);
 	}

@@ -21,7 +21,7 @@
 	<form class="dropzone" id="myDropzone">
 		<div class="dz-message" data-dz-message>
 			<img src="<?php echo base_url('/resource/theme/default/img/upload_imgs21.png') ?>"/>
-			<div>Choose files or Drag them here<br>Double Click Img to remove</div>
+			<div>Choose files or Drag them here<br>Double Click to remove</div>
 		</div>
 	</form>
 </div>

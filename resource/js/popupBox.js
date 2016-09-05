@@ -204,7 +204,7 @@ popupBox._signUp = function (data) {
         popupBox._updateNav();
         popupBox._hideSmallPopup();
     } else {
-        popupBox._popupMsgBanner("warning", data.msg);
+        popupBox._popupMsgBanner("warning", data);
     }
 }
 
@@ -213,7 +213,7 @@ popupBox._login = function (data) {
         popupBox._updateNav();
         popupBox._hideSmallPopup();
     } else {
-        popupBox._popupMsgBanner("warning", data.msg);
+        popupBox._popupMsgBanner("warning", data);
     }
 }
 
@@ -250,7 +250,7 @@ popupBox._handleRememberMe = function () {
     });
 }
 
-popupBox._popupMsgBanner = function (type, msg) {
+popupBox._popupMsgBanner = function (type, data) {
     if (typeof type == 'undefined') {
         type = "close";
     }
@@ -259,6 +259,7 @@ popupBox._popupMsgBanner = function (type, msg) {
         msg = type;
     }
 
+    var msg = "";
     var className = "ajaxNotice";
     var banner = jQuery("." + className);
     banner.removeClass();
@@ -270,6 +271,7 @@ popupBox._popupMsgBanner = function (type, msg) {
         case "warning":
         case "success":
         case "error":
+            msg = data.errorMsg;
             banner.html(msg);
             banner.addClass(type);
             banner.fadeIn(popupBox._FADE_TIME);

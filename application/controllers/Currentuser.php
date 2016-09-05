@@ -205,7 +205,7 @@ class Currentuser extends User_Controller {
 		$userId = $this->isOnline();
 
 		if (!$userId) {
-			$this->returnFailure("Need login");
+			echo responseJson(false, '', "Need login");
 			return;
 		}
 
@@ -214,6 +214,8 @@ class Currentuser extends User_Controller {
 		if (!empty($fileName)) {
 			$this->utils->removeUploadedFile($fileName, $userId);
 		}
+
+		echo responseJson(true, $fileName.' removed.');
 	}
 
 	public function deleteAllTmpFile_post() {
