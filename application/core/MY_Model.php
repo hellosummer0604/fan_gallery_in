@@ -89,7 +89,9 @@ class MY_Model extends CI_Model {
 
 		$res = &get_instance()->db->delete(static::$tbl, $data);
 
-		return $res;
+		$num = &get_instance()->db->affected_rows();
+
+		return $num > 0;
 	}
 
 	/********** end static function **********/
@@ -130,6 +132,8 @@ class MY_Model extends CI_Model {
 			}
 
 			$this->db->insert(static::$tbl, $insertData);
+
+			return $this->db->affected_rows() > 0;
 		} else {//update
 			$thisId = $this->getId();
 			if (empty($thisId)) {
@@ -154,9 +158,11 @@ class MY_Model extends CI_Model {
 			}
 
 			$this->db->update(static::$tbl, $updateData, array("id" => $this->getId()));
+
+			return $this->db->affected_rows() > 0;
 		}
 
-		return true;
+		return false;
 	}
 
 	//validate fields before save
@@ -169,9 +175,9 @@ class MY_Model extends CI_Model {
 	}
 
 	public function delete() {
-		$res = $this->db->delete(static::$tbl, array("id" => $this->getId()));
+		$this->db->delete(static::$tbl, array("id" => $this->getId()));
 
-		return $res;
+		return $this->db->affected_rows() > 0;
 	}
 
 

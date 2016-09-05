@@ -1,131 +1,31 @@
 <?php
+require_once ('Base_img.php');
 
-class Temp_img extends MY_Model
+class Temp_img extends Base_img
 {
 	protected static $tbl = "Upload_temp";
 
-	//columns in database start with underscore
-	protected $_user_id = null;
-	protected $_path = null;
-	protected $_filename = null;
-	protected $_type = null;
-	protected $_size = null;
-	protected $_width = null;
-	protected $_height = null;
-
+	protected $_session = null;
 
 	/**
 	 * @return null
 	 */
-	public function getUserId() {
-		return $this->_user_id;
+	public function getSession() {
+		return $this->_session;
 	}
 
 	/**
-	 * @param null $user_id
+	 * @param null $session
 	 */
-	public function setUserId($user_id) {
-		$this->_user_id = $user_id;
+	public function setSession($session) {
+		$this->_session = $session;
 	}
 
-	/**
-	 * @return null
-	 */
-	public function getPath() {
-		return $this->_path;
-	}
-
-	/**
-	 * @param null $path
-	 */
-	public function setPath($path) {
-		$this->_path = $path;
-	}
-
-	/**
-	 * @return null
-	 */
-	public function getFilename() {
-		return $this->_filename;
-	}
-
-	/**
-	 * @param null $filename
-	 */
-	public function setFilename($filename) {
-		$this->_filename = $filename;
-	}
-
-	/**
-	 * @return null
-	 */
-	public function getType() {
-		return $this->_type;
-	}
-
-	/**
-	 * @param null $type
-	 */
-	public function setType($type) {
-		$this->_type = $type;
-	}
-
-	/**
-	 * @return null
-	 */
-	public function getSize() {
-		return $this->_size;
-	}
-
-	/**
-	 * @param null $size
-	 */
-	public function setSize($size) {
-		$this->_size = $size;
-	}
-
-	/**
-	 * @return null
-	 */
-	public function getWidth() {
-		return $this->_width;
-	}
-
-	/**
-	 * @param null $width
-	 */
-	public function setWidth($width) {
-		$this->_width = $width;
-	}
-
-	/**
-	 * @return null
-	 */
-	public function getHeight() {
-		return $this->_height;
-	}
-
-	/**
-	 * @param null $height
-	 */
-	public function setHeight($height) {
-		$this->_height = $height;
-	}
-
-	protected function generateId() {
-		return null;
-	}
-
-	public function __construct() {
-		parent::__construct();
-	}
-
-	/********** start static function **********/
-	public static function loadByFileAndUser($fileName, $userId) {
+	public static function loadBySessAndUser($session, $userId) {
 		$data = array();
 
-		if (!empty($fileName)) {
-			$data['filename'] = $fileName;
+		if (!empty($session)) {
+			$data['session'] = $session;
 		} else {
 			return null;
 		}
@@ -142,32 +42,9 @@ class Temp_img extends MY_Model
 			return null;
 		}
 
-		return $objs[0];
+		return $objs;
 	}
 
-	public static function deleteById($id) {
-		$img = self::load($id);
-
-		return $img->delete();
-	}
-
-	/********** end static function **********/
-
-	public function delete() {
-		$uniqueKey = str_replace(".".$this->getType(), "", $this->getFilename());
-		print_r($uniqueKey);
-		$res = parent::delete();
-
-		if ($res) {
-			$this->db->delete("Unique_id_img", array("str" => $uniqueKey));
-		}
-
-		return $res;
-	}
-
-	protected function removeUniqueImgId() {
-
-	}
 }
 
 
