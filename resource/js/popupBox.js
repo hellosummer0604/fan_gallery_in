@@ -251,15 +251,21 @@ popupBox._handleRememberMe = function () {
 }
 
 popupBox._popupMsgBanner = function (type, data) {
+    var msg = "";
+
     if (typeof type == 'undefined') {
         type = "close";
     }
 
-    if (typeof msg == 'undefined') {
+    if (typeof data == 'undefined') {
         msg = type;
+    } else if (typeof data == 'string') {
+        msg = data;
+    } else {
+        msg = data.errorMsg;
     }
 
-    var msg = "";
+
     var className = "ajaxNotice";
     var banner = jQuery("." + className);
     banner.removeClass();
@@ -271,7 +277,6 @@ popupBox._popupMsgBanner = function (type, data) {
         case "warning":
         case "success":
         case "error":
-            msg = data.errorMsg;
             banner.html(msg);
             banner.addClass(type);
             banner.fadeIn(popupBox._FADE_TIME);

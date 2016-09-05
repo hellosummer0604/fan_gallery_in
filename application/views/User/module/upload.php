@@ -16,7 +16,9 @@
 <div class="titleBox">
 	<h2>UPLOAD YOUR PHOTOS</h2>
 </div>
-
+<div class="ajaxNotice">
+	Loading...
+</div>
 <div id="uploadDropbox">
 	<form class="dropzone" id="myDropzone">
 		<div class="dz-message" data-dz-message>
@@ -118,13 +120,14 @@
 
 	function bindSubmit() {
 		jQuery('#submitUpload').off('click').on('click', function () {
+			popupBox._popupMsgBanner("notice", "Uploading...");
+
 			var closeBtn = jQuery("#closeUpload");
+			var submitBtn = jQuery("#submitUpload");
 			closeBtn.prop("disabled", true);
+			submitBtn.prop("disabled", true);
 
 			var tempData = {'fileList': JSON.stringify(DZ_DROPZONE.files)};
-
-			console.log('Submitting... ' + typeof DZ_DROPZONE.files);
-
 			jQuery.ajax({
 				method: 'POST',
 				url: '<?php echo base_url('/upload/complete')?>',
@@ -132,22 +135,22 @@
 				dataType: 'json',
 				async: 'false',
 				success: function (data) {
-					console.log(JSON.stringify(data));
-					console.log('server response');
-
-
-					// if finished, close popup.
-					//		popupBox.hideImgBoxPopup(['#genericBox']);
+					if (data.result) {
+						popupBox._popupMsgBanner("success", data.msg + ", redirecting to photo repository.");
+						//
+					} else {
+						popupBox._popupMsgBanner("warning", data);
+					}
 				},
 				error: function (data) {
-//					popupBox._popupMsgBanner("error", "Server error, please retry again.");
-//					console.error(data);
-
+					popupBox._popupMsgBanner("error", "Server error, please reload this page and retry again.");
+					console.error(data);
 				}
 			});
 
 			//enable cancel button
 			closeBtn.prop("disabled", false);
+			submitBtn.prop("disabled", false);
 		});
 
 

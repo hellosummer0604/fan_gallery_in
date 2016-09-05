@@ -387,7 +387,7 @@ class Utils {
 	public function moveTmpImageToRepo($imgList, $userId) {
 		$num = 0;
 
-		if(empty($imgList) || empty($userId)) {
+		if (empty($imgList) || empty($userId)) {
 			return $num;
 		}
 
@@ -400,20 +400,20 @@ class Utils {
 			}
 
 			//get exif infomation
-			$exif = exif_read_data($tmpImg->getFullPath());
+			$exif = null;
+			$exif = @exif_read_data($tmpImg->getFullPath());
 
 			//insert to img table
-			$Img =  new $this->_CI->Img;
-
+			$Img = new $this->_CI->Img;
 
 			$Img->setUserId($tmpImg->getUserId());
-			$Img->setFilename($this->rndImgId().".jpg");
+			$Img->setFilename($this->rndImgId() . ".jpg");
 			$Img->setTitle($tmpImg->getTitle());
 			$Img->setType("jpeg");
 			$Img->setSize($tmpImg->getSize());
 			$Img->setWidth($tmpImg->getWidth());
 			$Img->setHeight($tmpImg->getHeight());
-			if($exif) {
+			if ($exif) {
 				$Img->setExif(json_encode($exif));
 			}
 			$Img->setStatus(IMG_STATE_REPO);

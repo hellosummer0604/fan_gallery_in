@@ -173,7 +173,7 @@ abstract class Base_img extends MY_Model
 
 	public function delete() {
 		$uniqueKey = str_replace(".".$this->getType(), "", $this->getFilename());
-		print_r($uniqueKey);
+
 		$res = parent::delete();
 
 		if ($res) {

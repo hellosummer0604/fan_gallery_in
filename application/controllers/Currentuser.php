@@ -130,9 +130,14 @@ class Currentuser extends User_Controller {
 	}
 
 	public function uploadFile_post() {
-		$upload = $this->utils->uploadFile();
+		$userId = $this->isOnline();
 
-//		print_r($upload);
+		if ($userId == false) {
+			$this->response(responseJson(false, "Please login."), 200);
+			return;
+		}
+
+		$upload = $this->utils->uploadFile();
 
 		if (!empty($upload) && $upload['result'] && !empty($upload['data']['upload_data'])) {
 			$this->response($upload['data']['upload_data']['file_name'], 200);
@@ -178,14 +183,14 @@ class Currentuser extends User_Controller {
 		$userId = $this->isOnline();
 
 		if ($userId == false) {
-			//todo
-//			$this->response($str, 200);
+			echo responseJson(false, '', "Please login.");
+			return;
 		}
 
 		$fileList = $this->getValidUploadImgList($jsonStr);
 
 		if (empty($fileList)) {
-			$this->response("No valid file to upload", 500);
+			echo responseJson(false, '', "No file ready to upload.");
 			return;
 		}
 
@@ -193,11 +198,13 @@ class Currentuser extends User_Controller {
 
 		$str = $num." image(s) uploaded";
 
-		print_r($str);
+		if ($num > 0) {
+			echo responseJson(true, $str);
+		} else {
+			echo responseJson(false, '', $str);
+		}
 
-//		$this->response($str, 200);
-
-		//http://stackoverflow.com/questions/15088666/generating-image-thumbnails-using-php-without-running-out-of-memory
+		return;
 	}
 
 	public function deleteTmpFile_post() {
