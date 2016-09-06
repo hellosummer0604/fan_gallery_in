@@ -386,6 +386,7 @@ class Utils {
 
 	public function moveTmpImageToRepo($imgList, $userId) {
 		$num = 0;
+		$successList = array();
 
 		if (empty($imgList) || empty($userId)) {
 			return $num;
@@ -423,13 +424,14 @@ class Utils {
 
 			if ($persist) {
 				$num++;
+				$successList[] = $Img->getTitle();
 				//remove tmp file and record
 				$this->removeUploadedFile($fileName, $userId);
 			}
 
 		}
 
-		return $num;
+		return array('num' => $num, 'list' => $successList);
 	}
 
 	//todo need to add this to cron

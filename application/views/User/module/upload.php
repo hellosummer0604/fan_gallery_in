@@ -1,6 +1,24 @@
 <script src="<?php echo base_url('/resource/js/lib/dropzone.min.js') ?>"/>
-<!--<link rel='stylesheet' href='../resource/theme/default/css/basic.min.css'>-->
 <link rel='stylesheet' href='<?php echo base_url('/resource/theme/default/css/dropzone.min.css') ?>'>
+<style type="text/css">
+	#successList {
+		text-align: left;
+		padding-left: 30px;
+		margin-bottom: 30px;
+		margin-top: -18px;
+		min-height:1px;
+	}
+
+	#successList ul{
+		list-style: none;
+	}
+
+	#successList .chkMark:after {
+		content: attr(data-content) '\2714';
+		color: rgb(0, 171, 230);
+	}
+</style>
+
 
 <div class="colorBanner">
 	<table cellpadding="0" cellspacing="0">
@@ -29,10 +47,16 @@
 </div>
 
 <div id="btnSection">
-	<button id="submitUpload" class="btn-submit" type="button">Upload</button>
+	<button id="submitUpload" class="btn-submit" type="button">Upload</button>&nbsp;
 	<button id="closeUpload" class="btn-reset" type="button">Cancel</button>
 </div>
-
+<div id="successList">
+	<ul>
+<!--		<li>asdasdbhasudbasf.jpg <span class="chkMark"></span></li>-->
+<!--		<li>sadaisdhasodoiasd.png <span class="chkMark"></span></li>-->
+<!--		<li>asdbaspdhasdojasd.jpg <span class="chkMark"></span></li>-->
+	</ul>
+</div>
 <script>
 	//must here
 	var DZ_DROPZONE = null;
@@ -122,10 +146,8 @@
 		jQuery('#submitUpload').off('click').on('click', function () {
 			popupBox._popupMsgBanner("notice", "Uploading...");
 
-			var closeBtn = jQuery("#closeUpload");
-			var submitBtn = jQuery("#submitUpload");
-			closeBtn.prop("disabled", true);
-			submitBtn.prop("disabled", true);
+			jQuery("#closeUpload").hide();
+			jQuery("#submitUpload").hide();
 
 			var tempData = {'fileList': JSON.stringify(DZ_DROPZONE.files)};
 			jQuery.ajax({
@@ -133,24 +155,31 @@
 				url: '<?php echo base_url('/upload/complete')?>',
 				data: tempData,
 				dataType: 'json',
-				async: 'false',
 				success: function (data) {
 					if (data.result) {
 						popupBox._popupMsgBanner("success", data.msg + ", redirecting to photo repository.");
 						//
+						data.data.forEach(function(enrty) {
+							jQuery('#successList ul').append('<li>'+ enrty + '&nbsp;&nbsp;<span class="chkMark"></span><li>');
+						});
+
 					} else {
 						popupBox._popupMsgBanner("warning", data);
 					}
+					//enable cancel button
+					jQuery("#closeUpload").show();
+					jQuery("#submitUpload").show();
 				},
 				error: function (data) {
 					popupBox._popupMsgBanner("error", "Server error, please reload this page and retry again.");
 					console.error(data);
+					//enable cancel button
+					jQuery("#closeUpload").show();
+					jQuery("#submitUpload").show();
 				}
 			});
 
-			//enable cancel button
-			closeBtn.prop("disabled", false);
-			submitBtn.prop("disabled", false);
+
 		});
 
 
