@@ -194,12 +194,12 @@ class Currentuser extends User_Controller {
 			return;
 		}
 
-		$num = $this->utils->moveTmpImageToRepo($fileList, $userId);
+		$uploaded = $this->utils->moveTmpImageToRepo($fileList, $userId);
 
-		$str = $num." image(s) uploaded";
+		$str = $uploaded['num']." image(s) uploaded";
 
-		if ($num > 0) {
-			echo responseJson(true, $str);
+		if ($uploaded['num'] > 0) {
+			echo responseJson(true, $str, '', '', $uploaded['list']);
 		} else {
 			echo responseJson(false, '', $str);
 		}
