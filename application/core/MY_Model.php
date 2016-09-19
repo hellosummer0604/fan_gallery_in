@@ -57,6 +57,22 @@ class MY_Model extends CI_Model {
 		return $objs;
 	}
 
+	public static function loadByQuery($sql, $data) {
+		if (empty($sql)) {
+			return null;
+		}
+
+		$res = &get_instance()->db->query($sql, $data)->result_array();
+
+		$objs = self::assembleObjByResultSet($res);
+
+		if (empty($objs)) {
+			return null;
+		}
+
+		return $objs;
+	}
+
 	 protected static function assembleObjByResultSet($res) {
 		if (empty($res)) {
 			return null;
@@ -132,6 +148,10 @@ class MY_Model extends CI_Model {
 			}
 
 			$this->db->insert(static::$tbl, $insertData);
+
+			if (empty($this->_id)) {
+				$this->_id = $this->db->insert_id();
+			}
 
 			return $this->db->affected_rows() > 0;
 		} else {//update
