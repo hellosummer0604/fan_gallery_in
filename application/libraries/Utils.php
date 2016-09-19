@@ -11,6 +11,7 @@ class Utils {
 		$this->_CI = &get_instance();
 		$this->_CI->load->model('Temp_img');
 		$this->_CI->load->model('Img');
+		$this->_CI->load->model('Tag');
 
 	}
 
@@ -526,6 +527,10 @@ class Utils {
 
 
 	public function persistTmpImg($tmpImg, $img) {
+		if ($this->isOnline() == false) {
+			return false;
+		}
+
 		//calc img size
 		$thumbSizeArr = $this->thumbImgSize($tmpImg->getHeight(), $tmpImg->getWidth(), $tmpImg->getSize());
 		if (!empty($thumbSizeArr)) {
@@ -566,6 +571,10 @@ class Utils {
 
 		//save to database
 		if ($success) {
+			$tag = new Tag(IMG_UNASSIGNED, $this->isOnline());
+
+			$img->addTag($tag);
+
 			$success = $img->save();
 		}
 

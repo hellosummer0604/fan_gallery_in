@@ -82,7 +82,65 @@ class Test extends MY_Controller {
 		print_r($run);
 	}
 
+	public function test9() {
+		$this->load->model('Img');
 
+		$imgs = $this->Img->loadByAuthorAndStatus('f8057d071686e27832ba66b6b96a371d', IMG_STATE_REPO);
+		print_r($imgs);
+
+//		$img->save();
+	}
+
+	public function test10() {
+//		$this->load->model('Tag');
+//
+//		$tag = new Tag();
+//
+//		$tag->setTagName('asd');
+//
+//		print_r($tag);
+//		$tag->save();
+//		print_r($tag);
+	}
+
+	public function test11() {
+		$this->load->model('Tag');
+		$this->load->model('Img');
+
+		$img = Img::load(4);
+
+//		print_r($img->getTags());
+//		echo '<br>';
+
+		$tag1 = new Tag('unAssigned', 'f8057d071686e27832ba66b6b96a371d');
+		$tag2 = new Tag('tag 3', 'f8057d071686e27832ba66b6b96a371d');
+		$tag3 = new Tag('tag 4', 'f8057d071686e27832ba66b6b96a371d');
+//		$tag3 = new Tag('tag3', 'f8057d071686e27832ba66b6b96a371d');
+//		$tag2 = new Tag('tag1', 'f8057d071686e27832ba66b6b96a371d');
+//		$tag2 = new Tag('tag1', 'f8057d071686e27832ba66b6b96a371d');
+
+//		print_r($tag2);
+//		echo '<br>';
+
+
+		$img->addTag($tag2);
+		$img->addTag($tag3);
+//		$img->addTag($tag2);
+//		$img->addTag($tag3);
+
+		$img->removeTag($tag1);
+//		$img->removeTag($tag2);
+//		$img->removeTag($tag3);
+
+		$img->saveTags();
+
+
+	}
+
+	public function test12() {
+
+
+	}
 }
 
 ?>

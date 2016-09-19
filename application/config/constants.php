@@ -120,3 +120,5 @@ define('FILE_THUMB_PATH', 'resource/gallery/img_publish/img_thumb/');
 define('THUMB_MIN_WIDTH', 500);
 define('THUMB_MIN_HEIGHT', 500);
 define('THUMB_SIZE', 500);
+
+define('IMG_UNASSIGNED', 'unAssigned');
