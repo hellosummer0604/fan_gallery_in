@@ -590,5 +590,139 @@ class Utils {
 
 	/***************** end image uploading *****************/
 
+	/***************** start ajax image section wrapper *****************/
+	public function imgSectionPreprocessor($sectionId, $imgs) {
+		if (empty($imgs)) {
+			return null;
+		}
+
+		$imgList = array();
+
+		foreach ($imgs as $img) {
+			$imgList[] = array(
+				'id' => $img->getId(),
+				'thumb' => '/'.$img->getThumb().$img->getFilename(),
+				'detail' => '/'.$img->getPath().$img->getFilename(),
+				'width' => $img->getWidth(),
+				'height' => $img->getHeight(),
+			);
+		}
+
+		$section = array('sectionId' => $sectionId, 'imgList' => $imgList);
+
+		return $section;
+	}
+
+	/**
+	 * $imgSection format:
+	 *
+	 * Array
+	 * (
+		 * [sectionId] => repository
+		 * [imgList] => Array
+		 * (
+			 * [0] => Array
+			 * (
+				 * [id] => img17.jpg
+				 * [thumb] => ./resource/gallery/img_repository/img17.jpg
+				 * [width] => 800
+				 * [height] => 535
+			 * )
+			 *
+			 * [1] => Array
+			 * (
+				 * [id] => L1001642.jpg
+				 * [thumb] => ./resource/gallery/img_repository/L1001642.jpg
+				 * [width] => 800
+				 * [height] => 222
+			 * )
+			 *
+			 * [2] => Array
+			 * (
+				 * [id] => B61A7578.jpg
+				 * [thumb] => ./resource/gallery/img_repository/B61A7578.jpg
+				 * [width] => 800
+				 * [height] => 533
+			 * )
+		 * )
+	 * )
+	 *
+	 *
+	 * @param $imgSection
+	 * @return array|null
+	 */
+	public function imgSectionWrapper($imgSection)
+	{
+		if (empty($imgSection) || !array_key_exists('sectionId', $imgSection) || !array_key_exists('imgList', $imgSection) || empty($imgSection['sectionId']) || empty($imgSection['imgList'])) {
+			return null;
+		}
+
+		$groupSize = IMG_SECTION_SIZE;
+
+		$typeId = strtolower($imgSection['sectionId']);
+
+		$groupNum = count($imgSection['imgList']) / $groupSize;
+
+		if ($groupNum < 2) {
+			$groupName = 's_' . $typeId . '_g_' . "0";
+
+			$groupList = array($groupName => array('id' => $groupName, 'imgList' => $imgSection['imgList']));
+
+			$res = array('id' => $typeId, 'loadingList' => array(), 'waitingList' => $groupList);
+		} else {
+			$remainImg = count($imgSection['imgList']);
+
+			$groupList = array();
+
+			for ($i = 0; $i < $groupNum - 2; $i++) {
+				$groupName = 's_' . $typeId . '_g_' . $i;
+
+				$temp_img_array = array_slice($imgSection['imgList'], $i * $groupSize, $groupSize);
+
+				$temp_img_array = array('id' => $groupName, 'imgList' => $temp_img_array);
+
+				$groupList[$groupName] = $temp_img_array;
+
+				$remainImg = $remainImg - $groupSize;
+			}
+			//last group
+			$groupName = 's_' . $typeId . '_g_' . $i;
+
+			$temp_img_array = array_slice($imgSection['imgList'], $i * $groupSize, $remainImg);
+
+			$temp_img_array = array('id' => $groupName, 'imgList' => $temp_img_array);
+
+			$groupList[$groupName] = $temp_img_array;
+
+			$res = array('id' => $typeId, 'loadingList' => array(), 'waitingList' => $groupList);
+		}
+
+		return $res;
+	}
+
+
+	public static function imgDetailWrapper($imgObj) {
+		if (empty($imgObj)) {
+			return null;
+		}
+
+		$res = array();
+
+		try {
+			$res =  array('path' => base_url('/'.$imgObj->getPath().$imgObj->getFilename()),
+						  'filename' => $imgObj->getFilename(),
+						  'createTime' => $imgObj->getCreated(),
+						  'orgWidth' => $imgObj->getWidth(),
+						  'orgHeight' => $imgObj->getHeight(),
+						  'details' => $imgObj->getExif());
+
+			$res = array('data' => $res, 'type' => $imgObj->getStatus());
+		} catch (Exception $e) {
+			$res = null;
+		}
+
+		return $res;
+	}
+	/***************** end ajax image section wrapper *****************/
 
 }

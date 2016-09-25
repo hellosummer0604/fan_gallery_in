@@ -43,8 +43,12 @@ class Img extends Base_img
 	/**
 	 * @return null
 	 */
-	public function getThumb() {
-		return $this->_thumb;
+	public function getThumb($full = false) {
+		if ($full) {
+			return base_url($this->_thumb);
+		} else {
+			return $this->_thumb;
+		}
 	}
 
 	/**
@@ -188,10 +192,12 @@ class Img extends Base_img
 	 * Don't forget to add this when you're creating new loading functions
 	 *
 	 * @param $data
+	 * @param int $page
+	 * @param int|null $pageSize
 	 * @return array|null
 	 */
-	public static function loadByTerm($data) {
-		$objs = parent::loadByTerm($data);
+	public static function loadByTerm($data, $page = 0, $pageSize = IMG_SECTION_PAGE_SIZE) {
+		$objs = parent::loadByTerm($data, $page, $pageSize);
 
 		if (!empty($objs)) {
 			foreach ($objs as &$obj) {
@@ -224,7 +230,7 @@ class Img extends Base_img
 		return $objs;
 	}
 
-	public static function loadByAuthorAndStatus($userId, $status) {
+	private static function loadByAuthorAndStatus($userId, $status, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE) {
 		if (empty($userId) || empty($status)) {
 			return null;
 		}
@@ -234,13 +240,25 @@ class Img extends Base_img
 		$data['user_id'] = $userId;
 		$data['status'] = $status;
 
-		$objs = self::loadByTerm($data);
+		$objs = self::loadByTerm($data, $page, $pageSize);
 
 		if (empty($objs)) {
 			return null;
 		}
 
 		return $objs;
+	}
+
+	public static function loadRepository($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE) {
+		return self::loadByAuthorAndStatus(self::$util->isOnline(), IMG_STATE_REPO, $pageNo, $pageSize);
+	}
+
+	public static function getRepositoryImgs($pageNo, $pageSize, $last) {
+		$imgs = self::loadRepository($pageNo, $pageSize, $last);
+
+		$imgSection = self::$util->imgSectionPreprocessor(REPO_ID, $imgs);
+
+		return $imgSection;
 	}
 
 

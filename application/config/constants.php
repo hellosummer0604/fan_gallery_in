@@ -90,7 +90,7 @@ define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 
-define('IMG_SECTION_PAGE_NO', 1);
+define('IMG_SECTION_PAGE_NO', 0);
 define('IMG_SECTION_PAGE_SIZE', 150);
 define('IMG_SECTION_SIZE', 24);
 define('IMG_SECTION_LAST_SIZE', 20);
@@ -122,3 +122,7 @@ define('THUMB_MIN_HEIGHT', 500);
 define('THUMB_SIZE', 500);
 
 define('IMG_UNASSIGNED', 'unAssigned');
+
+
+define('REPO_ID', 'repo_id');
+

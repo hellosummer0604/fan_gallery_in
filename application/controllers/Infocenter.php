@@ -34,7 +34,7 @@ class Infocenter extends MY_Controller {
 		
 		$this->loadPosterView(false);
 		
-		$data['cateList'] = $res = ['Repository' => 'repo_id'];
+		$data['cateList'] = $res = ['Repository' => REPO_ID];
 		
 		$this->loadView('img_repository', $data);
 	}

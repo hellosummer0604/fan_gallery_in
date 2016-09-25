@@ -19,7 +19,7 @@ class Repository extends MY_Model {
 
 		$imgList = $this->getFileList($path, $pageNo, $pageSize, $last, false);
 //		echo json_encode($imgList);
-		
+
 		$res = array();
 
 		foreach ($imgList as $filename) {
@@ -46,6 +46,7 @@ class Repository extends MY_Model {
 			return null;
 		}
 
+//		print_r($res);
 		return $res;
 	}
 

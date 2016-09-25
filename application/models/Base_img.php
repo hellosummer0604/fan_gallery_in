@@ -29,10 +29,15 @@ abstract class Base_img extends MY_Model
 	}
 
 	/**
-	 * @return null
+	 * @param bool $full
+	 * @return null|string
 	 */
-	public function getPath() {
-		return $this->_path;
+	public function getPath($full = false) {
+		if ($full) {
+			return base_url($this->_path);
+		} else {
+			return $this->_path;
+		}
 	}
 
 	/**
