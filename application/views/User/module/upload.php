@@ -48,7 +48,7 @@
 
 <div id="btnSection">
 	<button id="submitUpload" class="btn-submit" type="button">Upload</button>&nbsp;
-	<button id="closeUpload" class="btn-reset" type="button">Cancel</button>
+	<button id="closeUpload" class="btn-reset" type="button">Close</button>
 </div>
 <div id="successList">
 	<ul>

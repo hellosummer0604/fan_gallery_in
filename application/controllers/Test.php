@@ -138,7 +138,10 @@ class Test extends MY_Controller {
 	}
 
 	public function test12() {
+		$this->load->model('Img');
 
+		$img = Img::loadRepository();
+		print_r(json_encode($img));
 
 	}
 }

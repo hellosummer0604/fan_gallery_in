@@ -41,12 +41,16 @@ class MY_Model extends CI_Model {
 		return $objs[0];
 	}
 
-	public static function loadByTerm($data) {
+	public static function loadByTerm($data, $page = null, $pageSize = null) {
 		if (empty($data)) {
 			return null;
 		}
 
-		$res = &get_instance()->db->get_where(static::$tbl, $data)->result_array();
+		if (is_null($page) || is_null($pageSize)) {
+			$res = get_instance()->db->order_by("id", "desc")->get_where(static::$tbl, $data)->result_array();
+		} else {
+			$res = get_instance()->db->order_by("id", "desc")->get_where(static::$tbl, $data, $pageSize, $page)->result_array();
+		}
 
 		$objs = self::assembleObjByResultSet($res);
 
@@ -62,7 +66,7 @@ class MY_Model extends CI_Model {
 			return null;
 		}
 
-		$res = &get_instance()->db->query($sql, $data)->result_array();
+		$res = get_instance()->db->query($sql, $data)->result_array();
 
 		$objs = self::assembleObjByResultSet($res);
 
@@ -103,9 +107,9 @@ class MY_Model extends CI_Model {
 
 		$data = array("id" => $id);
 
-		$res = &get_instance()->db->delete(static::$tbl, $data);
+		get_instance()->db->delete(static::$tbl, $data);
 
-		$num = &get_instance()->db->affected_rows();
+		$num = get_instance()->db->affected_rows();
 
 		return $num > 0;
 	}

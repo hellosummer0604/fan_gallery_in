@@ -10,6 +10,7 @@ class Ajax_controller extends MY_Controller
 
         $this->load->model('Photograph');
         $this->load->model('Repository');
+        $this->load->model('Img');
     }
 
     public function index()
@@ -20,35 +21,27 @@ class Ajax_controller extends MY_Controller
 //		$this->db->query();
     }
 
-    public function getImgDetail()
-    {
-        if (empty($_POST['imgId'])) {
-            echo json_encode(null);
-            return;
-        } else {
-            $imgId = $_POST['imgId'];
-        }
+
+	public function getImgDetail()
+	{
+		if (empty($_POST['imgId'])) {
+			echo json_encode(null);
+			return;
+		} else {
+			$imgId = $_POST['imgId'];
+		}
 
 
-        //firstly check database
-        $imgObj = $this->Photograph->getImg($imgId);
+		//firstly check database
+		$imgObj = Img::load($imgId);
 
-        if ($imgObj != null) {
-            echo json_encode(array('data' => $imgObj, 'type' => 'posted'));
-            return;
-        }
+		if (empty($imgObj)) {
+			//cannot find
+			echo json_encode(null);
+		}
 
-        //secondly check repository
-        $imgObj = $this->Repository->getImgDetailInfo($imgId);
-
-        if ($imgObj != null) {
-            echo json_encode(array('data' => $imgObj, 'type' => 'repository'));
-            return;
-        }
-
-        //cannot find
-        echo json_encode(null);
-    }
+		echo json_encode($this->utils->imgDetailWrapper($imgObj));
+	}
 
 
     /**
@@ -71,8 +64,7 @@ class Ajax_controller extends MY_Controller
 
         $lastSize = empty($_POST['lastSize']) ? IMG_SECTION_LAST_SIZE : $_POST['lastSize'];
 
-
-        $imgSec = $this->getImgSection($sectionId, $pageNo, $pageSize);
+        $imgSec = $this->getImgSection($sectionId, $pageNo, $pageSize, $lastSize);
 
         if (empty($imgSec)) {
             echo json_encode(null);
@@ -93,8 +85,8 @@ class Ajax_controller extends MY_Controller
 
         $typeId = strtolower($typeId);
 
-        if ($typeId == 'repo_id') {
-            $imgSection = $this->Repository->getRepositoryImgs('resource/gallery/img_repository', $pageNo, $pageSize, $last);
+        if ($typeId == REPO_ID) {
+            $imgSection = $this->Img->getRepositoryImgs($pageNo, $pageSize, $last);
         } else {
             $imgSection = $this->Photograph->getSectionImg($typeId, $pageNo, $pageSize, $last);
         }
