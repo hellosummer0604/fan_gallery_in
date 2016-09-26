@@ -44,27 +44,28 @@ class Ajax_controller extends MY_Controller
 	}
 
 
-    /**
-     * The main img grid will call this function to get img section
-     * get img section from database
-     */
-    public function getImg()
+	/**
+	 * @param null $userId
+	 * @param null $tagName
+	 * @param null $pageNo
+	 */
+    public function getImg($userId = null, $tagName = null, $pageNo = null)
     {
-        if (empty($_POST['sectionId'])) {
-            return;
-        } else {
-            $sectionId = $_POST['sectionId'];
-        }
+        if (empty($userId)) {
+			return;
+		}
+
+		if (empty($pageNo)) {
+			$pageNo = 0;
+		}
 
 //        sleep(5);
-
-        $pageNo = empty($_POST['page']) ? IMG_SECTION_PAGE_NO : $_POST['page'];
 
         $pageSize = empty($_POST['pageSize']) ? IMG_SECTION_PAGE_SIZE : $_POST['pageSize'];
 
         $lastSize = empty($_POST['lastSize']) ? IMG_SECTION_LAST_SIZE : $_POST['lastSize'];
 
-        $imgSec = $this->getImgSection($sectionId, $pageNo, $pageSize, $lastSize);
+        $imgSec = $this->getImgSection($userId, $tagName, $pageNo, $pageSize, $lastSize);
 
         if (empty($imgSec)) {
             echo json_encode(null);
@@ -79,7 +80,7 @@ class Ajax_controller extends MY_Controller
      * $typeId can be 1.repository, 2.category name, 3.tag name, 4 author id
      */
 
-    private function getImgSection($typeId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE)
+    private function getImgSection($userId, $typeId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE)
     {
         $groupSize = IMG_SECTION_SIZE;
 
@@ -88,7 +89,7 @@ class Ajax_controller extends MY_Controller
         if ($typeId == REPO_ID) {
             $imgSection = $this->Img->getRepositoryImgs($pageNo, $pageSize, $last);
         } else {
-            $imgSection = $this->Photograph->getSectionImg($typeId, $pageNo, $pageSize, $last);
+            $imgSection = $this->Img->getSectionImg($userId, $typeId, $pageNo, $pageSize, $last);
         }
 
 

@@ -117,3 +117,26 @@ Init._detect_mobile = function () {
 
 
 }
+
+Init.router = function (property) {
+    var url = window.location.href;
+
+    var parts = url.split('/');
+
+    var index = -1;
+
+    for(var i = 0; i < parts.length; i++) {
+        if (parts[i] == property) {
+            index = i;
+            break;
+        }
+    }
+
+    index++;
+
+    if (index != -1 && index < parts.length) {
+        return parts[index].trim();
+    }
+
+    return null;
+}

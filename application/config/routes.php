@@ -73,4 +73,8 @@ $route['upload/complete'] = 'Currentuser/completeUpload/';
 $route['upload/delete'] = 'Currentuser/deleteTmpFile/';
 $route['upload/deleteAll'] = 'Currentuser/deleteAllTmpFile/';
 
+$route['user/(:any)'] = "home/index/$1";
+$route['user/(:any)/tag/(:any)'] = "Ajax_controller/getImg/$1/$2";
+$route['user/(:any)/tag/(:any)/page/(:num)'] = "Ajax_controller/getImg/$1/$2/$3";
+
 

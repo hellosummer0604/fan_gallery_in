@@ -36,7 +36,7 @@ class Home extends MY_Controller {
 	}
 	
 	
-	public function index()
+	public function index($userid = null)
 	{
         //must be the first line
         $this->setHeader(array('css' => $this->cssArray, 'js' => $this->jsArray));
