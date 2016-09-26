@@ -194,10 +194,11 @@ class Img extends Base_img
 	 * @param $data
 	 * @param int $page
 	 * @param int|null $pageSize
+	 * @param null $last
 	 * @return array|null
 	 */
-	public static function loadByTerm($data, $page = 0, $pageSize = IMG_SECTION_PAGE_SIZE) {
-		$objs = parent::loadByTerm($data, $page, $pageSize);
+	public static function loadByTerm($data, $page = 0, $pageSize = IMG_SECTION_PAGE_SIZE, $last = null) {
+		$objs = parent::loadByTerm($data, $page, $pageSize, $last);
 
 		if (!empty($objs)) {
 			foreach ($objs as &$obj) {
@@ -230,7 +231,7 @@ class Img extends Base_img
 		return $objs;
 	}
 
-	private static function loadByAuthorAndStatus($userId, $status, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE) {
+	private static function loadByAuthorAndStatus($userId, $status, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
 		if (empty($userId) || empty($status)) {
 			return null;
 		}
@@ -240,7 +241,7 @@ class Img extends Base_img
 		$data['user_id'] = $userId;
 		$data['status'] = $status;
 
-		$objs = self::loadByTerm($data, $page, $pageSize);
+		$objs = self::loadByTerm($data, $page, $pageSize, $last);
 
 		if (empty($objs)) {
 			return null;
@@ -249,11 +250,11 @@ class Img extends Base_img
 		return $objs;
 	}
 
-	public static function loadRepository($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE) {
-		return self::loadByAuthorAndStatus(self::$util->isOnline(), IMG_STATE_REPO, $pageNo, $pageSize);
+	public static function loadRepository($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
+		return self::loadByAuthorAndStatus(self::$util->isOnline(), IMG_STATE_REPO, $pageNo, $pageSize, $last);
 	}
 
-	public static function getRepositoryImgs($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last) {
+	public static function getRepositoryImgs($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
 		$imgs = self::loadRepository($pageNo, $pageSize, $last);
 
 		$imgSection = self::$util->imgSectionPreprocessor(REPO_ID, $imgs);
@@ -265,6 +266,13 @@ class Img extends Base_img
 
 	}
 
+
+	/************************** start load img section for user **************************/
+	public static function getSectionImg($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last) {
+
+	}
+
+	/************************** end load img section for user **************************/
 
 }
 

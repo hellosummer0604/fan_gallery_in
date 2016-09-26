@@ -140,8 +140,11 @@ class Test extends MY_Controller {
 	public function test12() {
 		$this->load->model('Img');
 
-		$img = Img::loadRepository();
-		print_r(json_encode($img));
+		$imgs = Img::loadRepository(5, 5, 5);
+		foreach ($imgs as $img) {
+			print_r($img->getId()." - ".$img->getTitle()."<br>");
+		}
+
 
 	}
 

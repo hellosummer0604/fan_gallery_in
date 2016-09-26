@@ -41,15 +41,37 @@ class MY_Model extends CI_Model {
 		return $objs[0];
 	}
 
-	public static function loadByTerm($data, $page = null, $pageSize = null) {
+	public static function loadByTerm($data, $page = null, $pageSize = null, $last = null) {
 		if (empty($data)) {
 			return null;
 		}
 
 		if (is_null($page) || is_null($pageSize)) {
 			$res = get_instance()->db->order_by("id", "desc")->get_where(static::$tbl, $data)->result_array();
+		} else if (is_null($last)) {
+			$res = get_instance()->db->order_by("id", "desc")->get_where(static::$tbl, $data, $pageSize, $page * $pageSize)->result_array();
 		} else {
-			$res = get_instance()->db->order_by("id", "desc")->get_where(static::$tbl, $data, $pageSize, $page)->result_array();
+			//get all images
+			$count = get_instance()->db->select(" COUNT(*) sum ")->get_where(static::$tbl, $data)->result_array();
+
+			if (empty($count) || $count[0]['sum'] == 0) {
+				return null;
+			}
+
+			$count = $count[0]['sum'];
+
+			//find how many items in next page
+			$numNextPage = $count - (($page + 1) * $pageSize);
+
+			if ($numNextPage < $last) {//load all the rest items
+				$fakeInfinity = ($pageSize + $last) * 2; //larger than rest items
+
+				$res = get_instance()->db->order_by("id", "desc")->get_where(static::$tbl, $data, $fakeInfinity, $page * $pageSize)->result_array();
+			} else {//only load this page
+				$res = get_instance()->db->order_by("id", "desc")->get_where(static::$tbl, $data, $pageSize, $page * $pageSize)->result_array();
+			}
+
+
 		}
 
 		$objs = self::assembleObjByResultSet($res);
