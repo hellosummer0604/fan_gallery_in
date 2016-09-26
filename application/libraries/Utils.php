@@ -596,15 +596,25 @@ class Utils {
 			return null;
 		}
 
+		$userId = $this->isOnline();
+
 		$imgList = array();
 
 		foreach ($imgs as $img) {
+			if (!empty($userId) && $userId == $img->getUserId()) {
+				$isAuthor = true;
+			} else {
+				$isAuthor = false;
+			}
+
 			$imgList[] = array(
 				'id' => $img->getId(),
 				'thumb' => '/'.$img->getThumb().$img->getFilename(),
 				'detail' => '/'.$img->getPath().$img->getFilename(),
 				'width' => $img->getWidth(),
 				'height' => $img->getHeight(),
+				'ownerId' => $img->getUserId(),
+				'isOwner' => $isAuthor
 			);
 		}
 

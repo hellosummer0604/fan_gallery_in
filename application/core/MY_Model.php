@@ -65,13 +65,11 @@ class MY_Model extends CI_Model {
 
 			if ($numNextPage < $last) {//load all the rest items
 				$fakeInfinity = ($pageSize + $last) * 2; //larger than rest items
-
-				$res = get_instance()->db->order_by("id", "desc")->get_where(static::$tbl, $data, $fakeInfinity, $page * $pageSize)->result_array();
 			} else {//only load this page
-				$res = get_instance()->db->order_by("id", "desc")->get_where(static::$tbl, $data, $pageSize, $page * $pageSize)->result_array();
+				$fakeInfinity = $pageSize;
 			}
 
-
+			$res = get_instance()->db->order_by("id", "desc")->get_where(static::$tbl, $data, $fakeInfinity, $page * $pageSize)->result_array();
 		}
 
 		$objs = self::assembleObjByResultSet($res);

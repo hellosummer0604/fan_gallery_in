@@ -268,8 +268,104 @@ class Img extends Base_img
 
 
 	/************************** start load img section for user **************************/
-	public static function getSectionImg($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last) {
+	/**
+	 * @param $tagId
+	 * @param int $page
+	 * @param int $pageSize
+	 * @param int $last
+	 * @return array|null
+	 */
+	public static function loadSectionImgs($userId, $tagId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
+		$imgTbl = self::$tbl;
+		$imgTagTbl = self::$tblTagImg;
 
+		$data = array(
+			"$imgTbl.user_id" => $userId,
+			"$imgTbl.status" => IMG_STATE_PUBLIC,);
+
+		if (!empty($tagId)) {
+			$data["$imgTagTbl.tag_id"] = $tagId;
+		}
+
+		if (is_null($page) || is_null($pageSize)) {
+			$res = get_instance()->db
+								->select("$imgTbl.*")
+								->from($imgTbl)
+								->join($imgTagTbl, "$imgTbl.id  = $imgTagTbl.image_id", 'inner')
+								->where($data)
+								->order_by("$imgTbl.id", "desc")
+								->get()
+								->result_array();
+
+		} else if (is_null($last)) {
+			$res = get_instance()->db
+								->select("$imgTbl.*")
+								->from($imgTbl)
+								->join($imgTagTbl, "$imgTbl.id  = $imgTagTbl.image_id", 'inner')
+								->where($data)
+								->order_by("$imgTbl.id", "desc")
+								->limit($pageSize, $page * $pageSize)
+								->get()
+								->result_array();
+		} else {
+			//get all images
+			$count = get_instance()->db
+								->select(" COUNT(*) sum")
+								->from($imgTbl)
+								->join($imgTagTbl, "$imgTbl.id  = $imgTagTbl.image_id", 'inner')
+								->where($data)
+								->get()
+								->result_array();
+
+			if (empty($count) || $count[0]['sum'] == 0) {
+				return null;
+			}
+
+			$count = $count[0]['sum'];
+
+			//find how many items in next page
+			$numNextPage = $count - (($page + 1) * $pageSize);
+
+			if ($numNextPage < $last) {//load all the rest items
+				$fakeInfinity = ($pageSize + $last) * 2; //larger than rest items
+			} else {//only load this page
+				$fakeInfinity = $pageSize;
+			}
+
+			$res = get_instance()->db
+				->select("$imgTbl.*")
+				->from($imgTbl)
+				->join($imgTagTbl, "$imgTbl.id  = $imgTagTbl.image_id", 'inner')
+				->where($data)
+				->order_by("$imgTbl.id", "desc")
+				->limit($fakeInfinity, $page * $pageSize)
+				->get()
+				->result_array();
+		}
+
+		$objs = self::assembleObjByResultSet($res);
+
+		if (empty($objs)) {
+			return null;
+		}
+
+		return $objs;
+	}
+
+	public static function getSectionImg($userId, $tagId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
+		$imgs = self::loadSectionImgs($userId, $tagId, $pageNo, $pageSize, $last);
+
+		$tag = Tag::load($tagId);
+
+		if (empty($tag)) {
+			$sectionName = TAG_ALL;
+		} else {
+			$sectionName = $tag->getTagName();
+		}
+
+		$imgSection = self::$util->imgSectionPreprocessor($sectionName, $imgs);
+
+		return $imgSection;
 	}
 
 	/************************** end load img section for user **************************/
