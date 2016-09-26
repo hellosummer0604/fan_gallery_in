@@ -140,6 +140,22 @@ abstract class Base_img extends MY_Model
 	}
 
 	/********** start static function **********/
+	public static function load($id) {
+		$img =  parent::load($id);
+
+		$userId = self::$util->isOnline();
+
+		if (!empty($userId) && $img->getUserId() == $userId) {
+			return $img;
+		}
+
+		if (method_exists($img, 'getStatus') && $img->getStatus() == IMG_STATE_PUBLIC) {
+			return $img;
+		}
+
+		return null;
+	}
+
 	public static function loadByFileAndUser($fileName, $userId) {
 		$data = array();
 

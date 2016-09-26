@@ -144,6 +144,14 @@ class Test extends MY_Controller {
 		print_r(json_encode($img));
 
 	}
+
+	public function test13() {
+		$this->load->model('Img');
+
+		$img = Img::load(30);
+		print_r(json_encode($img->getTitle()));
+
+	}
 }
 
 ?>
