@@ -253,12 +253,16 @@ class Img extends Base_img
 		return self::loadByAuthorAndStatus(self::$util->isOnline(), IMG_STATE_REPO, $pageNo, $pageSize);
 	}
 
-	public static function getRepositoryImgs($pageNo, $pageSize, $last) {
+	public static function getRepositoryImgs($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last) {
 		$imgs = self::loadRepository($pageNo, $pageSize, $last);
 
 		$imgSection = self::$util->imgSectionPreprocessor(REPO_ID, $imgs);
 
 		return $imgSection;
+	}
+
+	public static function getRepositoryImgsPagination($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE) {
+
 	}
 
 
