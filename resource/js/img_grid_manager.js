@@ -26,11 +26,16 @@ Img_Grid_Manager.activate = function () {
 
 Img_Grid_Manager.loadImgSection = function (sid, page) {
 	if (typeof page == 'undefined') {
-		page = 1;
+		page = 0;
 	}
 
+    var userId = Init.router('user');
+
+    if (userId == null) {
+        window.location.href = document.location.origin;
+    }
+
 	if (typeof Img_Grid_Manager.sectionList[sid] != 'undefined') {
-		console.log('Already loaded: ' + sid);
 		//render
 		Img_Grid_Manager._renderLoadingList(sid);
 	} else {
@@ -40,7 +45,7 @@ Img_Grid_Manager.loadImgSection = function (sid, page) {
 		
 		jQuery.ajax({
 			method: 'POST',
-			url: 'http://north.gallery/ajax_controller/getImg',
+			url: 'http://north.gallery/user/' + userId + '/tag/' + sid + '/page/' + page,
 			data: sectionInfo,
 			dataType: 'json',
 			async: 'false',
