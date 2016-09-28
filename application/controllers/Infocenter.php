@@ -30,7 +30,7 @@ class Infocenter extends MY_Controller {
 	public function index() {
 		$this->setHeader(array('css' => $this->cssArray, 'js' => $this->jsArray));
 
-		$this->loadImgPopEditView();
+		$this->loadImgPopView();
 		
 		$this->loadPosterView(false);
 		
