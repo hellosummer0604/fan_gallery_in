@@ -386,12 +386,18 @@ var ImgGrid = Class.create({
 			/***<div class='imgThumbBox' style="cursor:pointer; position: absolute; width:285px; height: 190px; left: 5px; top: 5px; background-color: red"></div>**/
 
 			for (var col = 0; col < obj[row]['entris'].length; col++) {
-				var div_html = "<div class='imgThumbBox loadingBgLight' style='width:" + obj[row]['entris'][col]['width'] + "px; height: " + obj[row]['entris'][col]['height'] + "px; left: " + obj[row]['entris'][col]['left'] + "px; top: " + obj[row]['entris'][col]['top'] + "px;'></div>";
+				var div_html = "<div class='imgThumbBox loadingBgLight' style='width:"
+                    + obj[row]['entris'][col]['width'] + "px; height: "
+                    + obj[row]['entris'][col]['height'] + "px; left: "
+                    + obj[row]['entris'][col]['left'] + "px; top: "
+                    + obj[row]['entris'][col]['top'] + "px;'>"
+                    + "</div>";
 				target.append(div_html);
 			}
 		}
 
 	},
+    //todo click and popup event is here
 	_assignImgAndEvent: function (imgArray, target) {
 		var clazz = this;
 
@@ -427,9 +433,35 @@ var ImgGrid = Class.create({
 					postId = imgArray[index + 1]['id'];
 				}
 
-				jQuery(container).html("<div class='hideImgId'><div class='hide_cur_id'>" + curId + "</div><div class='hide_pre_id'>" + preId + "</div><div class='hide_post_id'>" + postId + "</div> </div>");
-				//bind event;
+				var tempHtml = "<div class='hideImgId'>"
+                                    + "<div class='hide_cur_id'>" + curId + "</div>"
+                                    + "<div class='hide_pre_id'>" + preId + "</div>"
+                                    + "<div class='hide_post_id'>" + postId + "</div>"
+                            + "</div>"
+                            + "<div class='thumbPlate'>"
+                            + "<div class='topBox'></div>"
+                            + "<div class='bottomBox'>the best coffee you can get</div>"
+                            + "</div>";
 
+                jQuery(container).html(tempHtml);
+
+                //bind onmouseover and onmouseout
+                var fadeInEnabled = true;
+                jQuery(container).on({
+                    mouseenter: function () {
+                        if (fadeInEnabled) {
+                            fadeInEnabled = false;
+                            jQuery(container).find(".thumbPlate").fadeIn('fast', function () {
+                                fadeInEnabled = true;
+                            });
+                        }
+                    },
+                    mouseleave: function () {
+                        jQuery(container).find(".thumbPlate").fadeOut(0);
+                    }
+                });
+
+				//bind event;
 				jQuery(container).off('click').on('click', function() {
 					popupBox.showImgBoxPopup('#imgBox', container);
 				});
