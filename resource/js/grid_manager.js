@@ -433,14 +433,15 @@ var ImgGrid = Class.create({
 					postId = imgArray[index + 1]['id'];
 				}
 
-				var tempHtml = "<div class='hideImgId'>"
+				var tempHtml = "<div class='textBox'><span>Privacy updated, 嘿嘿嘿<span></div>"
+                            + "<div class='hideImgId'>"
                                     + "<div class='hide_cur_id'>" + curId + "</div>"
                                     + "<div class='hide_pre_id'>" + preId + "</div>"
                                     + "<div class='hide_post_id'>" + postId + "</div>"
                             + "</div>"
                             + "<div class='thumbPlate'>"
-                            + "<div class='topBox'></div>"
-                            + "<div class='bottomBox'>the best coffee you can get</div>"
+                            + "<div class='topBox editBtn'></div>"
+                            + "<div class='bottomBox'><span class='invisibleIcon'></span>the best coffee you can get</div>"
                             + "</div>";
 
                 jQuery(container).html(tempHtml);

@@ -115,7 +115,7 @@ popupBox._bindSubmit = function () {
         var baseUrl = document.location.origin;
         var targetForm = jQuery(self).closest('form');
         var actionUrl = baseUrl + targetForm.attr("action");
-
+console_test(actionUrl);
         //disable button
         jQuery(self).prop("disabled", true);
         //loading notice
@@ -163,7 +163,7 @@ popupBox._bindSubmit = function () {
 //update the nav bar after successful login/signup
 popupBox._updateNav = function () {
     var baseUrl = document.location.origin;
-    var actionUrl = baseUrl + "/head";
+    var actionUrl = baseUrl + "/account/head";
 
     jQuery.ajax({
         method: 'POST',
@@ -219,7 +219,7 @@ popupBox._login = function (data) {
 
 popupBox._logout = function (data) {
     var baseUrl = document.location.origin;
-    var actionUrl = baseUrl + "/logout";
+    var actionUrl = baseUrl + "/account/logout";
 
     jQuery.ajax({
         method: 'POST',
