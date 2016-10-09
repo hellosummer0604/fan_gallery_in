@@ -9,7 +9,7 @@
 
 
 		<div class="mainBox">
-			<form name="loginForm" id="loginForm" action="/login" method="post">
+			<form name="loginForm" id="loginForm" action="/account/login" method="post">
 				<div class="colorBanner">
 					<table cellpadding="0" cellspacing="0">
 						<tr>
@@ -68,7 +68,7 @@
 	<div class="baseLayer">
 
 		<div class="mainBox">
-			<form name="registerForm" id="registerForm" action="/signup" method="post">
+			<form name="registerForm" id="registerForm" action="/account/signup" method="post">
 				<div class="colorBanner">
 					<table cellpadding="0" cellspacing="0">
 						<tr>

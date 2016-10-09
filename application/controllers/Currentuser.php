@@ -105,7 +105,7 @@ class Currentuser extends User_Controller {
 
 		$this->setHeader(array('css' => $cssArray, 'js' => $jsArray));
 
-		$this->loadImgPopEditView();
+		$this->loadImgPopView();
 
 		$this->loadPosterView(false);
 

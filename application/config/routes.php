@@ -49,17 +49,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+
+/**
+ * first class router name
+ *
+ * 1) ./resource/
+ * 2) ./upload/
+ * 3) ./account/
+ * 4) ./{shortUrl}/
+ *
+ *
+ */
+
+
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 
 //for signup, login, logout, retrieve
-$route['signup'] = 'Home/signup';
-$route['login'] = 'Home/login';
-$route['logout'] = 'Home/logout';
-$route['retrieve'] = 'Home/retrieve';
-$route['head'] = 'Home/headNav';
+$route['account/signup']['post'] = 'Home/signup';
+$route['account/login']['post'] = 'Home/login';
+$route['account/logout'] = 'Home/logout';
+$route['account/retrieve'] = 'Home/retrieve';
+$route['account/head'] = 'Home/headNav';
+
+//upload
+$route['upload'] = 'Currentuser/moduleUpload/';
+$route['upload/file'] = 'Currentuser/uploadFile/';
+$route['upload/complete'] = 'Currentuser/completeUpload/';
+$route['upload/delete'] = 'Currentuser/deleteTmpFile/';
+$route['upload/deleteAll'] = 'Currentuser/deleteAllTmpFile/';
 
 //for current user
 $route['u/(:any)'] = 'Currentuser/$1';
@@ -67,11 +87,6 @@ $route['u/(:any)/(:any)'] = 'Currentuser/$1/$2';
 $route['u/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3';
 $route['u/(:any)/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3/$4';
 
-$route['upload'] = 'Currentuser/moduleUpload/';
-$route['upload/file'] = 'Currentuser/uploadFile/';
-$route['upload/complete'] = 'Currentuser/completeUpload/';
-$route['upload/delete'] = 'Currentuser/deleteTmpFile/';
-$route['upload/deleteAll'] = 'Currentuser/deleteAllTmpFile/';
 
 $route['user/(:any)'] = "home/index/$1";
 $route['user/(:any)/tag/(:any)'] = "Ajax_controller/getImg/$1/$2";
