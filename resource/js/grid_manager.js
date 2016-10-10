@@ -433,15 +433,16 @@ var ImgGrid = Class.create({
 					postId = imgArray[index + 1]['id'];
 				}
 
-				var tempHtml = "<div class='textBox'><span>Privacy updated, 嘿嘿嘿<span></div>"
+				var tempHtml = "<div class='textBox'><span>Private Photo<span></div>"
                             + "<div class='hideImgId'>"
                                     + "<div class='hide_cur_id'>" + curId + "</div>"
                                     + "<div class='hide_pre_id'>" + preId + "</div>"
                                     + "<div class='hide_post_id'>" + postId + "</div>"
                             + "</div>"
                             + "<div class='thumbPlate'>"
-                            + "<div class='topBox editBtn'></div>"
-                            + "<div class='bottomBox'><span class='invisibleIcon'></span>the best coffee you can get</div>"
+                            + "<div class='topBox editImgInfoBtn'></div>"
+                            // + "<div class='bottomBox'><span class='invisibleIcon'></span>the best coffee you can get</div>"
+                            + "<div class='bottomBox'>the best coffee you can get</div>"
                             + "</div>";
 
                 jQuery(container).html(tempHtml);
@@ -467,41 +468,13 @@ var ImgGrid = Class.create({
 					popupBox.showImgBoxPopup('#imgBox', container);
 				});
 
-//				jQuery(container).css({
-//					'background-image': "url(" + imgUrl + ")",
-//					"background-repeat": "no-repeat",
-//					"background-size": "100% 100%",
-//					"background-position": "0px 0px"
-//				});
-//				jQuery(container).fadeIn(200);
-//
-////just temp text for test
-//				var curId = imgArray[index]['id'];
-//				var preId = "";
-//				var postId = "";
-//
-//				if(index > 0) {
-//					preId = imgArray[index - 1]['id'];
-//				}
-//
-//				if (index + 1 < imgArray.length) {
-//					postId = imgArray[index + 1]['id'];
-//				}
-//
-//				jQuery(container).html("<div class='hideImgId'><div class='hide_cur_id'>" + curId + "</div><div class='hide_pre_id'>" + preId + "</div><div class='hide_post_id'>" + postId + "</div> </div>");
-//				//bind event;
-////				popupBox
-//				jQuery(container).bind({
-//					click: function () {
-//						popupBox.showPopup('#imgBox', container);
-//					},
-//					mouseenter: function () {
-//
-//					},
-//					mouseleave: function () {
-//
-//					}
-//				});
+                jQuery('.editImgInfoBtn', container).off('click').on("click", function (event) {
+                    event.stopPropagation();
+
+
+                    alert('asd');
+                });
+
 			});
 		});
 

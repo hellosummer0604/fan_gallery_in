@@ -1055,7 +1055,7 @@ div.error {
 }
 
 .imgThumbBox .textBox {
-    display: none;
+    /*display: none;*/
     width: 100%;
     height: 100%;
     top: 0px;
@@ -1081,7 +1081,8 @@ div.error {
 }
 
 .thumbPlate .invisibleIcon {
-    height: 12px;
+    margin-top: 2px;
+    height: 10px;
     width: 17px;
 
     /*background-color: #00CC00;*/
