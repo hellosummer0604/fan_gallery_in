@@ -3,6 +3,7 @@ var popupBox = popupBox || {}
 //execute after resize
 popupBox._resizeEvt;
 
+popupBox._POPBOX_DIV_ID = '#imgBox';
 popupBox._BACKGROUND_IMAGE_HEIGHT = -1;
 popupBox._BACKGROUND_IMAGE_WIDTH = -1;
 popupBox._POPUP_IMG_URL = -1;
@@ -74,13 +75,12 @@ popupBox.bindNavButtons = function () {
     });
 }
 
-popupBox.showImgBoxPopup = function (target, obj) {
-    popupBox.showPopup(target, obj, function () {
-        ///load img
-        var objId = jQuery(obj).find('.hide_cur_id').html();
+popupBox.showImgBoxPopup = function (obj, target) {
+    var objId = jQuery(obj).find('.hide_cur_id').html();
 
-        popupBox._loadImgdetail(objId);
-    });
+    popupBox._loadImgdetail(objId, target);
+
+
 }
 
 popupBox._showLoginPopup = function () {
@@ -163,7 +163,7 @@ console_test(actionUrl);
 //update the nav bar after successful login/signup
 popupBox._updateNav = function () {
     var baseUrl = document.location.origin;
-    var actionUrl = baseUrl + "/account/head";
+    var actionUrl = baseUrl + "/component/head";
 
     jQuery.ajax({
         method: 'POST',
@@ -365,6 +365,7 @@ popupBox.hideImgBoxPopup = function (targetArray) {
     popupBox.hidePopup(targetArray, function () {
         ///clear
         popupBox._clearImgdetail();
+
         popupBox._clearInput();
 
         popupBox._popupMsgBanner('close');
@@ -374,38 +375,78 @@ popupBox.hideImgBoxPopup = function (targetArray) {
 }
 
 
-popupBox._loadImgdetail = function (imgId) {
+// popupBox._loadImgdetail = function (imgId) {
+//     if (typeof imgId == 'undefined') {
+//         console.error('loading img  ' + JSON.stringify(imgId) + ' fail: ');
+//         //show error and closepopup
+//         popupBox._loadError();
+//         return;
+//     }
+//
+//     var imgId = {'imgId': imgId};
+//
+//     jQuery.ajax({
+//         method: 'POST',
+//         url: 'http://north.gallery/ajax_controller/getImgDetail',
+//         data: imgId,
+//         dataType: 'json',
+//         success: function (resObj) {
+//             if (resObj == null) {
+//                 console.error('loading img  ' + JSON.stringify(imgId) + ' fail: ');
+//                 //show error and closepopup
+//                 popupBox._loadError();
+//                 return;
+//             }
+//
+//             //success
+//             //set backgorund image size
+//             popupBox._BACKGROUND_IMAGE_HEIGHT = resObj['data']['orgHeight'];
+//             popupBox._BACKGROUND_IMAGE_WIDTH = resObj['data']['orgWidth'];
+//
+//             popupBox._displayImgdetail(resObj);
+//         },
+//         error: function (errorMsg) {
+//             //show error and closepopup
+//             popupBox._loadError();
+//             console.error('loading img  ' + imgId + ' fail: ' + JSON.stringify(errorMsg));
+//         }
+//     });
+//
+// }
+
+popupBox._loadImgdetail = function (imgId, target) {
     if (typeof imgId == 'undefined') {
-        console.error('loading img  ' + JSON.stringify(imgId) + ' fail: ');
         //show error and closepopup
         popupBox._loadError();
         return;
     }
 
-    var imgId = {'imgId': imgId};
+    var url = location.protocol + "//" + location.host + "/component/" + target + '/' + imgId;
 
     jQuery.ajax({
         method: 'POST',
-        url: 'http://north.gallery/ajax_controller/getImgDetail',
-        data: imgId,
+        url: url,
         dataType: 'json',
         success: function (resObj) {
-            if (resObj == null) {
-                console.error('loading img  ' + JSON.stringify(imgId) + ' fail: ');
-                //show error and closepopup
+            if (resObj == null || typeof resObj == 'undefined') {
                 popupBox._loadError();
                 return;
             }
 
-            //success
-            //set backgorund image size
-            popupBox._BACKGROUND_IMAGE_HEIGHT = resObj['data']['orgHeight'];
-            popupBox._BACKGROUND_IMAGE_WIDTH = resObj['data']['orgWidth'];
+            //update html of div#imgBox
+            jQuery(popupBox._POPBOX_DIV_ID).replaceWith(resObj['html']);
 
-            popupBox._displayImgdetail(resObj);
+            //set backgorund image size
+            popupBox._BACKGROUND_IMAGE_HEIGHT = resObj['imgInfo']['orgHeight'];
+            popupBox._BACKGROUND_IMAGE_WIDTH = resObj['imgInfo']['orgWidth'];
+
+            popupBox._displayImgdetail(resObj['imgInfo']);
+
+            popupBox.bindCloseAction(function () {
+                popupBox.hideImgBoxPopup(['#imgBox']);
+            });
         },
         error: function (errorMsg) {
-            //show error and closepopup
             popupBox._loadError();
             console.error('loading img  ' + imgId + ' fail: ' + JSON.stringify(errorMsg));
         }
@@ -415,29 +456,20 @@ popupBox._loadImgdetail = function (imgId) {
 
 popupBox._displayImgdetail = function (data) {
     //display image
-    var imgUrl = data['data']['path'];
+    var imgUrl = data['path'];
     //global id, avoid img load sequence error
     popupBox._POPUP_IMG_URL = imgUrl;
 
     var container = "#popImgBox";
 
-
-    if (popupBox.isEditPopup()) {
-        jQuery('#imgTitle >input').val('asdasd');
-    } else {
-        jQuery('.mainBox > #imgTitle').html("我就是图片标题怎么了");
-    }
-
-    jQuery('#imgBox > #authorBox').html("North Fan<br>2016-01-12");
-
-    jQuery('.innerBox > #imgTags').html("<div class='itag'><a href='#'>Drink</a></div><div class='itag'><a href='#'>Smoothy</a></div><div class='itag'><a href='#'>Interior</a></div><div class='itag'><a href='#'>Light</a></div><div class='itag'><a href='#'>Night</a></div>");
-
-
-    if (popupBox.isEditPopup()) {
+    if (jQuery('#imgText > #imgDescription').length) {
         jQuery('#imgText > textarea').css('overflow', 'hidden').autogrow();
-    } else {
-        jQuery('#popImgText > #imgText').html("微软推出了诺基亚230，这款只要399元的手机采用了铝制机身，不仅双卡双待，而且一次充电待机长达22天，这款手机于1月19日正式开卖。其实不只是在船上。一切封闭的场所，最后都会导致这种文明准则丧失、大家弱肉强食的事。历史上的围城战，人相食者有多少？历史上的大饥荒，村子里互相杀戮的有多少？海难则争夺食物，雪灾则互相撕咬。");
     }
+
+    popupBox.showPopup(popupBox._POPBOX_DIV_ID, null, function () {
+
+    });
+
 
     jQuery('<img/>').attr('src', imgUrl).load(function () {
         jQuery(this).remove(); // prevent memory leaks as @benweet suggested
@@ -467,6 +499,7 @@ popupBox._displayImgdetail = function (data) {
 
 popupBox._loadError = function () {
     setTimeout(function () {
+        console.error('Error: cannot open this popup');
         popupBox.hideImgBoxPopup(['#imgBox', '#uploadBox', '.smallPopup', '#genericBox']);
     }, 1000);
 
@@ -474,53 +507,39 @@ popupBox._loadError = function () {
 
 
 popupBox._clearImgdetail = function () {
-
     //clear imgBox
-    var container = "#popImgBox";
+    // var container = "#popImgBox";
+    //
+    // jQuery(container).css({
+    //     'background-image': "url(http://" + window.location.hostname + "/resource/loader2.gif)",
+    //     //'background-image': "none",
+    //     'height': "500px",
+    // });
+    //
+    // jQuery(container).removeClass("displayBg");
+    // jQuery(container).addClass("loadingBg");
+    //
+    // popupBox._BACKGROUND_IMAGE_HEIGHT = -1;
+    // popupBox._BACKGROUND_IMAGE_WIDTH = -1;
+    //
+    //
+    // //CLEAR TEXT HERE
+    // if (jQuery('#imgText > textarea').length) {
+    //     jQuery('#imgText > textarea').css('height', '220px').autogrow();
+    // }
 
-    jQuery(container).css({
-        'background-image': "url(http://" + window.location.hostname + "/resource/loader2.gif)",
-        //'background-image': "none",
-        'height': "500px",
-    });
-
-    jQuery(container).removeClass("displayBg");
-    jQuery(container).addClass("loadingBg");
-
-    popupBox._BACKGROUND_IMAGE_HEIGHT = -1;
-    popupBox._BACKGROUND_IMAGE_WIDTH = -1;
-
-
-    //CLEAR TEXT HERE
-
-    if (popupBox.isEditPopup()) {
-        jQuery('#imgTitle >input').val('');
-    } else {
-        jQuery('.mainBox > #imgTitle').html("");
-    }
-
-    jQuery('#imgBox > #authorBox').html("");
-
-    if (popupBox.isEditPopup()) {
-        jQuery('#imgText > textarea').css('overflow', 'hidden');
-        jQuery('#imgText > textarea').css('height', '220px').autogrow();
-        jQuery('#imgText > textarea').val('');
-    } else {
-        jQuery('#popImgText > #imgText').html("");
-    }
-
-
+    jQuery(popupBox._POPBOX_DIV_ID).replaceWith('<div id="imgBox"></div>');
 }
 
 popupBox.isEditPopup = function () {
-    if (typeof popupBoxEdit == "undefined") {
-        return false;
-    } else {
+    if (jQuery('.isImgBoxEdit').length) {
         return true;
+    } else {
+        return false;
     }
 }
 
-
+//bind all close actions
 popupBox.bindCloseAction = function (func) {
     if (!popupBox._canClose) {
         return;
@@ -547,7 +566,11 @@ popupBox.bindCloseAction = function (func) {
     });
 
     jQuery('.baseLayer').off('click').on('click', function (event) {
-        func();
+        if (!popupBox.isEditPopup()) {
+            func();
+        } else {
+            event.stopPropagation();
+        }
     });
 
     //for smallPopup, if click on cancel

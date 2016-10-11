@@ -72,7 +72,11 @@ $route['account/signup']['post'] = 'Home/signup';
 $route['account/login']['post'] = 'Home/login';
 $route['account/logout'] = 'Home/logout';
 $route['account/retrieve'] = 'Home/retrieve';
-$route['account/head'] = 'Home/headNav';
+
+//for html component
+$route['component/head'] = 'Home/headNav';
+$route['component/imgPopup/(:num)'] = 'Home/imgPopup/$1';
+$route['component/imgPopupEdit/(:num)'] = 'Home/imgPopupEdit/$1';
 
 //upload
 $route['upload'] = 'Currentuser/moduleUpload/';

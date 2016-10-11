@@ -465,14 +465,13 @@ var ImgGrid = Class.create({
 
 				//bind event;
 				jQuery(container).off('click').on('click', function() {
-					popupBox.showImgBoxPopup('#imgBox', container);
+					popupBox.showImgBoxPopup(container, 'imgPopup');
 				});
 
                 jQuery('.editImgInfoBtn', container).off('click').on("click", function (event) {
                     event.stopPropagation();
 
-
-                    alert('asd');
+                    popupBox.showImgBoxPopup(container, 'imgPopupEdit');
                 });
 
 			});

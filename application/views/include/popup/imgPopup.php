@@ -1,96 +1,25 @@
 <div id="imgBox" class="shadowWrapper">
-
-	<span id="authorBox">ssss</span>
-
-	<div class="shadowLayer baseLayer">
-
-	</div>
-
+	<span id="authorBox"><?php echo $imgObj->getAuthor()->getUsername().' '.date('Y-m-d', strtotime($imgObj->getCreated()));?></span>
+	<div class="shadowLayer baseLayer"></div>
 	<div class="baseLayer">
-
-		<!--				<div class="closeBanner">
-							<div class="closeButton">This is </div>
-						</div>-->
 		<div class="mainBox">
-			<div class="popupImg" id="imgTitle">
-			</div>
 
-			<div class="popupImg loadingBg" id="popImgBox">
-
-			</div>
-
+			<div class="popupImg" id="imgTitle"><?php echo $imgObj->getTitle();?></div>
+			<div class="popupImg loadingBg" id="popImgBox"></div>
 			<div class="popupImg" id="popImgText">
 				<span class="innerBox">
-					<div id="imgAuthorTags" class="itag"><a id="authorTag" href="#">North Fan</a></div><span
-						id="imgTags"></span>
+					<div id="imgAuthorTags" class="itag"><a id="authorTag" href="#">North Fan</a></div>
+						<span id="imgTags"><?php
+							$tags = $imgObj->getTags();
+							foreach ($tags as $item) {
+								echo "<div class='itag'><a href='".base_url('/tags/'.$item->getId())."'>".$item->getTagName()."</a></div>";
+							}
+						?></span>
 				</span>
-				<div class="innerBox" id="imgText"></div>
+				<div class="innerBox" id="imgText"><?php echo $imgObj->getText();?></div>
 			</div>
-<!--			<div class="popupImg" id="popImgDescription">-->
-<!--				EXIF info here-->
-<!--			</div>-->
+
 		</div>
 	</div>
-</div>
-
-
-<div id="imgBoxEdit" class="shadowWrapper">
-
-	<span id="authorBox">ssss</span>
-
-	<div class="shadowLayer baseLayer">
-
-	</div>
-
-	<div class="baseLayer">
-		<div class="mainBox">
-			<form action="/publish" method="post">
-				<!--				<div class="closeBanner">
-									<div class="closeButton">This is </div>
-								</div>-->
-				<div class="popupImg" id="imgTitle">
-					<input type="text" id="imgTitle" name="imgTitle">
-				</div>
-
-				<div class="popupImg loadingBg" id="popImgBox">
-
-				</div>
-
-				<div class="popupImg" id="popImgText">
-                <span class="innerBox">
-                    <div id="imgAuthorTags" class="buttonDiv itag"><a href="#">North Fan</a></div><span id="imgTags"
-																										class="buttonDiv"></span>
-                </span>
-					<br>
-					<span class="innerBox" id="imgTagNameAutoComplete">
-                    <input class="imgTagName typeahead" type="text" maxlength="20" placeholder="Tagging this photo"/>
-                </span>
-					<!--                &nbsp;&nbsp;&nbsp;-->
-					<!--                <span>[Tagging this photo]</span>-->
-
-					<div class="innerBox" id="imgText">
-						<textarea name="imgDescription" id="imgDescription" placeholder="请在此输入内容..."></textarea>
-					</div>
-					<div class="innerBox">
-						<button class="btn-submit" type="button">Submit</button>
-						<button class="btn-reset" type="reset">Cancel</button>
-					</div>
-				</div>
-
-				<!--				<div class="popupImg" id="popImgDescription">-->
-				<!--					EXIF info here-->
-				<!--				</div>-->
-
-			</form>
-		</div>
-	</div>
-</div>
-
-<div id="headContainer">
-	<?php
-		$flag = ONLINE_FLAG;
-		$data[ONLINE_FLAG] = $$flag;
-		$this->load->view('include/headNav', $data);
-	?>
 </div>
 

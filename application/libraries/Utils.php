@@ -289,7 +289,7 @@ class Utils {
 		} else {
 			$uploadData = $this->_CI->upload->data();
 			$fileName = $uploadData['file_name'];
-			$title = $uploadData['client_name'];
+			$title = $uploadData['raw_name'];
 			$data = array('upload_data' => $uploadData);
 
 			//if it is img
@@ -723,10 +723,8 @@ class Utils {
 						  'filename' => $imgObj->getFilename(),
 						  'createTime' => $imgObj->getCreated(),
 						  'orgWidth' => $imgObj->getWidth(),
-						  'orgHeight' => $imgObj->getHeight(),
-						  'details' => $imgObj->getExif());
+						  'orgHeight' => $imgObj->getHeight());
 
-			$res = array('data' => $res, 'type' => $imgObj->getStatus());
 		} catch (Exception $e) {
 			$res = null;
 		}

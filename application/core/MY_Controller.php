@@ -107,13 +107,13 @@ class MY_Controller extends CI_Controller {
 
 	public function loadImgPopView() {
 		$data[ONLINE_FLAG] = $this->isOnline() ? true : false;
-		$this->loadView('/include/popup/imgPopup', $data);
+		$this->loadView('/include/popup/imgPopupContainer', $data);
 	}
 
-	public function loadImgPopEditView() {
-		$data[ONLINE_FLAG] = $this->isOnline() ? true : false;
-		$this->loadView('/include/popup/imgPopupEdit', $data);
-	}
+//	public function loadImgPopEditView() {
+//		$data[ONLINE_FLAG] = $this->isOnline() ? true : false;
+//		$this->loadView('/include/popup/imgPopupEdit', $data);
+//	}
 
 	public function loadPosterView($enable = true, $data = null) {
 		if ($enable) {

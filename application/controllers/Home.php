@@ -34,7 +34,43 @@ class Home extends MY_Controller {
 		$data[ONLINE_FLAG] = $this->isOnline() ? true : false;
 		$this->load->view('include/headNav', $data);
 	}
-	
+
+	private function imgForPopup ($imgId) {
+		if (empty($imgId)) {
+			return null;
+		}
+
+		$imgObj = Img::load($imgId);
+
+		return $imgObj;
+	}
+	public function imgPopup($imgId) {
+		$imgObj = $this->imgForPopup($imgId);
+
+		if (empty($imgObj)) {
+			return;
+		}
+
+		$data['imgObj'] = $imgObj;
+
+		$viewHTML = $this->load->view('include/popup/imgPopup', $data, true);
+
+		echo json_encode(array('html' => $viewHTML, 'imgInfo' => $this->utils->imgDetailWrapper($imgObj)));
+	}
+
+	public function imgPopupEdit($imgId) {
+		$imgObj = $this->imgForPopup($imgId);
+
+		if (empty($imgObj)) {
+			return;
+		}
+
+		$data['imgObj'] = $imgObj;
+
+		$viewHTML = $this->load->view('include/popup/imgPopupEdit', $data, true);
+
+		echo json_encode(array('html' => $viewHTML, 'imgInfo' => $this->utils->imgDetailWrapper($imgObj)));
+	}
 	
 	public function index($userid = null)
 	{

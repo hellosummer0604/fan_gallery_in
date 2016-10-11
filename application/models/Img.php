@@ -8,6 +8,7 @@ class Img extends Base_img
 	protected static $tblTagImg = "Image_tag";
 
 	protected $_exif = null;
+	protected $_text = null;
 	protected $_status = null;
 	protected $_thumb = null;
 	protected $tags = array();
@@ -24,6 +25,20 @@ class Img extends Base_img
 	 */
 	public function setExif($exif) {
 		$this->_exif = $exif;
+	}
+
+	/**
+	 * @return null
+	 */
+	public function getText() {
+		return $this->_text;
+	}
+
+	/**
+	 * @param null $text
+	 */
+	public function setText($text) {
+		$this->_text = $text;
 	}
 
 	/**

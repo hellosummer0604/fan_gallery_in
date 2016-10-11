@@ -28,6 +28,12 @@ abstract class Base_img extends MY_Model
 		$this->_user_id = $user_id;
 	}
 
+	public function getAuthor() {
+		$this->load->model('User');
+		$user = $this->User->load($this->_user_id);
+		return $user;
+	}
+
 	/**
 	 * @param bool $full
 	 * @return null|string
