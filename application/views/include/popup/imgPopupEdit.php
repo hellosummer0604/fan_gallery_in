@@ -7,7 +7,7 @@
 	<div class="baseLayer">
 		<div class="mainBox">
 		<form action="/publish" method="post">
-			<div class="popupImg" id="imgTitle"><input type="text" id="imgTitle" name="imgTitle" value="<?php echo $imgObj->getTitle();?>"></div>
+			<div class="popupImg" id="imgTitle"><input type="text" id="imgTitle" name="imgTitle" value="<?php echo $imgObj->getTitle();?>" autofocus></div>
 			<div class="popupImg loadingBg" id="popImgBox"></div>
 			<div class="popupImg" id="popImgText">
 				<span class="innerBox">
