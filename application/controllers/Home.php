@@ -10,6 +10,7 @@ class Home extends MY_Controller {
 			'default',
 			'index',
 			'jquery.dropdown',
+			'jquery.auto-complete',
 		];
 
 		$this->jsArray = [
