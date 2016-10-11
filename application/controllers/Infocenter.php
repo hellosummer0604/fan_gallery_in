@@ -10,19 +10,15 @@ class Infocenter extends MY_Controller {
 		$cssArray = ['default', 'index', 'jquery.auto-complete'];
 		$jsArray = ['jquery1.11.3.min',
 			'prototype1.7.3.0_1',
-			'autogrow.min',
 			'jquery-color',
 			'init',
 			'indexNav',
 			'popupBox',
-			'popupBoxEdit',
 			'poster_manager',
 			'color_manager',
 			'grid_manager',
 			'img_grid_manager',
 			'temp_test',
-			'img_grid_manager',
-			'lib/typeahead.bundle.min'
 		];
 
 	}
