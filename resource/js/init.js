@@ -5,7 +5,8 @@ jQuery.noConflict();
 
 //scrollbar width
 GLOBAL_IS_MOBILE = false;
-
+//current user id
+CURRENT_USER = null;
 
 
 
@@ -139,4 +140,16 @@ Init.router = function (property) {
     }
 
     return null;
+}
+
+Init.setLoggedIn = function (userid) {
+    CURRENT_USER = userid;
+}
+
+Init.setLoggedOut = function () {
+    CURRENT_USER = null;
+}
+
+Init.userLoggedIn = function () {
+    return CURRENT_USER;
 }

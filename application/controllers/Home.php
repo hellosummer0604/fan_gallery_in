@@ -199,14 +199,17 @@ class Home extends MY_Controller {
 			'password' => $password
 		);
 
-		if(!$this->User->signup($data)) {
+		$user = $this->User->signup($data);
+		$data = array('username' => $user->getUsername(), 'id' => $user->getId());
+
+		if(empty($user)) {
 			$error = "Server Error, please try later.";
 		}
 
 		if (!empty($error)) {
 			echo responseJson(false, '', $error);
 		} else {
-			echo responseJson(true, 'Success!');
+			echo responseJson(true, 'Succeed!', '', '', $data);
 		}
 
 		return;
