@@ -216,11 +216,19 @@ class Home extends MY_Controller {
 	}
 
 
-
-
     public function retrieve() {
 
     }
+
+    public function currentUserId() {
+		$userId = $this->isOnline();
+
+		if (!$userId) {
+			$userId = null;
+		}
+
+		echo responseJson(true, '' , '' ,'', array('userId' => $userId));
+	}
 
 
 }

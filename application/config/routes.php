@@ -69,6 +69,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 //for signup, login, logout, retrieve
 $route['account/signup']['post'] = 'Home/signup';
+$route['account/userId']['get'] = 'Home/currentUserId';
 $route['account/login']['post'] = 'Home/login';
 $route['account/logout'] = 'Home/logout';
 $route['account/retrieve'] = 'Home/retrieve';

@@ -105,6 +105,7 @@ Init.MonitorEvents = function () {
 Init.Init_Global_Variable = function () {
 	Init._detect_mobile();
 
+    Init.setCurrentUser();
 }
 
 Init._detect_mobile = function () {
@@ -140,6 +141,20 @@ Init.router = function (property) {
     }
 
     return null;
+}
+
+Init.setCurrentUser = function () {
+    jQuery.ajax({
+        method: 'GET',
+        url: document.location.origin + "/account/userId",
+        dataType: 'json',
+        success: function (data) {
+            Init.setLoggedIn(data.data.userId);
+        },
+        error: function (data) {
+            Init.setLoggedIn(null);
+        }
+    });
 }
 
 Init.setLoggedIn = function (userid) {
