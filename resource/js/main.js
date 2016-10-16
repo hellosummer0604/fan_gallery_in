@@ -31,7 +31,7 @@ $(function () {
     //add modal event
     bandModalEvent();
 
-    renderNavBar();
+    // renderNavBar();
 })
 
 

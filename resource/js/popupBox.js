@@ -161,7 +161,7 @@ console_test(actionUrl);
 }
 
 //update the nav bar after successful login/signup
-popupBox._updateNav = function () {
+popupBox._updateNav = function () {//
     var baseUrl = document.location.origin;
     var actionUrl = baseUrl + "/component/head";
 
@@ -203,6 +203,7 @@ popupBox._signUp = function (data) {
     if (data.result) {
         popupBox._updateNav();
         popupBox._hideSmallPopup();
+        Init.setLoggedIn(data.data.id);
     } else {
         popupBox._popupMsgBanner("warning", data);
     }
@@ -212,6 +213,7 @@ popupBox._login = function (data) {
     if (data.result) {
         popupBox._updateNav();
         popupBox._hideSmallPopup();
+        Init.setLoggedIn(data.data.id);
     } else {
         popupBox._popupMsgBanner("warning", data);
     }
@@ -227,6 +229,7 @@ popupBox._logout = function (data) {
         dataType: 'html',
         async: 'false',
         success: function (data) {
+            Init.setLoggedOut();
             popupBox._updateNav();
         },
         error: function (data) {
@@ -575,7 +578,11 @@ popupBox.bindCloseAction = function (func) {
 
     //for smallPopup, if click on cancel
     jQuery('.btn-smallpop-cancel').off('click').on('click', function (event) {
-        func();
+        if (!popupBox.isEditPopup()) {
+            func();
+        } else {
+            event.stopPropagation();
+        }
     });
 }
 

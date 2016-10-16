@@ -441,7 +441,6 @@ var ImgGrid = Class.create({
                             + "</div>"
                             + "<div class='thumbPlate'>"
                             + "<div class='topBox editImgInfoBtn'></div>"
-                            // + "<div class='bottomBox'><span class='invisibleIcon'></span>the best coffee you can get</div>"
                             + "<div class='bottomBox'>the best coffee you can get</div>"
                             + "</div>";
 
@@ -453,13 +452,20 @@ var ImgGrid = Class.create({
                     mouseenter: function () {
                         if (fadeInEnabled) {
                             fadeInEnabled = false;
-                            jQuery(container).find(".thumbPlate").fadeIn('fast', function () {
+                            jQuery(container).find(".bottomBox").fadeIn('fast', function () {
                                 fadeInEnabled = true;
                             });
+
+                            if (Init.userLoggedIn() == imgArray[index]['ownerId']) {
+                                jQuery(container).find(".editImgInfoBtn").fadeIn('fast', function () {
+                                    fadeInEnabled = true;
+                                });
+                            }
                         }
                     },
                     mouseleave: function () {
-                        jQuery(container).find(".thumbPlate").fadeOut(0);
+                        jQuery(container).find(".bottomBox").fadeOut(0);
+                        jQuery(container).find(".editImgInfoBtn").fadeOut(0);
                     }
                 });
 
