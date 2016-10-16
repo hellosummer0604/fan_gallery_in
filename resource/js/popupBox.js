@@ -578,7 +578,11 @@ popupBox.bindCloseAction = function (func) {
 
     //for smallPopup, if click on cancel
     jQuery('.btn-smallpop-cancel').off('click').on('click', function (event) {
-        func();
+        if (!popupBox.isEditPopup()) {
+            func();
+        } else {
+            event.stopPropagation();
+        }
     });
 }
 
