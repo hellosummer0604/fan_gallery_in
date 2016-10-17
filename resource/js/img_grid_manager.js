@@ -45,7 +45,8 @@ Img_Grid_Manager.loadImgSection = function (sid, page) {
 		
 		jQuery.ajax({
 			method: 'POST',
-			url: 'http://north.gallery/user/' + userId + '/tag/' + sid + '/page/' + page,
+			// url: 'http://north.gallery/user/' + userId + '/tag/' + sid + '/page/' + page,
+			url: document.location.origin + '/user/' + userId + '/tag/' + sid + '/page/' + page,
 			data: sectionInfo,
 			dataType: 'json',
 			async: 'false',

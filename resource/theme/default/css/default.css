@@ -245,7 +245,7 @@ div.error {
     margin-bottom: 70px;
 }
 
-.mainBox #imgTitle{
+.mainBox #imgTitleBox{
     padding-top:0px;
     padding-bottom: 0px;
     width: auto;
@@ -264,8 +264,7 @@ div.error {
     border:0px;
     background:none;
     height: 50px;
-    max-width: 450px;
-    width: 85%;
+    width: 100%;
 }
 
 .baseLayer input[type="text"]#imgTitle:focus{

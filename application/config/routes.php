@@ -86,6 +86,14 @@ $route['upload/complete'] = 'Currentuser/completeUpload/';
 $route['upload/delete'] = 'Currentuser/deleteTmpFile/';
 $route['upload/deleteAll'] = 'Currentuser/deleteAllTmpFile/';
 
+//Image
+$route['image/(:any)'] = "Image_controller/$1";
+$route['image/(:num)/edit']['post'] = "Image_controller/update/$1/";
+$route['image/(:any)/(:any)'] = "Image_controller/$1/$2";
+$route['image/(:any)/(:any)/(:any)'] = "Image_controller/$1/$2/$3";
+$route['image/(:any)/(:any)/(:any)/(:any)'] = "Image_controller/$1/$2/$3/$4";
+
+
 //for current user
 $route['u/(:any)'] = 'Currentuser/$1';
 $route['u/(:any)/(:any)'] = 'Currentuser/$1/$2';

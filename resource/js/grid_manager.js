@@ -441,7 +441,7 @@ var ImgGrid = Class.create({
                             + "</div>"
                             + "<div class='thumbPlate'>"
                             + "<div class='topBox editImgInfoBtn'></div>"
-                            + "<div class='bottomBox'>the best coffee you can get</div>"
+                            + "<div class='bottomBox' id='thumb_title_"+curId+"'>" + imgArray[index]['title'] +"</div>"
                             + "</div>";
 
                 jQuery(container).html(tempHtml);

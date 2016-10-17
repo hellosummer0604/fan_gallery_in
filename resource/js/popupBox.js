@@ -296,12 +296,6 @@ popupBox._clearInput = function () {
         jQuery(this).val("");
     });
 }
-//popupBox.hideSignPopup = function (targetArray) {
-//	popupBox.hidePopup(targetArray, function() {
-//		///clear
-//		popupBox._clearImgdetail();
-//	});
-//}
 
 popupBox.bindSwitchSignPopUp = function () {
     var target = null;
@@ -377,46 +371,6 @@ popupBox.hideImgBoxPopup = function (targetArray) {
     });
 }
 
-
-// popupBox._loadImgdetail = function (imgId) {
-//     if (typeof imgId == 'undefined') {
-//         console.error('loading img  ' + JSON.stringify(imgId) + ' fail: ');
-//         //show error and closepopup
-//         popupBox._loadError();
-//         return;
-//     }
-//
-//     var imgId = {'imgId': imgId};
-//
-//     jQuery.ajax({
-//         method: 'POST',
-//         url: 'http://north.gallery/ajax_controller/getImgDetail',
-//         data: imgId,
-//         dataType: 'json',
-//         success: function (resObj) {
-//             if (resObj == null) {
-//                 console.error('loading img  ' + JSON.stringify(imgId) + ' fail: ');
-//                 //show error and closepopup
-//                 popupBox._loadError();
-//                 return;
-//             }
-//
-//             //success
-//             //set backgorund image size
-//             popupBox._BACKGROUND_IMAGE_HEIGHT = resObj['data']['orgHeight'];
-//             popupBox._BACKGROUND_IMAGE_WIDTH = resObj['data']['orgWidth'];
-//
-//             popupBox._displayImgdetail(resObj);
-//         },
-//         error: function (errorMsg) {
-//             //show error and closepopup
-//             popupBox._loadError();
-//             console.error('loading img  ' + imgId + ' fail: ' + JSON.stringify(errorMsg));
-//         }
-//     });
-//
-// }
-
 popupBox._loadImgdetail = function (imgId, target) {
     if (typeof imgId == 'undefined') {
         //show error and closepopup
@@ -424,7 +378,7 @@ popupBox._loadImgdetail = function (imgId, target) {
         return;
     }
 
-    var url = location.protocol + "//" + location.host + "/component/" + target + '/' + imgId;
+    var url = document.location.origin + "/component/" + target + '/' + imgId;
 
     jQuery.ajax({
         method: 'POST',
@@ -444,6 +398,8 @@ popupBox._loadImgdetail = function (imgId, target) {
             popupBox._BACKGROUND_IMAGE_WIDTH = resObj['imgInfo']['orgWidth'];
 
             popupBox._displayImgdetail(resObj['imgInfo']);
+
+            popupBox._bindEditSubmit();
 
             popupBox.bindCloseAction(function () {
                 popupBox.hideImgBoxPopup(['#imgBox']);
@@ -510,27 +466,6 @@ popupBox._loadError = function () {
 
 
 popupBox._clearImgdetail = function () {
-    //clear imgBox
-    // var container = "#popImgBox";
-    //
-    // jQuery(container).css({
-    //     'background-image': "url(http://" + window.location.hostname + "/resource/loader2.gif)",
-    //     //'background-image': "none",
-    //     'height': "500px",
-    // });
-    //
-    // jQuery(container).removeClass("displayBg");
-    // jQuery(container).addClass("loadingBg");
-    //
-    // popupBox._BACKGROUND_IMAGE_HEIGHT = -1;
-    // popupBox._BACKGROUND_IMAGE_WIDTH = -1;
-    //
-    //
-    // //CLEAR TEXT HERE
-    // if (jQuery('#imgText > textarea').length) {
-    //     jQuery('#imgText > textarea').css('height', '220px').autogrow();
-    // }
-
     jQuery(popupBox._POPBOX_DIV_ID).replaceWith('<div id="imgBox"></div>');
 }
 
@@ -540,6 +475,41 @@ popupBox.isEditPopup = function () {
     } else {
         return false;
     }
+}
+
+popupBox.submitEditPopup = function () {
+    var imageId = jQuery('#imgId').val();
+    var data = {
+        title: jQuery('#imgTitle').val(),
+        desc: jQuery('#imgDescription').val()
+    };
+
+    jQuery.ajax({
+        method: 'POST',
+        url: document.location.origin + '/image/' + imageId + '/edit',
+        data: data,
+        dataType: 'json',
+        success: function (data) {
+            if (data.result) {
+                //set title of thumb
+                jQuery('#thumb_title_' + imageId).html(data.data.title);
+                //close popup
+                popupBox.hideImgBoxPopup(['#imgBox']);
+            }
+
+
+        },
+        error: function (data) {
+            console.error('Updating img fail: ' + JSON.stringify(data));
+//todo
+        }
+    });
+}
+
+popupBox._bindEditSubmit = function () {
+    jQuery('#btn-img-edit-submit').off('click').on('click', function (event) {
+        popupBox.submitEditPopup();
+    });
 }
 
 //bind all close actions
@@ -578,11 +548,7 @@ popupBox.bindCloseAction = function (func) {
 
     //for smallPopup, if click on cancel
     jQuery('.btn-smallpop-cancel').off('click').on('click', function (event) {
-        if (!popupBox.isEditPopup()) {
-            func();
-        } else {
-            event.stopPropagation();
-        }
+        func();
     });
 }
 

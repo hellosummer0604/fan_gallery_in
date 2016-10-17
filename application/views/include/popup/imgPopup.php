@@ -4,7 +4,7 @@
 	<div class="baseLayer">
 		<div class="mainBox">
 
-			<div class="popupImg" id="imgTitle"><?php echo $imgObj->getTitle();?></div>
+			<div class="popupImg" id="imgTitleBox"><?php echo $imgObj->getTitle();?></div>
 			<div class="popupImg loadingBg" id="popImgBox"></div>
 			<div class="popupImg" id="popImgText">
 				<span class="innerBox">
