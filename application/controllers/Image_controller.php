@@ -43,8 +43,19 @@ class Image_controller extends MY_Controller {
 
 		extract($_POST);
 
-		$img->setTitle(trim($title));
-		$img->setText(trim($desc));
+		$title = trim($title);
+		$desc = trim($desc);
+
+		//return success if no update.
+		if ($img->getTitle() == $title && $img->getText() == $desc) {
+			echo responseJson(true, 'Succeed, no update.', '', '', array('title' => trim($title)));
+			return;
+		}
+
+		$img->setTitle($title);
+		$img->setText($desc);
+
+
 
 		if ($img->save() === false) {
 			echo responseJson(false, 'Failed to update this photo!');
