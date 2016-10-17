@@ -7,7 +7,8 @@
 	<div class="baseLayer">
 		<div class="mainBox">
 		<form action="/publish" method="post">
-			<div class="popupImg" id="imgTitle"><input type="text" id="imgTitle" name="imgTitle" value="<?php echo $imgObj->getTitle();?>" autofocus></div>
+			<input type="text" id="imgId" name="imgId" value="<?php echo $imgObj->getId();?>" hidden>
+			<div class="popupImg" id="imgTitleBox"><input type="text" id="imgTitle" name="imgTitle" value="<?php echo $imgObj->getTitle();?>" autofocus></div>
 			<div class="popupImg loadingBg" id="popImgBox"></div>
 			<div class="popupImg" id="popImgText">
 				<span class="innerBox">
@@ -30,7 +31,7 @@
 					<textarea name="imgDescription" id="imgDescription" placeholder="请在此输入内容..."><?php echo $imgObj->getText();?></textarea>
 				</div>
 				<div class="innerBox">
-					<button class="btn-submit" type="button">Submit</button>
+					<button id="btn-img-edit-submit" class="btn-submit" type="button">Update</button>
 					<button class="btn-reset btn-smallpop-cancel" type="reset">Cancel</button>
 				</div>
 			</div>

@@ -601,20 +601,14 @@ class Utils {
 		$imgList = array();
 
 		foreach ($imgs as $img) {
-			if (!empty($userId) && $userId == $img->getUserId()) {
-				$isAuthor = true;
-			} else {
-				$isAuthor = false;
-			}
-
 			$imgList[] = array(
 				'id' => $img->getId(),
+				'title' => $img->getTitle(),
 				'thumb' => '/'.$img->getThumb().$img->getFilename(),
 				'detail' => '/'.$img->getPath().$img->getFilename(),
 				'width' => $img->getWidth(),
 				'height' => $img->getHeight(),
-				'ownerId' => $img->getUserId(),
-				'isOwner' => $isAuthor
+				'ownerId' => $img->getUserId()
 			);
 		}
 
