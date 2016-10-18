@@ -69,7 +69,6 @@ class Home extends MY_Controller {
 		}
 
 		$data['imgObj'] = $imgObj;
-		$data['actSection'] = $section;
 
 		$viewHTML = $this->load->view('include/popup/imgPopupEdit', $data, true);
 

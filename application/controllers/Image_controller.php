@@ -46,11 +46,10 @@ class Image_controller extends MY_Controller {
 		$title = htmlspecialchars(trim($title));
 		$desc = newline2br(htmlspecialchars(trim($desc)));
 		$status = trim($status);
-		$actSection = trim($actSection);
 
 		//if status updated, send refresh flag
 		if ($status != $img->getStatus()) {
-			$action = array('refresh' => true, 'actSection' => $actSection);
+			$action = array('refresh' => true);
 		} else {
 			$action = array('refresh' => false);
 		}

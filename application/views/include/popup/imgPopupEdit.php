@@ -8,7 +8,6 @@
 		<div class="mainBox">
 		<form action="/publish" method="post">
 			<input type="text" id="imgId" name="imgId" value="<?php echo $imgObj->getId();?>" hidden>
-			<input type="text" id="actSection" name="actSection" value="<?php echo $actSection;?>" hidden>
 			<div class="popupImg" id="imgTitleBox"><input type="text" id="imgTitle" name="imgTitle" value="<?php echo $imgObj->getTitle();?>" autofocus></div>
 			<div class="popupImg loadingBg" id="popImgBox"></div>
 			<div class="popupImg" id="popImgText">

@@ -495,7 +495,6 @@ popupBox.submitEditPopup = function () {
         title: jQuery('#imgTitle').val(),
         desc: jQuery('#imgDescription').val(),
         status: jQuery('#imgStatus').val(),
-        actSection: jQuery('#actSection').val()
     };
 
     jQuery.ajax({
@@ -505,10 +504,8 @@ popupBox.submitEditPopup = function () {
         dataType: 'json',
         success: function (data) {
             if (data.result) {
-                if (data.action.refresh == true && typeof data.action.actSection != 'undefined') {//reload whole imgList
-                    var sectId = data.action.actSection;
-                    var actNav = jQuery('#nav_' + sectId);
-                    headNav._setActive(actNav);
+                if (data.action.refresh == true) {//reload whole imgList
+                    Img_Grid_Manager._refreshCurrentImgList();
                 } else {//just refresh part of the imgList
                     //set title of thumb
                     jQuery('.bottomBox', '#thumb_title_' + imageId).html(data.data.title);
