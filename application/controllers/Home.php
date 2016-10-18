@@ -60,6 +60,8 @@ class Home extends MY_Controller {
 	}
 
 	public function imgPopupEdit($imgId) {
+		extract($_POST);
+
 		$imgObj = $this->imgForPopup($imgId);
 
 		if (empty($imgObj)) {
@@ -67,6 +69,7 @@ class Home extends MY_Controller {
 		}
 
 		$data['imgObj'] = $imgObj;
+		$data['actSection'] = $section;
 
 		$viewHTML = $this->load->view('include/popup/imgPopupEdit', $data, true);
 

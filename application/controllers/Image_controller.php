@@ -43,26 +43,40 @@ class Image_controller extends MY_Controller {
 
 		extract($_POST);
 
-		$title = trim($title);
-		$desc = trim($desc);
+		$title = htmlspecialchars(trim($title));
+		$desc = newline2br(htmlspecialchars(trim($desc)));
+		$status = trim($status);
+		$actSection = trim($actSection);
+
+		//if status updated, send refresh flag
+		if ($status != $img->getStatus()) {
+			$action = array('refresh' => true, 'actSection' => $actSection);
+		} else {
+			$action = array('refresh' => false);
+		}
+
+		if (!is_numeric($status)) {
+			$status = $img->getStatus();
+		}
 
 		//return success if no update.
-		if ($img->getTitle() == $title && $img->getText() == $desc) {
+		if ($img->getTitle() == $title && $img->getText() == $desc && $status == $img->getStatus()) {
 			echo responseJson(true, 'Succeed, no update.', '', '', array('title' => trim($title)));
 			return;
 		}
 
 		$img->setTitle($title);
 		$img->setText($desc);
-
-
+		$img->setStatus($status);
 
 		if ($img->save() === false) {
 			echo responseJson(false, 'Failed to update this photo!');
 			return;
 		}
 
-		echo responseJson(true, 'Succeed!', '', '', array('title' => trim($title)));
+
+
+		echo responseJson(true, 'Succeed!', '', $action, array('title' => trim($title)));
 		return;
 	}
 

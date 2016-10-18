@@ -604,6 +604,7 @@ class Utils {
 			$imgList[] = array(
 				'id' => $img->getId(),
 				'title' => $img->getTitle(),
+				'status' => $img->getStatus(),
 				'thumb' => '/'.$img->getThumb().$img->getFilename(),
 				'detail' => '/'.$img->getPath().$img->getFilename(),
 				'width' => $img->getWidth(),

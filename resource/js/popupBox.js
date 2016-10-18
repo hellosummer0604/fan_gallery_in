@@ -83,6 +83,13 @@ popupBox.showImgBoxPopup = function (obj, target) {
 
 }
 
+//get active section when click img thumb
+popupBox._getActiveSection = function () {
+    var sectionId = jQuery('.nav_li.active').attr('id').substr(4);
+
+    return sectionId;
+}
+
 popupBox._showLoginPopup = function () {
     var target = jQuery('#loginBox');
     popupBox.showPopup(target, null, function () {
@@ -380,9 +387,14 @@ popupBox._loadImgdetail = function (imgId, target) {
 
     var url = document.location.origin + "/component/" + target + '/' + imgId;
 
+    var data = {
+        section: popupBox._getActiveSection()
+    };
+
     jQuery.ajax({
         method: 'POST',
         url: url,
+        data: data,
         dataType: 'json',
         success: function (resObj) {
             if (resObj == null || typeof resObj == 'undefined') {
@@ -481,7 +493,9 @@ popupBox.submitEditPopup = function () {
     var imageId = jQuery('#imgId').val();
     var data = {
         title: jQuery('#imgTitle').val(),
-        desc: jQuery('#imgDescription').val()
+        desc: jQuery('#imgDescription').val(),
+        status: jQuery('#imgStatus').val(),
+        actSection: jQuery('#actSection').val()
     };
 
     jQuery.ajax({
@@ -492,7 +506,7 @@ popupBox.submitEditPopup = function () {
         success: function (data) {
             if (data.result) {
                 //set title of thumb
-                jQuery('#thumb_title_' + imageId).html(data.data.title);
+                jQuery('.bottomBox', '#thumb_title_' + imageId).html(data.data.title);
                 //close popup
                 popupBox.hideImgBoxPopup(['#imgBox']);
             }

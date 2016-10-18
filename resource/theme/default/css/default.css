@@ -1062,7 +1062,7 @@ div.error {
     left: 0px;
     text-align: center;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.4);
+
 }
 
 .imgThumbBox .textBox span {
@@ -1071,6 +1071,7 @@ div.error {
     display:flex;
     align-items: center; /* Vertical center alignment */
     justify-content: center; /* Horizontal center alignment */
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .thumbPlate .bottomBox {
@@ -1170,6 +1171,31 @@ div.error {
 #imgText #imgDescription {
     padding:10px;
     width: calc(100% - 20px);
+}
+
+#imgStatusBox {
+    width: 225px;
+    height: 23px;
+    margin: 0px 5px 10px 5px;
+
+    display: inline-block;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    border:1px solid #999999;
+}
+
+.popupImg select#imgStatus {
+    border: none;
+    margin-left: 5px;
+    width:215px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+.popupImg select#imgStatus option {
+    margin: 0px 5px 10px 5px;
 }
 /*.popupImg .innerBox button.addImgTag {*/
 /*font-size:14px;*/
