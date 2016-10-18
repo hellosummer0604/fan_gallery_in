@@ -24,11 +24,30 @@
 				<span class="innerBox" id="imgTagNameAutoComplete">
 					<input class="imgTagName typeahead" type="text" maxlength="20" placeholder="Tagging this photo"/>
 				</span>
-				<!--                &nbsp;&nbsp;&nbsp;-->
-				<!--                <span>[Tagging this photo]</span>-->
+
+				<span class="innerBox" id="imgStatusBox">
+					<select id="imgStatus" name="imgStatus">
+						<?php
+						$status = $imgObj->getStatus();
+
+						$options = array(IMG_STATE_PUBLIC => 'Public',
+										 IMG_STATE_PRIVATE => 'Private',
+										 IMG_STATE_REPO => 'Repository');
+
+						foreach ($options as $key => $value) {
+							$selected = "";
+							if ($status == $key) {
+								$selected = " selected";
+							}
+
+							echo "<option value=\"$key\"$selected>$value</option>";
+						}
+						?>
+					</select>
+				</span>
 
 				<div class="innerBox" id="imgText">
-					<textarea name="imgDescription" id="imgDescription" placeholder="请在此输入内容..."><?php echo $imgObj->getText();?></textarea>
+					<textarea name="imgDescription" id="imgDescription" placeholder="请在此输入内容..."><?php echo br2newline($imgObj->getText());?></textarea>
 				</div>
 				<div class="innerBox">
 					<button id="btn-img-edit-submit" class="btn-submit" type="button">Update</button>

@@ -481,7 +481,8 @@ popupBox.submitEditPopup = function () {
     var imageId = jQuery('#imgId').val();
     var data = {
         title: jQuery('#imgTitle').val(),
-        desc: jQuery('#imgDescription').val()
+        desc: jQuery('#imgDescription').val(),
+        status: jQuery('#imgStatus').val(),
     };
 
     jQuery.ajax({
@@ -491,8 +492,12 @@ popupBox.submitEditPopup = function () {
         dataType: 'json',
         success: function (data) {
             if (data.result) {
-                //set title of thumb
-                jQuery('#thumb_title_' + imageId).html(data.data.title);
+                if (data.action.refresh == true) {//reload whole imgList
+                    Img_Grid_Manager._refreshCurrentImgList();
+                } else {//just refresh part of the imgList
+                    //set title of thumb
+                    jQuery('.bottomBox', '#thumb_title_' + imageId).html(data.data.title);
+                }
                 //close popup
                 popupBox.hideImgBoxPopup(['#imgBox']);
             }

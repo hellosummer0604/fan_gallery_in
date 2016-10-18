@@ -433,7 +433,12 @@ var ImgGrid = Class.create({
 					postId = imgArray[index + 1]['id'];
 				}
 
-				var tempHtml = "<div class='textBox'><span>Private Photo<span></div>"
+				var privateHtml = "";
+				if (imgArray[index]['status'] == '2') {
+                    privateHtml = "<span>Private Photo<span>";
+                }
+
+				var tempHtml = "<div class='textBox'>" + privateHtml + "</div>"
                             + "<div class='hideImgId'>"
                                     + "<div class='hide_cur_id'>" + curId + "</div>"
                                     + "<div class='hide_pre_id'>" + preId + "</div>"
@@ -441,10 +446,11 @@ var ImgGrid = Class.create({
                             + "</div>"
                             + "<div class='thumbPlate'>"
                             + "<div class='topBox editImgInfoBtn'></div>"
-                            + "<div class='bottomBox' id='thumb_title_"+curId+"'>" + imgArray[index]['title'] +"</div>"
+                            + "<div class='bottomBox'>" + imgArray[index]['title'] +"</div>"
                             + "</div>";
 
                 jQuery(container).html(tempHtml);
+                jQuery(container).attr('id', "thumb_title_" + curId);
 
                 //bind onmouseover and onmouseout
                 var fadeInEnabled = true;

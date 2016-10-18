@@ -86,10 +86,12 @@ class Ajax_controller extends MY_Controller
 
         $typeId = strtolower($typeId);
 
+		$visitor = $this->isOnline();
+
         if ($typeId == REPO_ID) {
             $imgSection = $this->Img->getRepositoryImgs($pageNo, $pageSize, $last);
         } else {
-            $imgSection = $this->Img->getSectionImg($userId, $typeId, $pageNo, $pageSize, $last);
+            $imgSection = $this->Img->getSectionImg($userId, $typeId, $pageNo, $pageSize, $last, $visitor);
         }
 
 

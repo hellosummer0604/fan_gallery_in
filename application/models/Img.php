@@ -284,19 +284,29 @@ class Img extends Base_img
 
 	/************************** start load img section for user **************************/
 	/**
+	 * 1. except repo
+	 * 2. visitor can only get public photo
 	 * @param $tagId
 	 * @param int $page
 	 * @param int $pageSize
 	 * @param int $last
 	 * @return array|null
 	 */
-	public static function loadSectionImgs($userId, $tagId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
+	public static function loadSectionImgs($userId, $tagId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
 		$imgTbl = self::$tbl;
 		$imgTagTbl = self::$tblTagImg;
 
 		$data = array(
-			"$imgTbl.user_id" => $userId,
-			"$imgTbl.status" => IMG_STATE_PUBLIC,);
+			"$imgTbl.user_id" => $userId
+		);
+
+		//if not owner, only public photo is visiable
+		if ($visitor != $userId) {
+			$data["$imgTbl.status"] = IMG_STATE_PUBLIC;
+		}
+
+		$data["$imgTbl.status != "] = IMG_STATE_REPO;
+
 
 		if (!empty($tagId)) {
 			$data["$imgTagTbl.tag_id"] = $tagId;
@@ -367,8 +377,8 @@ class Img extends Base_img
 		return $objs;
 	}
 
-	public static function getSectionImg($userId, $tagId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
-		$imgs = self::loadSectionImgs($userId, $tagId, $pageNo, $pageSize, $last);
+	public static function getSectionImg($userId, $tagId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
+		$imgs = self::loadSectionImgs($userId, $tagId, $pageNo, $pageSize, $last, $visitor);
 
 		$tag = Tag::load($tagId);
 

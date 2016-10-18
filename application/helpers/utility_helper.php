@@ -44,6 +44,13 @@ function responseJson($result = false, $msg = null, $errorMsg = null, $action = 
 	));
 }
 
+function br2newline($input) {
+	$breaks = array("<br />","<br>","<br/>");
 
+	return str_ireplace($breaks, PHP_EOL, $input);
+}
 
+function newline2br($input) {
+	return str_replace(array("\r\n", "\r", "\n"), '<br>', $input);
+}
 ?>

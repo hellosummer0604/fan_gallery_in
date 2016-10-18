@@ -60,6 +60,8 @@ class Home extends MY_Controller {
 	}
 
 	public function imgPopupEdit($imgId) {
+		extract($_POST);
+
 		$imgObj = $this->imgForPopup($imgId);
 
 		if (empty($imgObj)) {
