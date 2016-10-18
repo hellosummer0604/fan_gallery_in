@@ -35,38 +35,67 @@ Img_Grid_Manager.loadImgSection = function (sid, page) {
         window.location.href = document.location.origin;
     }
 
-	if (typeof Img_Grid_Manager.sectionList[sid] != 'undefined') {
-		//render
-		Img_Grid_Manager._renderLoadingList(sid);
-	} else {
-		var sectionInfo = {'sectionId': sid};
+    //
+	// if (typeof Img_Grid_Manager.sectionList[sid] != 'undefined') {
+	// 	//render
+	// 	Img_Grid_Manager._renderLoadingList(sid);
+	// } else {
+	// 	var sectionInfo = {'sectionId': sid};
+    //
+	// 	Img_Grid_Manager.canLoad = false;
+	//
+	// 	jQuery.ajax({
+	// 		method: 'POST',
+	// 		// url: 'http://north.gallery/user/' + userId + '/tag/' + sid + '/page/' + page,
+	// 		url: document.location.origin + '/user/' + userId + '/tag/' + sid + '/page/' + page,
+	// 		data: sectionInfo,
+	// 		dataType: 'json',
+	// 		async: 'false',
+	// 		success: function (section) {
+	// 			console.log('frist loading image section' + sid);
+	// 			if (section != null && section.id != null && section.loadingList != null) {
+	// 				Img_Grid_Manager.sectionList[section.id] = section;
+    //
+	// 				//add first group
+	// 				Img_Grid_Manager._addImgGroup(sid);
+	// 			}
+    //
+	// 			Img_Grid_Manager.canLoad = true;
+	// 		},
+	// 		error: function (section) {
+	// 			console.error('loading img section ' + sid + ' fail: ' + JSON.stringify(section));
+	// 			Img_Grid_Manager.canLoad = true;
+	// 		}
+	// 	});
+	// }
 
-		Img_Grid_Manager.canLoad = false;
-		
-		jQuery.ajax({
-			method: 'POST',
-			// url: 'http://north.gallery/user/' + userId + '/tag/' + sid + '/page/' + page,
-			url: document.location.origin + '/user/' + userId + '/tag/' + sid + '/page/' + page,
-			data: sectionInfo,
-			dataType: 'json',
-			async: 'false',
-			success: function (section) {
-				console.log('frist loading image section' + sid);
-				if (section != null && section.id != null && section.loadingList != null) {
-					Img_Grid_Manager.sectionList[section.id] = section;
+    var sectionInfo = {'sectionId': sid};
 
-					//add first group
-					Img_Grid_Manager._addImgGroup(sid);
-				}
+    Img_Grid_Manager.canLoad = false;
 
-				Img_Grid_Manager.canLoad = true;
-			},
-			error: function (section) {
-				console.error('loading img section ' + sid + ' fail: ' + JSON.stringify(section));
-				Img_Grid_Manager.canLoad = true;
-			}
-		});
-	}
+    jQuery.ajax({
+        method: 'POST',
+        // url: 'http://north.gallery/user/' + userId + '/tag/' + sid + '/page/' + page,
+        url: document.location.origin + '/user/' + userId + '/tag/' + sid + '/page/' + page,
+        data: sectionInfo,
+        dataType: 'json',
+        async: 'false',
+        success: function (section) {
+            console.log('frist loading image section' + sid);
+            if (section != null && section.id != null && section.loadingList != null) {
+                Img_Grid_Manager.sectionList[section.id] = section;
+
+                //add first group
+                Img_Grid_Manager._addImgGroup(sid);
+            }
+
+            Img_Grid_Manager.canLoad = true;
+        },
+        error: function (section) {
+            console.error('loading img section ' + sid + ' fail: ' + JSON.stringify(section));
+            Img_Grid_Manager.canLoad = true;
+        }
+    });
 }
 
 //move one img group from waiting list to loading list

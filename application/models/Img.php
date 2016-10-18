@@ -284,6 +284,8 @@ class Img extends Base_img
 
 	/************************** start load img section for user **************************/
 	/**
+	 * 1. except repo
+	 * 2. visitor can only get public photo
 	 * @param $tagId
 	 * @param int $page
 	 * @param int $pageSize
@@ -302,6 +304,9 @@ class Img extends Base_img
 		if ($visitor != $userId) {
 			$data["$imgTbl.status"] = IMG_STATE_PUBLIC;
 		}
+
+		$data["$imgTbl.status != "] = IMG_STATE_REPO;
+
 
 		if (!empty($tagId)) {
 			$data["$imgTagTbl.tag_id"] = $tagId;

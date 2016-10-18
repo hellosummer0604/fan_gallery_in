@@ -505,8 +505,14 @@ popupBox.submitEditPopup = function () {
         dataType: 'json',
         success: function (data) {
             if (data.result) {
-                //set title of thumb
-                jQuery('.bottomBox', '#thumb_title_' + imageId).html(data.data.title);
+                if (data.action.refresh == true && typeof data.action.actSection != 'undefined') {//reload whole imgList
+                    var sectId = data.action.actSection;
+                    var actNav = jQuery('#nav_' + sectId);
+                    headNav._setActive(actNav);
+                } else {//just refresh part of the imgList
+                    //set title of thumb
+                    jQuery('.bottomBox', '#thumb_title_' + imageId).html(data.data.title);
+                }
                 //close popup
                 popupBox.hideImgBoxPopup(['#imgBox']);
             }
