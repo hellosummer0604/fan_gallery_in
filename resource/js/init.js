@@ -7,6 +7,8 @@ jQuery.noConflict();
 GLOBAL_IS_MOBILE = false;
 //current user id
 CURRENT_USER = null;
+//current page of active section
+CURRENT_PAGE = 0;
 
 
 
