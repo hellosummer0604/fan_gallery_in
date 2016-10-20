@@ -49,7 +49,6 @@
 	<section class="bodySection imgSection" id="<?php echo $item ?>" style="display:none;">
 		<div class="beforeThis"></div>
 		<div class="pagingBanner moreGroup">
-			<a href="#" class="start">First</a><a href="#">1</a><a href="#">2</a><a href="#">3</a><a class="active" href="javascript: void(0)">4</a><a href="#">4</a><a href="#">4</a><a href="#">5</a><a href="#" class="end">Last</a>
 		</div>
 
 		<div class="footer" ><?php echo $item ?></div>

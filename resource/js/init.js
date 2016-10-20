@@ -9,6 +9,8 @@ GLOBAL_IS_MOBILE = false;
 CURRENT_USER = null;
 //current page of active section
 CURRENT_PAGE = 0;
+//current tag/section id
+CURRENT_SECTION = 0;
 
 
 
@@ -169,4 +171,20 @@ Init.setLoggedOut = function () {
 
 Init.userLoggedIn = function () {
     return CURRENT_USER;
+}
+
+Init.setCurrentPage = function (page) {
+    CURRENT_PAGE = page;
+}
+
+Init.getCurrentPage = function () {
+    return CURRENT_PAGE;
+}
+
+Init.setCurrentSection = function (section) {
+    CURRENT_SECTION = section;
+}
+
+Init.getCurrentSection = function () {
+    return CURRENT_SECTION;
 }
