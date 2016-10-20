@@ -81,6 +81,42 @@ class MY_Model extends CI_Model {
 		return $objs;
 	}
 
+	public static function loadByTermPagination($data, $page = null, $pageSize = null, $last = null) {
+		$res = array('pages' => 0, 'current' => 0, 'total' => 0);
+
+		if (empty($data)) {
+			return $res;
+		}
+
+		$itemCount = get_instance()->db->select(" COUNT(*) num")->order_by("id", "desc")->get_where(static::$tbl, $data)->result_array();
+		if (empty($itemCount)) {
+			$totalItems = 0;
+		} else {
+			$totalItems = $itemCount[0]['num'];
+		}
+
+		$res['total'] = $totalItems;
+		if (is_null($page) || is_null($pageSize)) {//no page
+			$res['pages'] = 1;
+			$res['current'] = 0;
+
+		} else if (is_null($last)) {//page without last
+			$res['pages'] = ceil($totalItems / $pageSize);
+			$res['current'] = $page > $res['total'] ? $res['total'] : $page;
+
+		} else {//page with last
+			$rest = fmod($totalItems, $pageSize);
+			if ($rest < $last) {
+				$res['pages'] = round(($totalItems  - $rest) / $pageSize);
+			} else {
+				$res['pages'] = ceil($totalItems / $pageSize);
+			}
+			$res['current'] = $page > $res['total'] ? $res['total'] : $page;
+		}
+
+		return $res;
+	}
+
 	public static function loadByQuery($sql, $data) {
 		if (empty($sql)) {
 			return null;

@@ -269,10 +269,19 @@ class Img extends Base_img
 		return self::loadByAuthorAndStatus(self::$util->isOnline(), IMG_STATE_REPO, $pageNo, $pageSize, $last);
 	}
 
+	public static function loadRepositoryPagination($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
+		$data = array();
+		$data['user_id'] = self::$util->isOnline();
+		$data['status'] = IMG_STATE_REPO;
+
+		return self::loadByTermPagination($data, $pageNo, $pageSize, $last);
+	}
+
 	public static function getRepositoryImgs($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
 		$imgs = self::loadRepository($pageNo, $pageSize, $last);
+		$pagination = self::loadRepositoryPagination($pageNo, $pageSize, $last);
 
-		$imgSection = self::$util->imgSectionPreprocessor(REPO_ID, $imgs);
+		$imgSection = self::$util->imgSectionPreprocessor(REPO_ID, $imgs, $pagination);
 
 		return $imgSection;
 	}
@@ -377,8 +386,68 @@ class Img extends Base_img
 		return $objs;
 	}
 
+	public static function loadSectionImgsPagination($userId, $tagId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
+		$imgTbl = self::$tbl;
+		$imgTagTbl = self::$tblTagImg;
+
+		$data = array(
+			"$imgTbl.user_id" => $userId
+		);
+
+		//if not owner, only public photo is visiable
+		if ($visitor != $userId) {
+			$data["$imgTbl.status"] = IMG_STATE_PUBLIC;
+		}
+
+		$data["$imgTbl.status != "] = IMG_STATE_REPO;
+
+
+		if (!empty($tagId)) {
+			$data["$imgTagTbl.tag_id"] = $tagId;
+		}
+
+		$res = array('pages' => 0, 'current' => 0, 'total' => 0);
+
+		$itemCount = get_instance()->db
+			->select(" COUNT(*) num")
+			->from($imgTbl)
+			->join($imgTagTbl, "$imgTbl.id  = $imgTagTbl.image_id", 'inner')
+			->where($data)
+			->get()
+			->result_array();
+
+		if (empty($itemCount)) {
+			$totalItems = 0;
+		} else {
+			$totalItems = $itemCount[0]['num'];
+		}
+
+		$res['total'] = $totalItems;
+		if (is_null($page) || is_null($pageSize)) {//without page
+			$res['pages'] = 1;
+			$res['current'] = 0;
+
+		} else if (is_null($last)) {//page without last number
+			$res['pages'] = ceil($totalItems / $pageSize);
+			$res['current'] = $page > $res['total'] ? $res['total'] : $page;
+
+		} else {//page with last number
+			$rest = fmod($totalItems, $pageSize);
+			if ($rest < $last) {
+				$res['pages'] = round(($totalItems  - $rest) / $pageSize);
+			} else {
+				$res['pages'] = ceil($totalItems / $pageSize);
+			}
+			$res['current'] = $page > $res['total'] ? $res['total'] : $page;
+		}
+
+		return $res;
+	}
+
+
 	public static function getSectionImg($userId, $tagId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
 		$imgs = self::loadSectionImgs($userId, $tagId, $pageNo, $pageSize, $last, $visitor);
+		$pagination = self::loadSectionImgsPagination($userId, $tagId, $pageNo, $pageSize, $last, $visitor);
 
 		$tag = Tag::load($tagId);
 
@@ -388,7 +457,7 @@ class Img extends Base_img
 			$sectionName = $tag->getTagName();
 		}
 
-		$imgSection = self::$util->imgSectionPreprocessor($sectionName, $imgs);
+		$imgSection = self::$util->imgSectionPreprocessor($sectionName, $imgs, $pagination);
 
 		return $imgSection;
 	}

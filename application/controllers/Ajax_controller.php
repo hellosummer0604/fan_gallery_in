@@ -135,6 +135,8 @@ class Ajax_controller extends MY_Controller
             $res = array('id' => $typeId, 'loadingList' => array(), 'waitingList' => $groupList);
         }
 
+        $res['pagination'] = $imgSection['pagination'];
+
         return $res;
     }
 
