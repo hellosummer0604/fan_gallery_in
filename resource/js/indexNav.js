@@ -245,7 +245,7 @@ headNav._setActive = function (obj) {
 	});
 
 	//load img section
-	Img_Grid_Manager.loadImgSection(activeSectionId);
+	Img_Grid_Manager.loadImgSection(activeSectionId, 0);
 
 
 }

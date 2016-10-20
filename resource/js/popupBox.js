@@ -26,8 +26,6 @@ popupBox.activate = function () {
 
 popupBox.showPopup = function (target, obj, callback) {
 
-    callback();
-
     jQuery(function () {
 
         //basic setting
@@ -42,6 +40,7 @@ popupBox.showPopup = function (target, obj, callback) {
 
             popupBox._addBlur();
 
+            callback();
         });
     });
 
@@ -214,6 +213,8 @@ popupBox._login = function (data) {
         popupBox._updateNav();
         popupBox._hideSmallPopup();
         Init.setLoggedIn(data.data.id);
+        //rerender
+        Img_Grid_Manager._refreshCurrentImgList();
     } else {
         popupBox._popupMsgBanner("warning", data);
     }
@@ -231,6 +232,8 @@ popupBox._logout = function (data) {
         success: function (data) {
             Init.setLoggedOut();
             popupBox._updateNav();
+            //rerender
+            Img_Grid_Manager._refreshCurrentImgList();
         },
         error: function (data) {
             console.error(JSON.stringify(data));
@@ -421,12 +424,12 @@ popupBox._displayImgdetail = function (data) {
 
     var container = "#popImgBox";
 
-    if (jQuery('#imgText > #imgDescription').length) {
-        jQuery('#imgText > textarea').css('overflow', 'hidden').autogrow();
-    }
+    var opts = {
+        onInitialize: true
+    };
 
     popupBox.showPopup(popupBox._POPBOX_DIV_ID, null, function () {
-
+        jQuery('#imgText > textarea').autogrow(opts);
     });
 
 

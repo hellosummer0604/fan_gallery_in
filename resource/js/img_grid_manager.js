@@ -35,40 +35,6 @@ Img_Grid_Manager.loadImgSection = function (sid, page) {
         window.location.href = document.location.origin;
     }
 
-    //
-	// if (typeof Img_Grid_Manager.sectionList[sid] != 'undefined') {
-	// 	//render
-	// 	Img_Grid_Manager._renderLoadingList(sid);
-	// } else {
-	// 	var sectionInfo = {'sectionId': sid};
-    //
-	// 	Img_Grid_Manager.canLoad = false;
-	//
-	// 	jQuery.ajax({
-	// 		method: 'POST',
-	// 		// url: 'http://north.gallery/user/' + userId + '/tag/' + sid + '/page/' + page,
-	// 		url: document.location.origin + '/user/' + userId + '/tag/' + sid + '/page/' + page,
-	// 		data: sectionInfo,
-	// 		dataType: 'json',
-	// 		async: 'false',
-	// 		success: function (section) {
-	// 			console.log('frist loading image section' + sid);
-	// 			if (section != null && section.id != null && section.loadingList != null) {
-	// 				Img_Grid_Manager.sectionList[section.id] = section;
-    //
-	// 				//add first group
-	// 				Img_Grid_Manager._addImgGroup(sid);
-	// 			}
-    //
-	// 			Img_Grid_Manager.canLoad = true;
-	// 		},
-	// 		error: function (section) {
-	// 			console.error('loading img section ' + sid + ' fail: ' + JSON.stringify(section));
-	// 			Img_Grid_Manager.canLoad = true;
-	// 		}
-	// 	});
-	// }
-
     var sectionInfo = {'sectionId': sid};
 
     Img_Grid_Manager.canLoad = false;
@@ -81,12 +47,19 @@ Img_Grid_Manager.loadImgSection = function (sid, page) {
         dataType: 'json',
         async: 'false',
         success: function (section) {
-            console.log('frist loading image section' + sid);
+            console.log('frist loading image section ' + sid);
             if (section != null && section.id != null && section.loadingList != null) {
+                Init.setCurrentPage(page);
+                Init.setCurrentSection(sid);
+
+                Img_Grid_Manager.removeImgSection();
+
                 Img_Grid_Manager.sectionList[section.id] = section;
 
                 //add first group
                 Img_Grid_Manager._addImgGroup(sid);
+
+                Img_Grid_Manager._setPagination(section.pagination);
             }
 
             Img_Grid_Manager.canLoad = true;
@@ -121,7 +94,7 @@ Img_Grid_Manager._addImgGroup = function (sid) {
 			delete waitingList[key];
 
 			//add new div for group
-			jQuery("<div class=\"imgGroup\" id=\"" + temp_group.id + "\">" + temp_group.id + "</div>").insertBefore(insertPosition);
+			jQuery("<div class=\"imgGroup\" id=\"" + temp_group.id + "\">" + temp_group.id + 'asdasda' + "</div>").insertBefore(insertPosition);
 
 //			console.log("add group" + temp_group.id);
 
@@ -228,36 +201,15 @@ Img_Grid_Manager._renderVisibleSection = function () {
 }
 
 //clear this section, for paging
-Img_Grid_Manager.removeImgSection = function (sid) {
-
+Img_Grid_Manager.removeImgSection = function () {
+    //clear old img section
+    jQuery('.imgGroup').remove();
 }
 
-Img_Grid_Manager.changePage = function (sid, page) {
-	Img_Grid_Manager.removeImgSection(sid);
-
-	Img_Grid_Manager.loadImgSection(sid, page);
+//
+Img_Grid_Manager.changePage = function (page) {
+	Img_Grid_Manager.loadImgSection(Init.getCurrentSection(), page);
 }
-//
-//Img_Grid_Manager._loadImgAll = function (idList) {
-//	if (typeof idList == 'undefined') {
-//		return null;
-//	}
-//
-//	var sectionList = {};
-//
-//
-//	jQuery.each(idList, function (index, value) {
-//		var section = Img_Grid_Manager._loadImgSection(value);
-//
-//		if ((!empty(section['id'])) && (!empty(section['loadingList']))) {
-//
-//			sectionList[section['id']] = section;
-//		}
-//
-//	});
-//
-//	return sectionList;
-//}
 
 
 /**
@@ -290,4 +242,69 @@ Img_Grid_Manager._refreshCurrentImgList = function() {
     var currentSection = jQuery('.nav_li.active');
 
     headNav._setActive(currentSection);
+}
+
+
+Img_Grid_Manager._setPagination = function(pagination) {
+    //max number of page buttons is MAX_NEIGHBOR_PAGE_BUTTON * 2 + 1
+    var PAGE_BUTTON_RADIUS = 4;
+
+    if (typeof pagination == 'undefined') {
+        return;
+    }
+
+    // jQuery('.pagingBanner.moreGroup').html('');
+
+    var pages = pagination.pages;
+    var current = pagination.current;
+    var pageNo = parseInt(current) + 1;
+
+    var left = pageNo - PAGE_BUTTON_RADIUS;
+    var right = pageNo + PAGE_BUTTON_RADIUS;
+
+    var validLeft = left;
+    var validRight = right;
+
+    if (left < 1) {
+        validRight = right + (1 - left);
+    }
+
+    if (right > pages) {
+        validLeft = left - (right - pages);
+    }
+
+    validRight = (validRight <= pages) ? validRight : pages;
+    validLeft = (validLeft >= 1) ? validLeft : 1;
+
+    var htmlStr = "<a href=\"#\" class=\"start\">First</a>";
+
+    for(var i = validLeft; i <= validRight; i++) {
+        if (i == pageNo) {
+            htmlStr += "<a class=\"active\" href=\"#\">" + i + "</a>";
+        } else {
+            htmlStr += "<a href=\"#\">" + i + "</a>";
+        }
+    }
+
+    htmlStr += "<a href=\"#\" class=\"end\">Last</a>";
+
+    jQuery('.pagingBanner.moreGroup:visible').html(htmlStr);
+
+    jQuery('.pagingBanner.moreGroup:visible').find('a').each(function () {
+        var pageNo = jQuery(this).html();
+
+        if (pageNo == 'First') {
+            pageNo = 1;
+        }
+
+        if (pageNo == 'Last') {
+            pageNo = pages;
+        }
+
+        jQuery(this).off('click').on('click', function(event) {
+            event.preventDefault();
+
+            Img_Grid_Manager.changePage(pageNo - 1);
+        });
+    });
 }

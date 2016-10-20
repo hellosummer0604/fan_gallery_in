@@ -591,7 +591,7 @@ class Utils {
 	/***************** end image uploading *****************/
 
 	/***************** start ajax image section wrapper *****************/
-	public function imgSectionPreprocessor($sectionId, $imgs) {
+	public function imgSectionPreprocessor($sectionId, $imgs, $pagination) {
 		if (empty($imgs)) {
 			return null;
 		}
@@ -613,7 +613,7 @@ class Utils {
 			);
 		}
 
-		$section = array('sectionId' => $sectionId, 'imgList' => $imgList);
+		$section = array('sectionId' => $sectionId, 'imgList' => $imgList, 'pagination' => $pagination);
 
 		return $section;
 	}

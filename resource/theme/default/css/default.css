@@ -274,11 +274,11 @@ div.error {
 #imgText textarea{
     margin-top: 10px;
     border: none;
-    height:220px;
     width: 100%;
     color:#666666;
     font-size: 14px;
     line-height: 24px;
+    overflow: hidden;
 }
 
 #imgBox #authorBox{
@@ -1192,6 +1192,7 @@ div.error {
     height: 20px;
     line-height: 20px;
     font-size: 14px;
+    color: #666666;
 }
 
 .popupImg select#imgStatus option {

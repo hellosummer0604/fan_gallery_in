@@ -47,7 +47,7 @@
 				</span>
 
 				<div class="innerBox" id="imgText">
-					<textarea name="imgDescription" id="imgDescription" placeholder="请在此输入内容..."><?php echo br2newline($imgObj->getText());?></textarea>
+					<textarea name="imgDescription" rows="3" id="imgDescription" placeholder="请在此输入内容..."><?php echo br2newline($imgObj->getText());?></textarea>
 				</div>
 				<div class="innerBox">
 					<button id="btn-img-edit-submit" class="btn-submit" type="button">Update</button>
