@@ -125,7 +125,7 @@ class Img extends Base_img
 		return true;
 	}
 
-	//todo check and remove unused tag
+
 	public function removeTag($tag) {
 		if(!empty($this->tags)) {
 			foreach ($this->tags as $key => $item) {
@@ -192,6 +192,7 @@ class Img extends Base_img
 		if (!empty($removes)) {
 			foreach ($removes as $remove) {
 				$remove->removeFromImg($this);
+				$remove->deleteUnused();
 			}
 		}
 

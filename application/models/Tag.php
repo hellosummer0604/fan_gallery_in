@@ -6,6 +6,7 @@
  * Time: 4:18 PM
  */
 
+require_once(APPPATH . 'models/Img.php');
 class Tag extends MY_Model {
 	protected static $tbl = "Tag";
 	protected static $tblTagImg = "Image_tag";
@@ -204,7 +205,7 @@ class Tag extends MY_Model {
 	 * If this tag has no images, delete this tag
 	 */
 	protected function deleteUnused() {
-		//todo
+		return self::clearEmptyTag($this);
 	}
 
 	public static function loadImageTags($img) {
@@ -236,4 +237,18 @@ class Tag extends MY_Model {
 	/*************** end image - tag relationship ******************************/
 	/*************** end image - tag relationship ******************************/
 
+	/*
+	 * If this tag has no images, delete this tag
+	 */
+	public static function clearEmptyTag($tagObj) {
+		if (empty($tagObj)) {
+			return;
+		}
+
+		$res = get_instance()->db->select(" COUNT(*) num")->from(self::$tblTagImg)->where(array(self::$tblTagImg.'.tag_id' => $tagObj->getId()))->get()->result_array();
+
+		if (empty($res) || $res[0]['num'] < 1) {//no images under this tag, delete this tag
+			$tagObj->delete();
+		}
+	}
 }
