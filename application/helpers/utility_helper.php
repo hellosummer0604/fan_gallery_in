@@ -61,4 +61,12 @@ function cutUserId($userId) {
 
 	return substr($userId, 0, 32);
 }
+
+function isDev() {
+	if(ENVIRONMENT == 'development') {
+		return true;
+	} else {
+		return false;
+	}
+}
 ?>

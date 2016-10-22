@@ -83,6 +83,10 @@ class Utils {
 	}
 
 	private function validateInputFormat($pattern = null, $str = null) {
+		if(isDev()) {
+			return true;
+		}
+
 		if (empty($pattern) || empty($str)) {
 			return false;
 		}
