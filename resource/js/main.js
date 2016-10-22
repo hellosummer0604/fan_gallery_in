@@ -82,13 +82,7 @@ var _openImgModal = function(img) {
     var imgWidth = $(img).attr("img-org-width");
     var imgHeight = $(img).attr("img-org-height");
     var imgSrc = $(img).attr("img-org-src");
-    //var imgSrc = $(img).attr("src");
 
-    //var html = "<img src='" + imgSrc + "'>";
-    //
-    //
-    //
-    //$("#imgBox").html(html);
 
     var img = $("#imgBox > img");
 

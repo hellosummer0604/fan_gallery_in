@@ -251,4 +251,16 @@ class Tag extends MY_Model {
 			$tagObj->delete();
 		}
 	}
+
+	public static function getAllTags($userId) {
+		if (empty($userId)) {
+			return null;
+		}
+
+		$data = array('user_id' => $userId);
+
+		return self::loadByTerm($data);
+	}
+
+
 }

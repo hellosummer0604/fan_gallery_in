@@ -286,7 +286,12 @@ Img_Grid_Manager._setPagination = function(pagination) {
 
     htmlStr += "<a href=\"#\" class=\"end\">Last</a>";
 
-    jQuery('.pagingBanner.moreGroup:visible').html(htmlStr);
+    if (pages > 1) {
+        jQuery('.pagingBanner.moreGroup:visible').html(htmlStr);
+    } else {
+        jQuery('.pagingBanner.moreGroup:visible').empty();
+    }
+
 
     jQuery('.pagingBanner.moreGroup:visible').find('a').each(function () {
         var pageNo = jQuery(this).html();

@@ -103,6 +103,7 @@ $route['u/(:any)/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3/$4';
 
 $route['user/(:any)'] = "home/index/$1";
 $route['user/(:any)/tag/(:any)'] = "Ajax_controller/getImg/$1/$2";
+$route['user/(:any)/tags'] = "Currentuser/getAllTags/$1";
 $route['user/(:any)/tag/(:any)/page/(:num)'] = "Ajax_controller/getImg/$1/$2/$3";
 
 
