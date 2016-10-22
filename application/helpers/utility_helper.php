@@ -53,4 +53,12 @@ function br2newline($input) {
 function newline2br($input) {
 	return str_replace(array("\r\n", "\r", "\n"), '<br>', $input);
 }
+
+function cutUserId($userId) {
+	if (empty($userId)) {
+		return null;
+	}
+
+	return substr($userId, 0, 32);
+}
 ?>

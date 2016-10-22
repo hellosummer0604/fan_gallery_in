@@ -232,6 +232,8 @@ class Currentuser extends User_Controller {
 	 * @return string
 	 */
 	public function getAllTags_get($userId) {
+		$userId = cutUserId($userId);
+
 		$this->load->model('Tag');
 
 		$tags = Tag::getAllTags($userId);

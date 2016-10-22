@@ -75,8 +75,10 @@ class Home extends MY_Controller {
 		echo json_encode(array('html' => $viewHTML, 'imgInfo' => $this->utils->imgDetailWrapper($imgObj)));
 	}
 	
-	public function index($userid = null)
+	public function index($userId = null)
 	{
+		$userId = cutUserId($userId);
+
         //must be the first line
         $this->setHeader(array('css' => $this->cssArray, 'js' => $this->jsArray));
 

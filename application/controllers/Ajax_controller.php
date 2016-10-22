@@ -59,7 +59,7 @@ class Ajax_controller extends MY_Controller
 			$pageNo = 0;
 		}
 
-//        sleep(5);
+		$userId = cutUserId($userId);
 
         $pageSize = empty($_POST['pageSize']) ? IMG_SECTION_PAGE_SIZE : $_POST['pageSize'];
 
