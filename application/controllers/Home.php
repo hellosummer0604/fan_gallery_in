@@ -77,6 +77,8 @@ class Home extends MY_Controller {
 	
 	public function index($userId = null)
 	{
+		$this->load->model('Tag');
+
 		$userId = cutUserId($userId);
 
         //must be the first line

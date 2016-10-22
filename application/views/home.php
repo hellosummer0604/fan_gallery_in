@@ -15,26 +15,14 @@
 	<div id="jq-dropdown-more" class="jq-dropdown jq-dropdown-scroll jq-dropdown-escape">
 		<ul class="jq-dropdown-panel-narrow">
 			<table cellspacing="0" cellpadding="0">
-				<tr>
-					<td colspan="3" class="disHover"><h3>All tags</h3></td>
+				<tr class="default">
+					<td colspan="2" class="disHover"><h3>All tags</h3></td>
 				</tr>
-				<tr>
-					<td colspan="3" class="disHover"><hr></td>
+				<tr class="default">
+					<td colspan="2" class="disHover"><hr></td>
 				</tr>
-				<tr>
-					<td><a href="#">North Fan</a></td>
-					<td><a href="#">Drink</a></td>
-					<td><a href="#">Interior</a></td>
-				</tr>
-				<tr>
-					<td><a href="#">Smoothy</a></td>
-					<td><a href="#">Interior</a></td>
-					<td><a href="#">Drink</a></td>
-				</tr>
-				<tr>
-					<td><a href="#">Light</a></td>
-					<td><a href="#">Drink</a></td>
-					<td></td>
+				<tr class="default">
+					<td colspan="2" class="disHover">Loading...</td>
 				</tr>
 			</table>
 		</ul>

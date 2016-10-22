@@ -245,6 +245,9 @@ class Currentuser extends User_Controller {
 			}
 		}
 
+		usort($data, function($a, $b) {
+			return strcmp($a['name'], $b['name']);
+		});
 
 		echo responseJson(true, "", "", "", $data);
 	}
