@@ -239,9 +239,7 @@ Img_Grid_Manager.bindResizeWindow = function () {
 }
 
 Img_Grid_Manager._refreshCurrentImgList = function() {
-    var currentSection = jQuery('.nav_li.active');
-
-    headNav._setActive(currentSection);
+    Img_Grid_Manager.loadImgSection(Init.getCurrentSection(), Init.getCurrentPage());
 }
 
 

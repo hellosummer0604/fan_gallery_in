@@ -1,4 +1,4 @@
-<div id="imgBox" class="shadowWrapper isImgBoxEdit">
+<div id="imgBox" class="shadowWrapper isEditBox">
 	<script src="<?php echo base_url('/resource/js/lib/typeahead.bundle.min.js')?>"></script>
 	<script src="<?php echo base_url('/resource/js/autogrow.min.js')?>"></script>
 	<script src="<?php echo base_url('/resource/js/popupBoxEdit.js')?>"></script>
@@ -22,7 +22,7 @@
 				</span>
 				<br>
 				<span class="innerBox" id="imgTagNameAutoComplete">
-					<input class="imgTagName typeahead" type="text" maxlength="20" placeholder="Tagging this photo"/>
+					<input id="newImgTag" name="newImgTag" class="imgTagName typeahead" type="text" maxlength="20" placeholder="Tagging this photo"/>
 				</span>
 
 				<span class="innerBox" id="imgStatusBox">

@@ -46,6 +46,10 @@ class Image_controller extends MY_Controller {
 		$title = htmlspecialchars(trim($title));
 		$desc = newline2br(htmlspecialchars(trim($desc)));
 		$status = trim($status);
+		if (!isset($tags)) {
+			$tags = array(IMG_UNASSIGNED);
+		}
+		$tags = $this->sterilizeTags($tags);
 
 		//if status updated, send refresh flag
 		if ($status != $img->getStatus()) {
@@ -59,7 +63,7 @@ class Image_controller extends MY_Controller {
 		}
 
 		//return success if no update.
-		if ($img->getTitle() == $title && $img->getText() == $desc && $status == $img->getStatus()) {
+		if ($img->getTitle() == $title && $img->getText() == $desc && $status == $img->getStatus() && !$this->hasTagsUpdate($img, $tags)) {
 			echo responseJson(true, 'Succeed, no update.', '', '', array('title' => trim($title)));
 			return;
 		}
@@ -67,6 +71,15 @@ class Image_controller extends MY_Controller {
 		$img->setTitle($title);
 		$img->setText($desc);
 		$img->setStatus($status);
+
+		//update tags
+		if (!empty($tags)) {
+			$img->clearTags();
+			foreach ($tags as $tag) {
+				$tagObj = new Tag($tag, $onlineUser);
+				$img->addTag($tagObj);
+			}
+		}
 
 		if ($img->save() === false) {
 			echo responseJson(false, 'Failed to update this photo!');
@@ -77,6 +90,50 @@ class Image_controller extends MY_Controller {
 
 		echo responseJson(true, 'Succeed!', '', $action, array('title' => trim($title)));
 		return;
+	}
+
+	private function sterilizeTags($tags) {
+		$res = array();
+
+		if (empty($tags)) {
+			return $res;
+		}
+
+		foreach ($tags as $tag) {
+			$res[] = htmlspecialchars(substr(trim($tag), 0, 20));
+		}
+
+		return $res;
+	}
+
+	private function hasTagsUpdate($img, $tags) {
+		if (empty($img) && empty($tags)) {
+			return false;
+		}
+
+		$tagObjs = $img->getTags(true);
+
+		if (empty($tagObjs)) {
+			if (empty($tags)) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		foreach ($tagObjs as $objKey => $tagObj) {
+			if(($key = array_search($tagObj->getTagName(), $tags)) !== false) {
+				unset($tags[$key]);
+			}
+
+			unset($tagObjs[$objKey]);
+		}
+
+		if (empty($img) && empty($tags)) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 }
