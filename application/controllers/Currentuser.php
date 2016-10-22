@@ -225,5 +225,25 @@ class Currentuser extends User_Controller {
 		$this->utils->removeAllUploadedFile();
 	}
 
+	/**
+	 * return all the tags of a user
+	 *
+	 * @param $userId
+	 * @return string
+	 */
+	public function getAllTags_get($userId) {
+		$this->load->model('Tag');
 
+		$tags = Tag::getAllTags($userId);
+		$data = array();
+
+		if (!empty($tags)) {
+			foreach ($tags as $tag) {
+				$data[] = array('id' => $tag->getId(), 'name' => $tag->getTagName());
+			}
+		}
+
+
+		echo responseJson(true, "", "", "", $data);
+	}
 }
