@@ -429,7 +429,9 @@ popupBox._displayImgdetail = function (data) {
     };
 
     popupBox.showPopup(popupBox._POPBOX_DIV_ID, null, function () {
-        jQuery('#imgText > textarea').autogrow(opts);
+        if (jQuery('#imgText > textarea').length) {
+            jQuery('#imgText > textarea').autogrow(opts);
+        }
     });
 
 
@@ -472,12 +474,19 @@ popupBox._clearImgdetail = function () {
     jQuery(popupBox._POPBOX_DIV_ID).replaceWith('<div id="imgBox"></div>');
 }
 
-popupBox.isEditPopup = function () {
-    if (jQuery('.isImgBoxEdit').length) {
+popupBox.isEditPopup = function (obj) {
+    var target = jQuery(obj).closest("div.shadowWrapper");
+
+    if (jQuery(target).hasClass('isEditBox')) {
         return true;
-    } else {
-        return false;
     }
+
+    if (jQuery(target).has('.popup_upload').length) {
+        return true;
+    }
+
+
+    return false;
 }
 
 popupBox.submitEditPopup = function () {
@@ -486,6 +495,7 @@ popupBox.submitEditPopup = function () {
         title: jQuery('#imgTitle').val(),
         desc: jQuery('#imgDescription').val(),
         status: jQuery('#imgStatus').val(),
+        tags: popupBoxEdit.getAllTags()
     };
 
     jQuery.ajax({
@@ -539,7 +549,7 @@ popupBox.bindCloseAction = function (func) {
 
     //for mobile phone, click image to close
     jQuery('#popImgBox').off('click').on('click', function (event) {
-        if (jQuery(window).width() < 512 && !popupBox.isEditPopup()) {
+        if (jQuery(window).width() < 512 && !popupBox.isEditPopup(this)) {
             func();
         } else {
             event.stopPropagation();
@@ -547,7 +557,7 @@ popupBox.bindCloseAction = function (func) {
     });
 
     jQuery('.baseLayer').off('click').on('click', function (event) {
-        if (!popupBox.isEditPopup()) {
+        if (!popupBox.isEditPopup(this)) {
             func();
         } else {
             event.stopPropagation();
@@ -675,7 +685,7 @@ popupBox._showGenericPopup = function () {
 popupBox._resetGenericPopup = function () {
     var mainBox = jQuery('#genericBox .mainBox');
     mainBox.removeClass().addClass('mainBox').addClass('defaultBox');
-    mainBox.html();
+    mainBox.empty();
 }
 
 /************************* end generic popup box ****************************/

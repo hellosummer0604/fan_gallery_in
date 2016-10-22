@@ -213,7 +213,8 @@ class MY_Model extends CI_Model {
 				$this->_id = $this->db->insert_id();
 			}
 
-			return $this->db->affected_rows() > 0;
+//			return $this->db->affected_rows() > 0;
+			return true;
 		} else {//update
 			$thisId = $this->getId();
 			if (empty($thisId)) {
@@ -239,7 +240,8 @@ class MY_Model extends CI_Model {
 
 			$this->db->update(static::$tbl, $updateData, array("id" => $this->getId()));
 
-			return $this->db->affected_rows() > 0;
+//			return $this->db->affected_rows() > 0;
+			return true;
 		}
 
 		return false;

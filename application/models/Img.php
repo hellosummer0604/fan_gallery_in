@@ -99,8 +99,14 @@ class Img extends Base_img
 		return true;
 	}
 
+	public function clearTags() {
+		$this->tags = array();
+	}
+
 	public function addTag($tag) {
-		array_push($this->tags, $tag);
+		if (!empty($tag)) {
+			array_push($this->tags, $tag);
+		}
 	}
 
 	private function equalTag($tag1, $tag2) {
@@ -118,6 +124,7 @@ class Img extends Base_img
 
 		return true;
 	}
+
 
 	public function removeTag($tag) {
 		if(!empty($this->tags)) {
@@ -185,6 +192,7 @@ class Img extends Base_img
 		if (!empty($removes)) {
 			foreach ($removes as $remove) {
 				$remove->removeFromImg($this);
+				$remove->deleteUnused();
 			}
 		}
 

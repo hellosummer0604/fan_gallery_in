@@ -1140,7 +1140,7 @@ div.error {
     border-radius: 12px;
 }
 
-.popupImg .itag {
+.popupImg .itag, #imgAuthorTags {
     font-size:14px;
     display: inline-block;
     border:1px solid #999999;
@@ -1152,20 +1152,43 @@ div.error {
     -moz-border-radius: 12px;
     border-radius: 12px;
 }
-.popupImg .itag a {
+.popupImg .itag a, #imgAuthorTags a {
     color: #999999;
 }
 
-.popupImg .itag:hover{
+.popupImg .itag:hover, #imgAuthorTags:hover{
     border:1px solid rgb(0, 171, 230);
 }
 
-.popupImg .itag:hover a {
+.popupImg .itag:hover a, #imgAuthorTags:hover a {
     color: rgb(0, 171, 230);
 }
 
-.popupImg .itag a:hover {
+.popupImg .itag a:hover, #imgAuthorTags a:hover {
     color: rgb(0, 171, 230);
+}
+
+.isEditBox .itag {
+    border:1px solid rgb(0, 171, 230);
+}
+
+.isEditBox .itag a{
+    color: rgb(0, 171, 230);
+}
+
+.isEditBox .itag:hover{
+    border:1px solid rgb(255, 51, 153);
+    cursor: pointer;
+}
+
+.isEditBox .itag:hover a{
+    color: rgb(255, 51, 153);
+    cursor: pointer;
+}
+
+.isEditBox .itag a:hover{
+    color: rgb(255, 51, 153);
+    cursor: pointer;
 }
 
 #imgText #imgDescription {
