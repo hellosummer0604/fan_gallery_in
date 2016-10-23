@@ -132,5 +132,5 @@ define('IMG_UNASSIGNED', 'unAssigned');
 
 define('REPO_ID', 'repo_id');
 
-define('TAG_ALL', 'All');
+define('TAG_ALL', 'all_id');
 

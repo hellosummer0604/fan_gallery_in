@@ -303,10 +303,12 @@ class Img extends Base_img
 	/**
 	 * 1. except repo
 	 * 2. visitor can only get public photo
-	 * @param $tagId
+	 * @param $userId
+	 * @param null $tagId
 	 * @param int $page
 	 * @param int $pageSize
 	 * @param int $last
+	 * @param null $visitor
 	 * @return array|null
 	 */
 	public static function loadSectionImgs($userId, $tagId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
@@ -323,11 +325,7 @@ class Img extends Base_img
 		}
 
 		$data["$imgTbl.status != "] = IMG_STATE_REPO;
-
-
-		if (!empty($tagId)) {
-			$data["$imgTagTbl.tag_id"] = $tagId;
-		}
+		$data["$imgTagTbl.tag_id"] = $tagId;
 
 		if (is_null($page) || is_null($pageSize)) {
 			$res = get_instance()->db
@@ -378,6 +376,93 @@ class Img extends Base_img
 				->select("$imgTbl.*")
 				->from($imgTbl)
 				->join($imgTagTbl, "$imgTbl.id  = $imgTagTbl.image_id", 'inner')
+				->where($data)
+				->order_by("$imgTbl.id", "desc")
+				->limit($fakeInfinity, $page * $pageSize)
+				->get()
+				->result_array();
+		}
+
+		$objs = self::assembleObjByResultSet($res);
+
+		if (empty($objs)) {
+			return null;
+		}
+
+		return $objs;
+	}
+
+	/**
+	 * The difference from loadSectionImgs are
+	 * 1. remove join
+	 * 2. remove where on tagid
+	 *
+	 * @param $userId
+	 * @param int $page
+	 * @param int $pageSize
+	 * @param int $last
+	 * @param null $visitor
+	 * @return array|null
+	 */
+	public static function loadAllSectionImgs($userId, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
+		$imgTbl = self::$tbl;
+
+		$data = array(
+			"$imgTbl.user_id" => $userId
+		);
+
+		//if not owner, only public photo is visiable
+		if ($visitor != $userId) {
+			$data["$imgTbl.status"] = IMG_STATE_PUBLIC;
+		}
+
+		$data["$imgTbl.status != "] = IMG_STATE_REPO;
+
+		if (is_null($page) || is_null($pageSize)) {
+			$res = get_instance()->db
+				->select("$imgTbl.*")
+				->from($imgTbl)
+				->where($data)
+				->order_by("$imgTbl.id", "desc")
+				->get()
+				->result_array();
+
+		} else if (is_null($last)) {
+			$res = get_instance()->db
+				->select("$imgTbl.*")
+				->from($imgTbl)
+				->where($data)
+				->order_by("$imgTbl.id", "desc")
+				->limit($pageSize, $page * $pageSize)
+				->get()
+				->result_array();
+		} else {
+			//get all images
+			$count = get_instance()->db
+				->select(" COUNT(*) sum")
+				->from($imgTbl)
+				->where($data)
+				->get()
+				->result_array();
+
+			if (empty($count) || $count[0]['sum'] == 0) {
+				return null;
+			}
+
+			$count = $count[0]['sum'];
+
+			//find how many items in next page
+			$numNextPage = $count - (($page + 1) * $pageSize);
+
+			if ($numNextPage < $last) {//load all the rest items
+				$fakeInfinity = ($pageSize + $last) * 2; //larger than rest items
+			} else {//only load this page
+				$fakeInfinity = $pageSize;
+			}
+
+			$res = get_instance()->db
+				->select("$imgTbl.*")
+				->from($imgTbl)
 				->where($data)
 				->order_by("$imgTbl.id", "desc")
 				->limit($fakeInfinity, $page * $pageSize)
@@ -452,10 +537,77 @@ class Img extends Base_img
 		return $res;
 	}
 
+	/**
+	 * The difference from loadSectionImgs are
+	 * 1. remove join
+	 * 2. remove where on tagid
+	 * @param $userId
+	 * @param int $page
+	 * @param int $pageSize
+	 * @param int $last
+	 * @param null $visitor
+	 * @return array
+	 */
+	public static function loadAllSectionImgsPagination($userId, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
+		$imgTbl = self::$tbl;
+
+		$data = array(
+			"$imgTbl.user_id" => $userId
+		);
+
+		//if not owner, only public photo is visiable
+		if ($visitor != $userId) {
+			$data["$imgTbl.status"] = IMG_STATE_PUBLIC;
+		}
+
+		$data["$imgTbl.status != "] = IMG_STATE_REPO;
+
+		$res = array('pages' => 0, 'current' => 0, 'total' => 0);
+
+		$itemCount = get_instance()->db
+			->select(" COUNT(*) num")
+			->from($imgTbl)
+			->where($data)
+			->get()
+			->result_array();
+
+		if (empty($itemCount)) {
+			$totalItems = 0;
+		} else {
+			$totalItems = $itemCount[0]['num'];
+		}
+
+		$res['total'] = $totalItems;
+		if (is_null($page) || is_null($pageSize)) {//without page
+			$res['pages'] = 1;
+			$res['current'] = 0;
+
+		} else if (is_null($last)) {//page without last number
+			$res['pages'] = ceil($totalItems / $pageSize);
+			$res['current'] = $page > $res['total'] ? $res['total'] : $page;
+
+		} else {//page with last number
+			$rest = fmod($totalItems, $pageSize);
+			if ($rest < $last) {
+				$res['pages'] = round(($totalItems  - $rest) / $pageSize);
+			} else {
+				$res['pages'] = ceil($totalItems / $pageSize);
+			}
+			$res['current'] = $page > $res['total'] ? $res['total'] : $page;
+		}
+
+		return $res;
+	}
+
 
 	public static function getSectionImg($userId, $tagId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
-		$imgs = self::loadSectionImgs($userId, $tagId, $pageNo, $pageSize, $last, $visitor);
-		$pagination = self::loadSectionImgsPagination($userId, $tagId, $pageNo, $pageSize, $last, $visitor);
+		if (strtolower($tagId) == TAG_ALL) {
+			$imgs = self::loadAllSectionImgs($userId, $pageNo, $pageSize, $last, $visitor);
+			$pagination = self::loadAllSectionImgsPagination($userId, $pageNo, $pageSize, $last, $visitor);
+		} else {
+			$imgs = self::loadSectionImgs($userId, $tagId, $pageNo, $pageSize, $last, $visitor);
+			$pagination = self::loadSectionImgsPagination($userId, $tagId, $pageNo, $pageSize, $last, $visitor);
+		}
 
 		$tag = Tag::load($tagId);
 

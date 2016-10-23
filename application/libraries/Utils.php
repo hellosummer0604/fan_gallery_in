@@ -600,8 +600,6 @@ class Utils {
 			return null;
 		}
 
-		$userId = $this->isOnline();
-
 		$imgList = array();
 
 		foreach ($imgs as $img) {
