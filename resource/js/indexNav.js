@@ -342,7 +342,7 @@ headNav._loadMoreTags = function () {
                 var htmlStr = "";
 
                 for(var i = 0; i < data.data.length; i++) {
-                    var tmpStr = "<td width=\"50%\"><a href=\"" + userUrl + "/tag/" + data.data[i].id + "\">" + data.data[i].name + "</a></td>";
+                    var tmpStr = "<td width=\"50%\"><a href=\"" + data.data[i].id + "\">" + data.data[i].name + "</a></td>";
 
                     if (i == 0) {
                         tmpStr = "<tr>" + tmpStr;
@@ -374,15 +374,22 @@ headNav._bindMorePanelTagTriggered = function () {
         jQuery(obj).off('click').on('click', function (event) {
             event.preventDefault();
 
-            event.stopPropagation();
+            // event.stopPropagation();
+            var sid = jQuery(this).attr("href");
+            console_test(sid);
+            console_test(sid);
+            console_test(sid);
+            console_test(sid);
 
-            headNav._morePanelTagClicked(jQuery(obj).closest('td'));
+            headNav._morePanelTagClicked(jQuery(obj).closest('td'), sid);
         });
     });
 }
 
-headNav._morePanelTagClicked = function (obj) {
+headNav._morePanelTagClicked = function (obj, sid) {
     headNav._setDeactive();
+
+    headNav._setNavColor("clear");
 
     headNav._clearMorePanelTagActive();
 
@@ -390,7 +397,7 @@ headNav._morePanelTagClicked = function (obj) {
 
     jQuery('#moreBtn').addClass('active');
 
-
+    Img_Grid_Manager.loadImgSection(sid, 0);
 }
 
 headNav._clearMorePanelTagActive = function () {
