@@ -54,10 +54,7 @@ var ImgGrid = Class.create({
 	},
 	
 	_setContainerWidth: function () {
-		
-		var curId = this.imgData.id;
-		
-		this.containerWidth = jQuery("#" + curId).innerWidth();
+		this.containerWidth = jQuery("#mainImgSection").innerWidth();
 		
 		if (this.containerWidth < 1024) {
 			this.imgBorder = this.imgThinBorder;

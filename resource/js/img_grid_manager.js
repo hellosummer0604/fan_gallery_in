@@ -73,7 +73,7 @@ Img_Grid_Manager.loadImgSection = function (sid, page) {
 
 //move one img group from waiting list to loading list
 Img_Grid_Manager._addImgGroup = function (sid) {
-	var insertPosition = jQuery("#" + sid + " > .beforeThis");
+	var insertPosition = jQuery("#mainImgSection > .beforeThis");
 
 	//it is reference
 	var waitingList = Img_Grid_Manager.sectionList[sid]['waitingList'];
@@ -96,8 +96,7 @@ Img_Grid_Manager._addImgGroup = function (sid) {
 			//add new div for group
 			jQuery("<div class=\"imgGroup\" id=\"" + temp_group.id + "\">" + temp_group.id + 'asdasda' + "</div>").insertBefore(insertPosition);
 
-//			console.log("add group" + temp_group.id);
-
+			// console.log("add group" + temp_group.id);
 
 			//render new groups
 			Img_Grid_Manager._renderGroup(temp_group);
@@ -127,20 +126,12 @@ Img_Grid_Manager._addImgGroup = function (sid) {
 Img_Grid_Manager._bindMoreGroup = function () {
 
 	jQuery(window).scroll(function () {
-		var sectionLoadId = null
-		jQuery(".moreGroup").each(function () {
-			var obj = this;
-			var sectionId = jQuery(obj).parent().attr('id');
-			var display = jQuery('#' + sectionId).css('display');
-			if (display == 'block') {
-				sectionLoadId = sectionId;
-			}
-		});
+		var sectionLoadId = Init.getCurrentSection();
 		
 		//auto load by visibility of paging block 
 		var needLoad = false;
 		
-		var pagingBlockToTop = jQuery('#' + sectionLoadId + " > .moreGroup").offset().top;
+		var pagingBlockToTop = jQuery("#mainImgSection > .moreGroup").offset().top;
 		var windowScroll = jQuery(window).scrollTop();
 		var windowSize = jQuery(window).height();
 		
@@ -188,22 +179,22 @@ Img_Grid_Manager._renderLoadingList = function (sid) {
 
 //render visible section when resize
 Img_Grid_Manager._renderVisibleSection = function () {
-	var sectionId = null;
 
-	jQuery(".imgSection").each(function () {
-		var temp_obj = this;
-		if (jQuery(temp_obj).css('display') == "block") {
-			sectionId = jQuery(temp_obj).attr("id");
-		}
-	});
 
-	Img_Grid_Manager._renderLoadingList(sectionId);
+	// jQuery(".imgSection").each(function () {
+	// 	var temp_obj = this;
+	// 	if (jQuery(temp_obj).css('display') == "block") {
+	// 		sectionId = jQuery(temp_obj).attr("id");
+	// 	}
+	// });
+	Img_Grid_Manager._renderLoadingList(Init.getCurrentSection());
 }
 
 //clear this section, for paging
 Img_Grid_Manager.removeImgSection = function () {
-    //clear old img section
-    jQuery('.imgGroup').remove();
+    jQuery('#mainImgSection').find('.imgGroup').each(function () {
+        jQuery(this).remove();
+    });
 }
 
 //

@@ -240,10 +240,6 @@ headNav._setActive = function (obj) {
 	obj.addClass("active");
 	var activeSectionId = obj.attr('id').substr(4);
 
-	jQuery("#" + activeSectionId).css({
-		'display': 'block'
-	});
-
 	//load img section
 	Img_Grid_Manager.loadImgSection(activeSectionId, 0);
 
@@ -255,11 +251,11 @@ headNav._setDeactive = function () {
 		jQuery(this).removeClass("active");
 	});
 
-	jQuery(".imgSection").each(function () {
-		jQuery(this).css({
-			'display': 'none'
-		});
-	});
+	// jQuery(".imgSection").each(function () {
+	// 	jQuery(this).css({
+	// 		'display': 'none'
+	// 	});
+	// });
 
 
 }
