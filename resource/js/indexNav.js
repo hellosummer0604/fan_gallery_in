@@ -250,14 +250,6 @@ headNav._setDeactive = function () {
 	jQuery(".linkContainer li").each(function () {
 		jQuery(this).removeClass("active");
 	});
-
-	// jQuery(".imgSection").each(function () {
-	// 	jQuery(this).css({
-	// 		'display': 'none'
-	// 	});
-	// });
-
-
 }
 
 headNav._liOnClick = function (obj) {
@@ -371,25 +363,22 @@ headNav._loadMoreTags = function () {
 headNav._bindMorePanelTagTriggered = function () {
     jQuery('#jq-dropdown-more').find('td').find('a').each(function () {
         var obj = this;
-        jQuery(obj).off('click').on('click', function (event) {
+        var currentTd = jQuery(obj).closest('td');
+
+        jQuery(currentTd).off('click').on('click', function (event) {
             event.preventDefault();
 
-            // event.stopPropagation();
-            var sid = jQuery(this).attr("href");
-            console_test(sid);
-            console_test(sid);
-            console_test(sid);
-            console_test(sid);
+            var sid = jQuery(obj).attr("href");
 
-            headNav._morePanelTagClicked(jQuery(obj).closest('td'), sid);
+            headNav._morePanelTagClicked(currentTd, sid);
         });
     });
 }
 
 headNav._morePanelTagClicked = function (obj, sid) {
-    headNav._setDeactive();
-
     headNav._setNavColor("clear");
+
+    headNav._setDeactive();
 
     headNav._clearMorePanelTagActive();
 
