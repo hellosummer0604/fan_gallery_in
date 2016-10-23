@@ -866,7 +866,9 @@ div.error {
 
 .imgNavContainer #jq-dropdown-more .jq-dropdown-panel-narrow{
     padding: 10px 10px 20px 10px;
+    max-height: 500px;
     font-size: 16px;
+    overflow-y: scroll;
 }
 
 .imgNavContainer #jq-dropdown-more .jq-dropdown-panel-narrow hr {
