@@ -204,7 +204,7 @@ class Tag extends MY_Model {
 	/*
 	 * If this tag has no images, delete this tag
 	 */
-	protected function deleteUnused() {
+	public function deleteUnused() {
 		return self::clearEmptyTag($this);
 	}
 
@@ -242,6 +242,10 @@ class Tag extends MY_Model {
 	 */
 	public static function clearEmptyTag($tagObj) {
 		if (empty($tagObj)) {
+			return;
+		}
+
+		if ($tagObj->getTagName() == IMG_UNASSIGNED) {
 			return;
 		}
 

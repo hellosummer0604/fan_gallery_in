@@ -37,7 +37,7 @@ headNav.activate = function () {
 
 	headNav._setFirstCateActive();
 
-    headNav._bindMorePaneTriggered();
+    headNav._bindMorePanelTriggered();
 }
 
 
@@ -240,10 +240,6 @@ headNav._setActive = function (obj) {
 	obj.addClass("active");
 	var activeSectionId = obj.attr('id').substr(4);
 
-	jQuery("#" + activeSectionId).css({
-		'display': 'block'
-	});
-
 	//load img section
 	Img_Grid_Manager.loadImgSection(activeSectionId, 0);
 
@@ -254,14 +250,6 @@ headNav._setDeactive = function () {
 	jQuery(".linkContainer li").each(function () {
 		jQuery(this).removeClass("active");
 	});
-
-	jQuery(".imgSection").each(function () {
-		jQuery(this).css({
-			'display': 'none'
-		});
-	});
-
-
 }
 
 headNav._liOnClick = function (obj) {
@@ -272,8 +260,11 @@ headNav._liOnClick = function (obj) {
 	headNav._setActive(obj);
 
 	headNav._setNavColor();
+
+    headNav._clearMorePanelTags();
 }
 
+//todo need modify
 headNav._bindClickEvt = function () {
 	jQuery(".linkContainer .nav_li").each(function () {
 
@@ -311,15 +302,102 @@ headNav._setMorePanelPos = function () {
     });
 }
 
-headNav._bindMorePaneTriggered = function () {
+//todo need to be modified
+headNav._bindMorePanelTriggered = function () {
     var trigger = jQuery('[data-jq-dropdown="#jq-dropdown-more"]');
     var jDropDown = jQuery('#jq-dropdown-more');
 
     trigger.off('click').on("click", function(event) {
         headNav._setMorePanelPos();
+
+        headNav._loadMoreTags();
     });
 
     jDropDown.css({
         top: '50px'
     });
+}
+
+headNav._loadMoreTags = function () {
+    var userUrl = document.location.origin + '/user/' + Init.router('user');
+    jQuery.ajax({
+        method: 'GET',
+        url: userUrl + '/tags',
+        dataType: 'json',
+        success: function (data) {
+
+            //insert to more panel
+            if (data.data.length > 0) {
+                //clear the panel
+                headNav._clearMorePanelTags();
+
+                var htmlStr = "";
+
+                for(var i = 0; i < data.data.length; i++) {
+                    var tmpStr = "<td width=\"50%\"><a href=\"" + data.data[i].id + "\">" + data.data[i].name + "</a></td>";
+
+                    if (i == 0) {
+                        tmpStr = "<tr>" + tmpStr;
+                    } else if (i % 2 == 0) {
+                        tmpStr = "</tr><tr>" + tmpStr;
+                    }
+
+                    if (i == data.data.length - 1) {
+                        tmpStr = tmpStr + "</tr>";
+                    }
+
+                    htmlStr = htmlStr + tmpStr;
+                }
+
+                jQuery('#jq-dropdown-more tr:last').after(htmlStr);
+                //bind panel tags click event
+                headNav._bindMorePanelTagTriggered();
+            }
+        },
+        error: function (data) {
+            console.error('cannot load more tags '+ JSON.stringify(section));
+        }
+    });
+}
+
+headNav._bindMorePanelTagTriggered = function () {
+    jQuery('#jq-dropdown-more').find('td').find('a').each(function () {
+        var obj = this;
+        var currentTd = jQuery(obj).closest('td');
+
+        jQuery(currentTd).off('click').on('click', function (event) {
+            event.preventDefault();
+
+            var sid = jQuery(obj).attr("href");
+
+            headNav._morePanelTagClicked(currentTd, sid);
+        });
+    });
+}
+
+headNav._morePanelTagClicked = function (obj, sid) {
+    headNav._setNavColor("clear");
+
+    headNav._setDeactive();
+
+    headNav._clearMorePanelTagActive();
+
+    obj.addClass('active');
+
+    jQuery('#moreBtn').addClass('active');
+
+    Img_Grid_Manager.loadImgSection(sid, 0);
+}
+
+headNav._clearMorePanelTagActive = function () {
+    jQuery('#moreBtn').removeClass('active');
+
+    jQuery('#jq-dropdown-more').find('.active').each(function () {
+        jQuery(this).removeClass('active');
+    });
+
+}
+
+headNav._clearMorePanelTags = function () {
+    jQuery("#jq-dropdown-more").find("tr:gt(1)").remove();
 }
