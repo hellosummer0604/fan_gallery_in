@@ -1,5 +1,5 @@
 <div id="imgBox" class="shadowWrapper">
-	<span id="authorBox"><?php echo $imgObj->getAuthor()->getUsername().' '.date('Y-m-d', strtotime($imgObj->getCreated()));?></span>
+	<span id="authorBox"><?php echo $imgObj->getAuthor()->getFirstName().' '.date('Y-m-d', strtotime($imgObj->getCreated()));?></span>
 	<div class="shadowLayer baseLayer"></div>
 	<div class="baseLayer">
 		<div class="mainBox">
@@ -8,7 +8,7 @@
 			<div class="popupImg loadingBg" id="popImgBox"></div>
 			<div class="popupImg" id="popImgText">
 				<span class="innerBox">
-					<div id="imgAuthorTags" class="itag"><a id="authorTag" href="#">North Fan</a></div>
+					<div id="imgAuthorTags" class="itag"><a id="authorTag" href="javascript:void(0)"><?php echo $imgObj->getAuthor()->getUsername();?></a></div>
 						<span id="imgTags"><?php
 							$tags = $imgObj->getTags();
 							foreach ($tags as $item) {
