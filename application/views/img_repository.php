@@ -41,20 +41,13 @@
 
 
 
-<?php
-	foreach ($cateList as $item) {
-//	$html = "<section class=\"bodySection imgSection\" id=\"" . $item . "\" style=\"display:none;\"><div class=\"beforeThis\"></div><div class=\"imgGroup pagingBanner\">++++++++++</div><div class=\"footer\" >" . $item . "</div></section>";
-//	echo $html;
-?>
-	<section class="bodySection imgSection" id="<?php echo $item ?>" style="display:none;">
-		<div class="beforeThis"></div>
-		<div class="pagingBanner moreGroup">
-		</div>
+<section class="bodySection imgSection" id="mainImgSection">
+	<div class="beforeThis"></div>
+	<div class="pagingBanner moreGroup">
+	</div>
 
-		<div class="footer" ><?php echo $item ?></div>
-	</section>
-<?php
-	}
-?>
+	<div class="footer" >footer</div>
+</section>
+
 </body>
 </html>
