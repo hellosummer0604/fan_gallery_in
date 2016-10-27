@@ -167,6 +167,14 @@ class Test extends MY_Controller {
 
 
 	}
+
+	public function test15() {
+		$this->load->model('User');
+
+		$user = $this->User->load('f8057d071686e27832ba66b6b96a371d');
+
+		print_r($user->getStickedTag());
+	}
 }
 
 ?>

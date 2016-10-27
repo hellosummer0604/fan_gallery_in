@@ -88,7 +88,7 @@ class Home extends MY_Controller {
 
 		$this->tempLoadPosterView();//todo will replace by real functions
 		
-		$data['cateList'] = $this->getCategoryLink();
+		$data['cateList'] = $this->getCategoryLink($userId);
 
 		$this->loadView('home', $data);
 	}

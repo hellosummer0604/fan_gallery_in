@@ -1,5 +1,5 @@
 <div id="imgBox" class="shadowWrapper">
-	<span id="authorBox"><?php echo $imgObj->getAuthor()->getFirstName().' '.date('Y-m-d', strtotime($imgObj->getCreated()));?></span>
+	<span id="authorBox"><?php echo $imgObj->getAuthor()->getUsername().' '.date('Y-m-d', strtotime($imgObj->getCreated()));?></span>
 	<div class="shadowLayer baseLayer"></div>
 	<div class="baseLayer">
 		<div class="mainBox">

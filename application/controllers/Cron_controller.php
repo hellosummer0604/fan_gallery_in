@@ -27,9 +27,21 @@ class Cron_controller extends MY_Controller {
 
 	}
 
-	//calculate how many imgs and public imgs in each tag
-	public function calculateTagImgCount() {
-
+	/*********** start calculate how many imgs and public imgs in each tag *********/
+	//todo wrong sql
+	private function countTagImg() {
+//		$sql = "SELECT COUNT(Image_tag.tag_id) num, Tag.id, Tag.tag_name FROM Tag LEFT JOIN Image_tag ON Tag.id = Image_tag.tag_id WHERE num = 0 GROUP BY Tag.id";
+//
+//		$res = $this->db->query($sql)->result_array();
+//
+//		if(empty($res)) {
+//			return null;
+//		} else {
+//			return $res;
+//		}
 	}
+
+
+	/*********** end calculate how many imgs and public imgs in each tag *********/
 
 }

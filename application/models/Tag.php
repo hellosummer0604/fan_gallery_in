@@ -266,5 +266,41 @@ class Tag extends MY_Model {
 		return self::loadByTerm($data);
 	}
 
+	public static function countPublicImg($user_id) {
+		$sql = "SELECT COUNT(Tag.id) num, Tag.id id, Tag.tag_name name FROM Tag LEFT JOIN Image_tag ON Tag.id = Image_tag.tag_id INNER JOIN Image ON Image_tag.image_id = Image.id WHERE Image.status = ? AND Image.user_id = ? GROUP BY Image_tag.tag_id ORDER BY num DESC, Tag.id DESC";
+
+		$res = get_instance()->db->query($sql, array(IMG_STATE_PUBLIC, $user_id))->result_array();
+
+		if(empty($res)) {
+			return null;
+		} else {
+			return $res;
+		}
+	}
+
+	public static function getStickedTag($user_id) {
+		$imgNum = 1;
+		$tagNum = 10;
+
+		$tags = self::countPublicImg($user_id);
+
+		if (empty($tags)) {
+			return array();
+		}
+
+		$data = array();
+
+		foreach ($tags as $tag) {
+			if (count($data) > $tagNum || $tag['num'] < $imgNum) {
+				break;
+			}
+
+			$data[$tag['name']] = $tag['id'];
+		}
+
+		return $data;
+	}
+
+
 
 }
