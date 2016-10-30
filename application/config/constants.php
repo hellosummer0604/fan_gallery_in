@@ -78,8 +78,8 @@ define('WEN_INDEX', 'http://north.gallery/');
 define('WEN_LOGIN', 'http://north.gallery/login');
 define('WEN_NO_REDIRECT', 'none');
 
-//define('ARB_activationKey', 'asvya123g_vukglby'); //cron password
-define('ARB_activationKey', 'asd'); //cron password
+define('ARB_activationKey', 'asvya123g_vukglby'); //cron password
+//define('ARB_activationKey', 'asd'); //cron password
 
 define('EXIT_SUCCESS', 0); // no errors
 define('EXIT_ERROR', 1); // generic error
