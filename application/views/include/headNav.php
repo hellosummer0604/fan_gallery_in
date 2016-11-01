@@ -20,7 +20,7 @@
 						<li><a href="<?php echo base_url("/user/".$this->utils->isonline())?>">Homepage</a></li>
 						<li><a href="<?php echo base_url("/u/infocenter")?>">Photographs</a></li>
 						<li class="jq-dropdown-divider"></li>
-						<li><a href="#8">Settings</a></li>
+						<li><a href="#" data-popup-view="/settings" data-popup-style="popup_settings">Settings</a></li>
 						<li><a id="logoutBtn" href="#10">Logout</a></li>
 					</ul>
 				</div>

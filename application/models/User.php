@@ -11,6 +11,8 @@ class User extends MY_Model
 	protected $_type = TYPE_USER;
 	protected $_first_name = null;
 	protected $_last_name = null;
+	protected $_primary_headline = null;
+	protected $_second_headline = null;
 	protected $_created = null;
 
 	/**

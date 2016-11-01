@@ -485,6 +485,10 @@ popupBox.isEditPopup = function (obj) {
         return true;
     }
 
+    if (jQuery(target).has('.popup_settings').length) {
+        return true;
+    }
+
 
     return false;
 }

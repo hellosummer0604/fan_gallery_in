@@ -251,4 +251,27 @@ class Currentuser extends User_Controller {
 
 		echo responseJson(true, "", "", "", $data);
 	}
+
+
+
+
+	/***************** start settings ***************/
+	public function moduleSettings_get() {
+		$viewPath = $this->basePath . "/module/settings";
+		$data = array();
+
+
+		if ($this->isOnline()) {
+			$this->session->set_userdata(SESSION_UPLOAD, $this->utils->tmpRandomKey());
+			$this->load->view($viewPath, $data);
+		} else {
+			$this->response("Need login", 403);
+		}
+	}
+
+	public function moduleSettings_post() {
+
+
+	}
+	/***************** end settings ***************/
 }

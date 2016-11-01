@@ -387,7 +387,7 @@ div.error {
     padding-top: 3px;
 }
 
-.registerFormBox input#remembermeChk{
+.popupFormBox input#remembermeChk{
     content: '';
 
     -moz-appearance:none;
@@ -411,7 +411,7 @@ div.error {
 }
 
 
-.registerFormBox input#remembermeChk + label {
+.popupFormBox input#remembermeChk + label {
     width:16px;
     height:16px;
     display: inline-block;
@@ -419,17 +419,17 @@ div.error {
     font-size: 18px;
 }
 
-.registerFormBox input#remembermeChk:checked + label:after {
+.popupFormBox input#remembermeChk:checked + label:after {
     content: attr(data-content) '\2714';
     color: rgb(0, 171, 230);
 }
 
-/*.registerFormBox input#remembermeChk:after {*/
+/*.popupFormBox input#remembermeChk:after {*/
 /*content: '\2714';*/
 /*font-size: 14px;*/
 /*}*/
 
-.registerFormBox #remembermeTx {
+.popupFormBox #remembermeTx {
     margin-left: 12px;
     margin-top: 8px;
     display: inline-block;
@@ -437,20 +437,20 @@ div.error {
     line-height: 14px;
 }
 
-.smallPopup .mainBox .registerFormBox {
+.mainBox .popupFormBox {
     font-size: 14px;
     padding-bottom: 22px;
     overflow: hidden;
 }
 
-.smallPopup .mainBox .registerFormBox label{
+.mainBox .popupFormBox label{
     margin-left: 30px;
     margin-bottom: 3px;
     color: #666666;
     display: block;
 }
 
-.smallPopup .mainBox .registerFormBox input:not([type='checkbox']){
+.mainBox .popupFormBox input:not([type='checkbox']){
     font-size: 14px;
     width: calc(100% - 72px);
     height:30px;
@@ -464,7 +464,7 @@ div.error {
     border-radius: 3px ;
 }
 
-.smallPopup .mainBox .registerFooter {
+.mainBox .popupFooter {
     border-top: 1px solid #dddddd;
     background-color: #eaeaea;
     -moz-border-radius: 0px;
@@ -479,7 +479,7 @@ div.error {
     width: calc(100% - 30px);
 }
 
-.registerFooter ul{
+.popupFooter ul{
     color: #666666;
     list-style-type: none;
     margin-left:30px;
@@ -487,19 +487,19 @@ div.error {
     font-size: 12px;
 }
 
-.registerFooter a {
+.popupFooter a {
     color: rgb(0, 171, 230);
 }
 
-.registerFooter a:hover {
+.popupFooter a:hover {
     color: rgb(255, 51, 153);
 }
 
-.registerFooter button {
+.popupFooter button {
     margin-top: 15px;
 }
 
-.registerFooter .btn-submit {
+.popupFooter .btn-submit {
     margin-left:30px;
 }
 
@@ -629,11 +629,25 @@ div.error {
     text-align: left;
 }
 
-
-
-
 /* generic(upload) popup end*/
 
+
+/* generic(settings) popup start*/
+.genericPopup .popup_settings{
+    min-width: 380px;
+    max-width:80%;
+    height:auto;
+    text-align: justify;
+    position: relative;
+}
+
+
+.genericPopup .popup_settings #btnSection {
+    margin: 10px 30px 30px 30px;
+    text-align: left;
+}
+
+/* generic(settings) popup end*/
 
 
 /* header nav start*/
