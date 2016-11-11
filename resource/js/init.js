@@ -140,7 +140,7 @@ Init.router = function (property) {
 
     index++;
 
-    if (index != -1 && index < parts.length) {
+    if (index != 0 && index < parts.length) {
         return parts[index].trim();
     }
 

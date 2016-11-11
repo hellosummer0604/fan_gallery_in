@@ -11,6 +11,7 @@ class Ajax_controller extends MY_Controller
         $this->load->model('Photograph');
         $this->load->model('Repository');
         $this->load->model('Img');
+        $this->load->model('Master_user');
     }
 
     public function index()
@@ -51,9 +52,6 @@ class Ajax_controller extends MY_Controller
 	 */
     public function getImg($userId = null, $tagName = null, $pageNo = null)
     {
-        if (empty($userId)) {
-			return;
-		}
 
 		if (empty($pageNo)) {
 			$pageNo = 0;
@@ -65,7 +63,11 @@ class Ajax_controller extends MY_Controller
 
         $lastSize = empty($_POST['lastSize']) ? IMG_SECTION_LAST_SIZE : $_POST['lastSize'];
 
-        $imgSec = $this->getImgSection($userId, $tagName, $pageNo, $pageSize, $lastSize);
+		if (empty($userId) || strlen($userId) < USER_ID_LEN) {//the null passed by router is a string which length is 32
+			$imgSec = $this->getHomePageImgSection($tagName, $pageNo, $pageSize, $lastSize);
+		} else {
+			$imgSec = $this->getUserImgSection($userId, $tagName, $pageNo, $pageSize, $lastSize);
+		}
 
         if (empty($imgSec)) {
             echo json_encode(null);
@@ -80,10 +82,8 @@ class Ajax_controller extends MY_Controller
      * $typeId can be 1.repository, 2.category name, 3.tag name, 4 author id
      */
 
-    private function getImgSection($userId, $typeId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE)
+    private function getUserImgSection($userId, $typeId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE)
     {
-        $groupSize = IMG_SECTION_SIZE;
-
         $typeId = strtolower($typeId);
 
 		$visitor = $this->isOnline();
@@ -94,51 +94,62 @@ class Ajax_controller extends MY_Controller
             $imgSection = $this->Img->getSectionImg($userId, $typeId, $pageNo, $pageSize, $last, $visitor);
         }
 
-
-        if (empty($imgSection['imgList'])) {
-            return null;
-        }
-
-        $groupNum = count($imgSection['imgList']) / $groupSize;
-
-        if ($groupNum < 2) {
-            $groupName = 's_' . $typeId . '_g_' . "0";
-
-            $groupList = array($groupName => array('id' => $groupName, 'imgList' => $imgSection['imgList']));
-
-            $res = array('id' => $typeId, 'loadingList' => array(), 'waitingList' => $groupList);
-        } else {
-            $remainImg = count($imgSection['imgList']);
-
-            $groupList = array();
-
-            for ($i = 0; $i < $groupNum - 2; $i++) {
-                $groupName = 's_' . $typeId . '_g_' . $i;
-
-                $temp_img_array = array_slice($imgSection['imgList'], $i * $groupSize, $groupSize);
-
-                $temp_img_array = array('id' => $groupName, 'imgList' => $temp_img_array);
-
-                $groupList[$groupName] = $temp_img_array;
-
-                $remainImg = $remainImg - $groupSize;
-            }
-            //last group
-            $groupName = 's_' . $typeId . '_g_' . $i;
-
-            $temp_img_array = array_slice($imgSection['imgList'], $i * $groupSize, $remainImg);
-
-            $temp_img_array = array('id' => $groupName, 'imgList' => $temp_img_array);
-
-            $groupList[$groupName] = $temp_img_array;
-
-            $res = array('id' => $typeId, 'loadingList' => array(), 'waitingList' => $groupList);
-        }
-
-        $res['pagination'] = $imgSection['pagination'];
-
-        return $res;
+		return $this->assembleImgSection($imgSection, $typeId);
     }
+
+    private function getHomePageImgSection($typeId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
+		$imgSection =  $this->Master_user->getPhotos($typeId, $pageNo, $pageSize, $last);
+
+		return $this->assembleImgSection($imgSection, $typeId);
+	}
+
+    private function assembleImgSection($imgSection, $typeId) {
+		if (empty($imgSection['imgList']) || empty($typeId)) {
+			return null;
+		}
+
+		$groupSize = IMG_SECTION_SIZE;
+
+		$groupNum = count($imgSection['imgList']) / $groupSize;
+
+		if ($groupNum < 2) {
+			$groupName = 's_' . $typeId . '_g_' . "0";
+
+			$groupList = array($groupName => array('id' => $groupName, 'imgList' => $imgSection['imgList']));
+
+			$res = array('id' => $typeId, 'loadingList' => array(), 'waitingList' => $groupList);
+		} else {
+			$remainImg = count($imgSection['imgList']);
+
+			$groupList = array();
+
+			for ($i = 0; $i < $groupNum - 2; $i++) {
+				$groupName = 's_' . $typeId . '_g_' . $i;
+
+				$temp_img_array = array_slice($imgSection['imgList'], $i * $groupSize, $groupSize);
+
+				$temp_img_array = array('id' => $groupName, 'imgList' => $temp_img_array);
+
+				$groupList[$groupName] = $temp_img_array;
+
+				$remainImg = $remainImg - $groupSize;
+			}
+			//last group
+			$groupName = 's_' . $typeId . '_g_' . $i;
+
+			$temp_img_array = array_slice($imgSection['imgList'], $i * $groupSize, $remainImg);
+
+			$temp_img_array = array('id' => $groupName, 'imgList' => $temp_img_array);
+
+			$groupList[$groupName] = $temp_img_array;
+
+			$res = array('id' => $typeId, 'loadingList' => array(), 'waitingList' => $groupList);
+		}
+
+		$res['pagination'] = $imgSection['pagination'];
+
+		return $res;
+	}
 
     public function tag()
     {

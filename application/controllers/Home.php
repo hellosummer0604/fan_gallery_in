@@ -42,6 +42,7 @@ class Home extends MY_Controller {
 		}
 
 		$imgObj = Img::load($imgId);
+		Img::addVisitedCount($imgId);
 
 		return $imgObj;
 	}
@@ -87,8 +88,12 @@ class Home extends MY_Controller {
 		$this->loadImgPopView();
 
 		$this->tempLoadPosterView();//todo will replace by real functions
-		
-		$data['cateList'] = $this->getCategoryLink($userId);
+
+		if (!empty($userId)) {
+			$data['cateList'] = $this->getCategoryLink($userId);
+		} else {
+			$data['cateList'] = array('new' => TAG_NEW, 'popular' => TAG_POPULAR, 'featured' => TAG_FEATURED);
+		}
 
 		$this->loadView('home', $data);
 	}

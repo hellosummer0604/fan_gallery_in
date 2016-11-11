@@ -66,6 +66,12 @@ $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+$route['/'] = 'home/index';
+$route[TAG_NEW] = 'Ajax_controller/getImg/null/'.TAG_NEW;
+$route[TAG_NEW.'/page/(:num)'] = 'Ajax_controller/getImg/null/'.TAG_NEW.'/$1';
+//$route[TAG_NEW] = 'home/index';
+$route['/'.TAG_POPULAR] = 'home/index';
+$route['/'.TAG_FEATURED] = 'home/index';
 
 //for signup, login, logout, retrieve
 $route['account/signup']['post'] = 'Home/signup';
@@ -102,6 +108,7 @@ $route['u/(:any)/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3/$4';
 
 
 $route['user/(:any)'] = "home/index/$1";
+$route['user/infocenter'] = "Currentuser/infocenter";
 $route['user/(:any)/tag/(:any)'] = "Ajax_controller/getImg/$1/$2";
 $route['user/(:any)/tags'] = "Currentuser/getAllTags/$1";
 $route['user/(:any)/tag/(:any)/page/(:num)'] = "Ajax_controller/getImg/$1/$2/$3";

@@ -9,6 +9,7 @@ class Img extends Base_img
 
 	protected $_exif = null;
 	protected $_text = null;
+	protected $_visited = null;
 	protected $_status = null;
 	protected $_thumb = null;
 	protected $tags = array();
@@ -39,6 +40,13 @@ class Img extends Base_img
 	 */
 	public function setText($text) {
 		$this->_text = $text;
+	}
+
+	/**
+	 * @return null
+	 */
+	public function getVisited() {
+		return $this->_visited;
 	}
 
 	/**
@@ -200,7 +208,14 @@ class Img extends Base_img
 	}
 
 	public function save() {
+		//dont update visited
+		$visited = $this->_visited;
+		unset($this->_visited);
+
 		$res = parent::save();
+
+		//recover visited
+		$this->_visited = $visited;
 
 		if ($res) {
 			$this->saveTags();
@@ -311,16 +326,19 @@ class Img extends Base_img
 	 * @param null $visitor
 	 * @return array|null
 	 */
-	public static function loadSectionImgs($userId, $tagId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
+	public static function loadSectionImgs($userId = null, $tagId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
 		$imgTbl = self::$tbl;
 		$imgTagTbl = self::$tblTagImg;
 
-		$data = array(
-			"$imgTbl.user_id" => $userId
-		);
+		if (!empty($userId)) {
+			$data = array(
+				"$imgTbl.user_id" => $userId
+			);
+		}
+
 
 		//if not owner, only public photo is visiable
-		if ($visitor != $userId) {
+		if (empty($userId) || $visitor != $userId) {
 			$data["$imgTbl.status"] = IMG_STATE_PUBLIC;
 		}
 
@@ -404,15 +422,17 @@ class Img extends Base_img
 	 * @param null $visitor
 	 * @return array|null
 	 */
-	public static function loadAllSectionImgs($userId, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
+	public static function loadAllSectionImgs($userId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
 		$imgTbl = self::$tbl;
 
-		$data = array(
-			"$imgTbl.user_id" => $userId
-		);
+		if (!empty($userId)) {
+			$data = array(
+				"$imgTbl.user_id" => $userId
+			);
+		}
 
 		//if not owner, only public photo is visiable
-		if ($visitor != $userId) {
+		if (empty($userId) || $visitor != $userId) {
 			$data["$imgTbl.status"] = IMG_STATE_PUBLIC;
 		}
 
@@ -479,16 +499,19 @@ class Img extends Base_img
 		return $objs;
 	}
 
-	public static function loadSectionImgsPagination($userId, $tagId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
+	public static function loadSectionImgsPagination($userId = null, $tagId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
 		$imgTbl = self::$tbl;
 		$imgTagTbl = self::$tblTagImg;
 
-		$data = array(
-			"$imgTbl.user_id" => $userId
-		);
+		if (!empty($userId)) {
+			$data = array(
+				"$imgTbl.user_id" => $userId
+			);
+		}
+
 
 		//if not owner, only public photo is visiable
-		if ($visitor != $userId) {
+		if (empty($userId) || $visitor != $userId) {
 			$data["$imgTbl.status"] = IMG_STATE_PUBLIC;
 		}
 
@@ -548,15 +571,17 @@ class Img extends Base_img
 	 * @param null $visitor
 	 * @return array
 	 */
-	public static function loadAllSectionImgsPagination($userId, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
+	public static function loadAllSectionImgsPagination($userId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
 		$imgTbl = self::$tbl;
 
-		$data = array(
-			"$imgTbl.user_id" => $userId
-		);
+		if (!empty($userId)) {
+			$data = array(
+				"$imgTbl.user_id" => $userId
+			);
+		}
 
 		//if not owner, only public photo is visiable
-		if ($visitor != $userId) {
+		if (empty($userId) || $visitor != $userId) {
 			$data["$imgTbl.status"] = IMG_STATE_PUBLIC;
 		}
 
@@ -623,7 +648,15 @@ class Img extends Base_img
 	}
 
 	/************************** end load img section for user **************************/
+	/**
+	 * @param $imgId
+	 */
+	public static function addVisitedCount($imgId) {
+		$imgTbl = self::$tbl;
+		$sql = "UPDATE $imgTbl SET visited = visited + 1 WHERE id = ?";
 
+		get_instance()->db->query($sql, array($imgId));
+	}
 }
 
 

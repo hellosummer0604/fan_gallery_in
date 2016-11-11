@@ -73,6 +73,7 @@ class MY_Controller extends CI_Controller {
 		foreach ($tags as $key => $item) {
 			$result[strtolower($key)] = $item;
 		}
+		$result['more'] = "";
 		
 		$this->CategoryLink = $result;
 		

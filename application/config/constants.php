@@ -136,4 +136,12 @@ define('IMG_UNASSIGNED', 'unAssigned');
 define('REPO_ID', 'repo_id');
 
 define('TAG_ALL', 'all_id');
+define('TAG_NEW', 'new_id');
+define('TAG_POPULAR', 'popular_id');
+define('TAG_FEATURED', 'featured_id');
+
+
+define('USER_ID_LEN', 32);
+
+
 
