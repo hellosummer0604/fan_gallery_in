@@ -10,6 +10,7 @@ class Img extends Base_img
 	protected $_exif = null;
 	protected $_text = null;
 	protected $_visited = null;
+	protected $_featured = null;
 	protected $_status = null;
 	protected $_thumb = null;
 	protected $tags = array();
@@ -47,6 +48,21 @@ class Img extends Base_img
 	 */
 	public function getVisited() {
 		return $this->_visited;
+	}
+
+	/**
+	 * If featured, it will be sticked on your homepage randomly
+	 * @return null
+	 */
+	public function getFeatured() {
+		return $this->_featured;
+	}
+
+	/**
+	 * @param null $featured
+	 */
+	public function setFeatured($featured) {
+		$this->_featured = $featured;
 	}
 
 	/**
