@@ -14,7 +14,7 @@ class Master_user extends MY_Model
 
 
 	public function getPopularPhotos($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
-
+		return $this->Img->getSectionImg(null, TAG_ALL, $pageNo, $pageSize, $last, $visitor, 'visited');
 	}
 
 	public function getFeaturedPhotos($pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {

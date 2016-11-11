@@ -415,15 +415,22 @@ class Img extends Base_img
 	 * 1. remove join
 	 * 2. remove where on tagid
 	 *
-	 * @param $userId
+	 * @param null $userId
 	 * @param int $page
 	 * @param int $pageSize
 	 * @param int $last
 	 * @param null $visitor
+	 * @param null $orderBy
 	 * @return array|null
 	 */
-	public static function loadAllSectionImgs($userId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
+	public static function loadAllSectionImgs($userId = null, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null, $orderBy = null) {
 		$imgTbl = self::$tbl;
+
+		if (empty($orderBy)) {
+			$orderBy = "$imgTbl.id";
+		} else {
+			$orderBy = "$imgTbl.$orderBy";
+		}
 
 		if (!empty($userId)) {
 			$data = array(
@@ -443,6 +450,7 @@ class Img extends Base_img
 				->select("$imgTbl.*")
 				->from($imgTbl)
 				->where($data)
+				->order_by($orderBy, "desc")
 				->order_by("$imgTbl.id", "desc")
 				->get()
 				->result_array();
@@ -452,6 +460,7 @@ class Img extends Base_img
 				->select("$imgTbl.*")
 				->from($imgTbl)
 				->where($data)
+				->order_by($orderBy, "desc")
 				->order_by("$imgTbl.id", "desc")
 				->limit($pageSize, $page * $pageSize)
 				->get()
@@ -462,6 +471,8 @@ class Img extends Base_img
 				->select(" COUNT(*) sum")
 				->from($imgTbl)
 				->where($data)
+				->order_by($orderBy, "desc")
+				->order_by("$imgTbl.id", "desc")
 				->get()
 				->result_array();
 
@@ -484,6 +495,7 @@ class Img extends Base_img
 				->select("$imgTbl.*")
 				->from($imgTbl)
 				->where($data)
+				->order_by($orderBy, "desc")
 				->order_by("$imgTbl.id", "desc")
 				->limit($fakeInfinity, $page * $pageSize)
 				->get()
@@ -625,9 +637,9 @@ class Img extends Base_img
 	}
 
 
-	public static function getSectionImg($userId, $tagId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null) {
+	public static function getSectionImg($userId, $tagId, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE, $visitor = null, $orderBy = null) {
 		if (strtolower($tagId) == TAG_ALL) {
-			$imgs = self::loadAllSectionImgs($userId, $pageNo, $pageSize, $last, $visitor);
+			$imgs = self::loadAllSectionImgs($userId, $pageNo, $pageSize, $last, $visitor, $orderBy);
 			$pagination = self::loadAllSectionImgsPagination($userId, $pageNo, $pageSize, $last, $visitor);
 		} else {
 			$imgs = self::loadSectionImgs($userId, $tagId, $pageNo, $pageSize, $last, $visitor);

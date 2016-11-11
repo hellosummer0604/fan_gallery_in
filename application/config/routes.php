@@ -67,11 +67,8 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['/'] = 'home/index';
-$route[TAG_NEW] = 'Ajax_controller/getImg/null/'.TAG_NEW;
-$route[TAG_NEW.'/page/(:num)'] = 'Ajax_controller/getImg/null/'.TAG_NEW.'/$1';
-//$route[TAG_NEW] = 'home/index';
-$route['/'.TAG_POPULAR] = 'home/index';
-$route['/'.TAG_FEATURED] = 'home/index';
+$route['homepage/(:any)'] = 'Ajax_controller/getImg/null/$1';
+$route['homepage/(:any)/page/(:num)'] = 'Ajax_controller/getImg/null/$1/$2';
 
 //for signup, login, logout, retrieve
 $route['account/signup']['post'] = 'Home/signup';

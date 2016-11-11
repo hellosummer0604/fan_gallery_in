@@ -33,7 +33,7 @@ Img_Grid_Manager.loadImgSection = function (sid, page) {
     var url = "";
 
     if (userId == null) {
-        url = document.location.origin + '/' + sid + '/page/' + page;
+        url = document.location.origin + '/homepage/' + sid + '/page/' + page;
     } else {
         url = document.location.origin + '/user/' + userId + '/tag/' + sid + '/page/' + page;
     }
