@@ -671,6 +671,11 @@ div.error {
     margin: 0px 20px 0px 20px;
 }
 
+.bigLogo a{
+    margin: 0px 20px 0px 20px;
+    color: #ffffff;
+}
+
 .headerNav .userBanner {
     float: right;
 }

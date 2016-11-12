@@ -64,6 +64,7 @@ class MY_Controller extends CI_Controller {
 	public function getCategoryLink($userId) {
 		$this->load->model('Tag');
 
+		//to do
 		$tags = Tag::getStickedTag($userId);
 
 

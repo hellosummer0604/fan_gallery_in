@@ -2,7 +2,7 @@
 
 </div>
 <nav class="headerNav">
-    <div class="float_left bigLogo">North Gallery</div>
+    <div class="float_left bigLogo"><a href="<?php echo base_url()?>">North Gallery</a></div>
 	<?php
 		$temp = ONLINE_FLAG;
 		$isOnline = $$temp;

@@ -285,22 +285,19 @@ class Img extends Base_img
 		return $objs;
 	}
 
-	public static function loadFeaturedByAuthor($userId, $status = IMG_STATE_PUBLIC) {
-		if (empty($userId)) {
-			return null;
-		}
-
+	public static function loadFeatured($userId = null, $status = IMG_STATE_PUBLIC, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
 		$data = array();
-
-		$data['user_id'] = $userId;
 		$data['featured'] = true;
+
+		if (!empty($userId)) {
+			$data['user_id'] = $userId;
+		}
 
 		if (!empty($status)) {
 			$data['status'] = $status;
 		}
 
-		$objs = self::loadByTerm($data);
-
+		$objs = self::loadByTerm($data, $pageNo, $pageSize, $last);
 		if (empty($objs)) {
 			return null;
 		}
@@ -308,7 +305,23 @@ class Img extends Base_img
 		return $objs;
 	}
 
-	private static function loadByAuthorAndStatus($userId, $status, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
+	public static function loadFeaturedPagination($userId = null, $status = IMG_STATE_PUBLIC, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
+		$data = array();
+		$data['featured'] = true;
+
+		if (!empty($userId)) {
+			$data['user_id'] = $userId;
+		}
+
+		if (!empty($status)) {
+			$data['status'] = $status;
+		}
+
+		return self::loadByTermPagination($data, $pageNo, $pageSize, $last);
+	}
+
+
+	private static function loadByAuthorAndStatus($userId, $status, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
 		if (empty($userId) || empty($status)) {
 			return null;
 		}
@@ -318,7 +331,7 @@ class Img extends Base_img
 		$data['user_id'] = $userId;
 		$data['status'] = $status;
 
-		$objs = self::loadByTerm($data, $page, $pageSize, $last);
+		$objs = self::loadByTerm($data, $pageNo, $pageSize, $last);
 
 		if (empty($objs)) {
 			return null;
@@ -692,6 +705,17 @@ class Img extends Base_img
 		} else {
 			$sectionName = $tag->getTagName();
 		}
+
+		$imgSection = self::$util->imgSectionPreprocessor($sectionName, $imgs, $pagination);
+
+		return $imgSection;
+	}
+
+	public static function getFeaturedSectionImg($userId, $status = IMG_STATE_PUBLIC, $pageNo = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
+		$imgs = self::loadFeatured($userId, $status, $pageNo, $pageSize, $last);
+		$pagination = self::loadFeaturedPagination($userId, $status, $pageNo, $pageSize, $last);
+
+		$sectionName = TAG_FEATURED;
 
 		$imgSection = self::$util->imgSectionPreprocessor($sectionName, $imgs, $pagination);
 

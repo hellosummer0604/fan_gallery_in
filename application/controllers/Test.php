@@ -187,8 +187,9 @@ class Test extends MY_Controller {
 
 		$this->load->model('Img');
 
-		$imgs = Img::loadFeaturedByAuthor('f8057d071686e27832ba66b6b96a371d');
+		$imgs = Img::loadFeatured();
 		print_r($imgs);
+//		print_r($this->db->last_query());
 	}
 }
 

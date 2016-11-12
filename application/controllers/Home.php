@@ -87,7 +87,7 @@ class Home extends MY_Controller {
 
 		$this->loadImgPopView();
 
-		$this->tempLoadPosterView($userId);//todo will replace by real functions
+		$this->tempLoadPosterView($userId);
 
 		if (!empty($userId)) {
 			$data['cateList'] = $this->getCategoryLink($userId);
@@ -102,7 +102,12 @@ class Home extends MY_Controller {
 	private function tempLoadPosterView($userId = null) {
 		$this->load->model('Img');
 
-		$imgs = $this->Img->loadFeaturedByAuthor($userId);
+		//homepage doesn't use featured as poster
+		if (empty($userId)) {
+			$imgs = $this->Img->loadFeatured($userId);
+		} else {
+			$imgs = null;
+		}
 
 		if (empty($imgs)) {
 			$data = $this->loadRandomPost();
