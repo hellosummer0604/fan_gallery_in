@@ -103,7 +103,7 @@ class Home extends MY_Controller {
 		$this->load->model('Img');
 
 		//homepage doesn't use featured as poster
-		if (empty($userId)) {
+		if (!empty($userId)) {
 			$imgs = $this->Img->loadFeatured($userId);
 		} else {
 			$imgs = null;
