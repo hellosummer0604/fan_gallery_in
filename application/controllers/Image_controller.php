@@ -46,6 +46,7 @@ class Image_controller extends MY_Controller {
 		$title = htmlspecialchars(trim($title));
 		$desc = newline2br(htmlspecialchars(trim($desc)));
 		$status = trim($status);
+		$featured = $featured == '1' ? true : false;
 		if (!isset($tags)) {
 			$tags = array(IMG_UNASSIGNED);
 		}
@@ -71,6 +72,7 @@ class Image_controller extends MY_Controller {
 		$img->setTitle($title);
 		$img->setText($desc);
 		$img->setStatus($status);
+		$img->setFeatured($featured);
 
 		//update tags
 		if (!empty($tags)) {

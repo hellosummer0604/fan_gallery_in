@@ -499,6 +499,7 @@ popupBox.submitEditPopup = function () {
         title: jQuery('#imgTitle').val(),
         desc: jQuery('#imgDescription').val(),
         status: jQuery('#imgStatus').val(),
+        featured: jQuery('#imgFeatured').val(),
         tags: popupBoxEdit.getAllTags()
     };
 

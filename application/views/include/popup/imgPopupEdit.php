@@ -26,7 +26,7 @@
 				</span>
 
 				<span class="innerBox" id="imgStatusBox">
-					<select id="imgStatus" name="imgStatus">
+					<select class="imgStatusSelector" id="imgStatus" name="imgStatus">
 						<?php
 						$status = $imgObj->getStatus();
 
@@ -45,6 +45,21 @@
 						?>
 					</select>
 				</span>
+				<span class="innerBox" id="imgFeaturedBox">
+					<select class="imgStatusSelector" id="imgFeatured" name="imgFeatured">
+						<?php
+							$featured = $imgObj->getFeatured();
+
+							if ($featured) {
+								echo "<option value=\"1\" selected=\"selected\">Featured</option><option value=\"0\">Regular</option>";
+							} else {
+								echo "<option value=\"1\">Featured</option><option value=\"0\" selected=\"selected\">Regular</option>";
+							}
+						?>
+
+					</select>
+				</span>
+
 
 				<div class="innerBox" id="imgText">
 					<textarea name="imgDescription" rows="3" id="imgDescription" placeholder="请在此输入内容..."><?php echo br2newline($imgObj->getText());?></textarea>

@@ -1234,7 +1234,7 @@ div.error {
     width: calc(100% - 20px);
 }
 
-#imgStatusBox {
+#imgStatusBox, #imgFeaturedBox {
     width: 225px;
     height: 23px;
     margin: 0px 5px 10px 5px;
@@ -1246,7 +1246,7 @@ div.error {
     border:1px solid #999999;
 }
 
-.popupImg select#imgStatus {
+.popupImg select.imgStatusSelector {
     border: none;
     margin-left: 5px;
     width:215px;
@@ -1256,7 +1256,7 @@ div.error {
     color: #666666;
 }
 
-.popupImg select#imgStatus option {
+.popupImg select.imgStatusSelector option {
     margin: 0px 5px 10px 5px;
 }
 /*.popupImg .innerBox button.addImgTag {*/
