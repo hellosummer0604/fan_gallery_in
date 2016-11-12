@@ -87,7 +87,7 @@ class Home extends MY_Controller {
 
 		$this->loadImgPopView();
 
-		$this->tempLoadPosterView();//todo will replace by real functions
+		$this->tempLoadPosterView($userId);//todo will replace by real functions
 
 		if (!empty($userId)) {
 			$data['cateList'] = $this->getCategoryLink($userId);
@@ -99,10 +99,31 @@ class Home extends MY_Controller {
 	}
 
 	//todo temporary, remove it
-	private function tempLoadPosterView() {
+	private function tempLoadPosterView($userId = null) {
+		$this->load->model('Img');
+
+		$imgs = $this->Img->loadFeaturedByAuthor($userId);
+
+		if (empty($imgs)) {
+			$data = $this->loadRandomPost();
+		} else {
+			$img = $imgs[array_rand($imgs, 1)];
+
+			$data['src'] = base_url($img->getFullPath());
+			$data['width'] = $img->getWidth();
+			$data['height'] = $img->getHeight();
+		}
+
+		$this->loadPosterView(true, $data);
+	}
+
+	private function loadRandomPost() {
 		$path = "./resource/gallery/img_publish/img_poster/";
 
 		$imgNames = $this->filehelper->getFolderFiles($path);
+		if (empty($imgNames)) {
+			return null;
+		}
 		$img = $path.$imgNames[array_rand($imgNames)];//get random img
 
 		$imgInfo = $this->filehelper->getImgSize($img);
@@ -111,8 +132,7 @@ class Home extends MY_Controller {
 		$data['width'] = $imgInfo['width'];
 		$data['height'] = $imgInfo['height'];
 
-
-		$this->loadPosterView(true, $data);
+		return $data;
 	}
 
 	public function login() {

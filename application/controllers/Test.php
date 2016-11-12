@@ -182,6 +182,14 @@ class Test extends MY_Controller {
 		$res = $this->Master_user->getPhotos(TAG_NEW);
 		print_r(json_encode($res));
 	}
+
+	public function test17() {
+
+		$this->load->model('Img');
+
+		$imgs = Img::loadFeaturedByAuthor('f8057d071686e27832ba66b6b96a371d');
+		print_r($imgs);
+	}
 }
 
 ?>

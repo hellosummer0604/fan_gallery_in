@@ -285,6 +285,29 @@ class Img extends Base_img
 		return $objs;
 	}
 
+	public static function loadFeaturedByAuthor($userId, $status = IMG_STATE_PUBLIC) {
+		if (empty($userId)) {
+			return null;
+		}
+
+		$data = array();
+
+		$data['user_id'] = $userId;
+		$data['featured'] = true;
+
+		if (!empty($status)) {
+			$data['status'] = $status;
+		}
+
+		$objs = self::loadByTerm($data);
+
+		if (empty($objs)) {
+			return null;
+		}
+
+		return $objs;
+	}
+
 	private static function loadByAuthorAndStatus($userId, $status, $page = IMG_SECTION_PAGE_NO, $pageSize = IMG_SECTION_PAGE_SIZE, $last = IMG_SECTION_LAST_SIZE) {
 		if (empty($userId) || empty($status)) {
 			return null;
