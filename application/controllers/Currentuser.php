@@ -252,14 +252,14 @@ class Currentuser extends User_Controller {
 			}
 		}
 
-		usort($data, function($a, $b) {
-			return strcmp($a['name'], $b['name']);
-		});
-
 		//add featured
 		if ($userId == $this->isOnline()) {
 			$data[] = array('id' => TAG_FEATURED, 'name' => "featured");
 		}
+
+		usort($data, function($a, $b) {
+			return strcmp($a['name'], $b['name']);
+		});
 
 		echo responseJson(true, "", "", "", $data);
 	}

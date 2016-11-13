@@ -63,9 +63,12 @@ class Ajax_controller extends MY_Controller
 
         $lastSize = empty($_POST['lastSize']) ? IMG_SECTION_LAST_SIZE : $_POST['lastSize'];
 
-		if (empty($userId) || strlen($userId) < USER_ID_LEN) {//the null passed by router is a string which length is 32
+		if (empty($userId) || ($userId != REPO_URL && strlen($userId) < USER_ID_LEN)) {//the null passed by router is a string which length is 32
 			$imgSec = $this->getHomePageImgSection($tagName, $pageNo, $pageSize, $lastSize);
 		} else {
+			if($userId == REPO_URL) {
+				$userId = $this->utils->isOnline();
+			}
 			$imgSec = $this->getUserImgSection($userId, $tagName, $pageNo, $pageSize, $lastSize);
 		}
 

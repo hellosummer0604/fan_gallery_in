@@ -10,7 +10,7 @@
 			echo "<li id='nav_$item' class='nav_li'>" . ucfirst($key) . "</li>";
 		}
 		?>
-	<li>Posted</li>
+	<li id='nav_<?php echo TAG_FEATURED?>' class='nav_li'>Featured</li>
 	<li>Categories</li>
 	<li>Tags</li>
         <li>Settings</li>

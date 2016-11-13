@@ -18,7 +18,7 @@
 						<li><a href="#" data-popup-view="/upload" data-popup-style="popup_upload">Quick Upload</a></li>
 						<li class="jq-dropdown-divider"></li>
 						<li><a href="<?php echo base_url("/user/".$this->utils->isonline())?>">Homepage</a></li>
-						<li><a href="<?php echo base_url("/user/infocenter")?>">Photographs</a></li>
+						<li><a href="<?php echo base_url("/user/".REPO_URL)?>">Photographs</a></li>
 						<li class="jq-dropdown-divider"></li>
 						<li><a href="#" data-popup-view="/settings" data-popup-style="popup_settings">Settings</a></li>
 						<li><a id="logoutBtn" href="#10">Logout</a></li>

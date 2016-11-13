@@ -130,10 +130,11 @@ define('THUMB_MIN_WIDTH', 500);
 define('THUMB_MIN_HEIGHT', 500);
 define('THUMB_SIZE', 500);
 
-define('IMG_UNASSIGNED', 'unAssigned');
+define('IMG_UNASSIGNED', 'default');
 
 
 define('REPO_ID', 'repo_id');
+define('REPO_URL', 'infocenter');
 
 define('TAG_ALL', 'all_id');
 define('TAG_NEW', 'new_id');

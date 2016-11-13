@@ -105,7 +105,8 @@ $route['u/(:any)/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3/$4';
 
 
 $route['user/(:any)'] = "home/index/$1";
-$route['user/infocenter'] = "Currentuser/infocenter";
+$route['user/'.REPO_URL] = "Currentuser/".REPO_URL;
+$route['user/'.REPO_URL."/tag/(:any)"] = "Currentuser/".REPO_URL;
 $route['user/(:any)/tag/(:any)']['post'] = "Ajax_controller/getImg/$1/$2";
 $route['user/(:any)/tag/(:any)']['get'] = "home/index/$1";
 $route['user/(:any)/tags'] = "Currentuser/getAllTags/$1";
