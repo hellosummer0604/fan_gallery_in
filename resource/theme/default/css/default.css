@@ -906,7 +906,7 @@ div.error {
 }
 
 .imgNavContainer #jq-dropdown-more .jq-dropdown-panel-narrow table td {
-    width: 33.3%;
+    width: 50%;
     height:35px;
     border: 1px solid #ffffff;
     overflow: hidden;
@@ -924,10 +924,6 @@ div.error {
     color: rgb(0, 171, 230);
 }
 
-.imgNavContainer #jq-dropdown-more .jq-dropdown-panel-narrow table .active {
-    height:30px;
-    border-bottom: 4px solid;
-}
 
 .imgNavContainer #jq-dropdown-more .jq-dropdown-panel-narrow table td a {
     color: #666666;
