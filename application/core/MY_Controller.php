@@ -61,6 +61,7 @@ class MY_Controller extends CI_Controller {
 
 
 	//generate link items in nav
+
 	public function getCategoryLink($userId) {
 		$this->load->model('Tag');
 
