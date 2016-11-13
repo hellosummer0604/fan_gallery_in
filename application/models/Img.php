@@ -693,6 +693,9 @@ class Img extends Base_img
 		if (strtolower($tagId) == TAG_ALL) {
 			$imgs = self::loadAllSectionImgs($userId, $pageNo, $pageSize, $last, $visitor, $orderBy);
 			$pagination = self::loadAllSectionImgsPagination($userId, $pageNo, $pageSize, $last, $visitor);
+		} elseif (strtolower($tagId) == TAG_FEATURED) {
+			$imgs = self::loadFeatured($userId, null, $pageNo, $pageSize, $last);
+			$pagination = self::loadFeaturedPagination($userId, null, $pageNo, $pageSize, $last);
 		} else {
 			$imgs = self::loadSectionImgs($userId, $tagId, $pageNo, $pageSize, $last, $visitor);
 			$pagination = self::loadSectionImgsPagination($userId, $tagId, $pageNo, $pageSize, $last, $visitor);
