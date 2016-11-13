@@ -870,6 +870,9 @@ div.error {
     cursor: pointer;
 }
 
+#moreBtn {
+    border-color: rgb(0, 171, 230);
+}
 
 
 .imgNavContainerForeground .active {
