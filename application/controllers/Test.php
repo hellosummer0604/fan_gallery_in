@@ -191,6 +191,15 @@ class Test extends MY_Controller {
 		print_r($imgs);
 //		print_r($this->db->last_query());
 	}
+
+	public function test18() {
+
+		$this->load->model('Tag');
+
+		$tags = Tag::getAllTags();
+		print_r($tags);
+//		print_r($this->db->last_query());
+	}
 }
 
 ?>

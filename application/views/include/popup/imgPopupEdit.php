@@ -12,11 +12,11 @@
 			<div class="popupImg loadingBg" id="popImgBox"></div>
 			<div class="popupImg" id="popImgText">
 				<span class="innerBox">
-					<div id="imgAuthorTags" class="itag"><a id="authorTag" href="<?php echo base_url('user/'.$imgObj->getAuthor()->getId())?>"><?php echo $imgObj->getAuthor()->getUsername();?></a></div>
+					<div id="imgAuthorTags" class="itag"><a id="authorTag" href="<?php $userId = $imgObj->getAuthor()->getId(); echo base_url("user/$userId")?>"><?php echo $imgObj->getAuthor()->getUsername();?></a></div>
 							<span id="imgTags"><?php
 								$tags = $imgObj->getTags();
 								foreach ($tags as $item) {
-									echo "<div class='itag'><a href='".base_url('/tags/'.$item->getId())."'>".$item->getTagName()."</a></div>";
+									echo "<div class='itag'><a href='javascript::void(0)'>".$item->getTagName()."</a></div>";
 								}
 								?></span>
 				</span>

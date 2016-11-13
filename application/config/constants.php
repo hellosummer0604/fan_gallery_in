@@ -140,6 +140,8 @@ define('TAG_NEW', 'new_id');
 define('TAG_POPULAR', 'popular_id');
 define('TAG_FEATURED', 'featured_id');
 
+define('TAG_IMG_LEAST', '2');
+
 
 define('USER_ID_LEN', 32);
 

@@ -147,6 +147,23 @@ Init.router = function (property) {
     return null;
 }
 
+Init.updateUrl = function(target, value) {
+    var url = window.location.href;
+    var newUrl = "";
+
+    var parts = url.split('/');
+
+    for(var i = 0; i < parts.length; i++) {
+        if (parts[i] == target && i + 1 < parts.length) {
+            parts[i + 1] = value;
+        }
+
+        newUrl += parts[i] + '/';
+    }
+
+    history.pushState(null, null, newUrl);
+}
+
 Init.setCurrentUser = function () {
     jQuery.ajax({
         method: 'GET',

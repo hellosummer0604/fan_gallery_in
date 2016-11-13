@@ -10,6 +10,7 @@ require_once(APPPATH . 'models/Img.php');
 class Tag extends MY_Model {
 	protected static $tbl = "Tag";
 	protected static $tblTagImg = "Image_tag";
+	protected static $tblImg = "Image";
 
 	//columns in database start with underscore
 	protected $_tag_name = null;
@@ -256,15 +257,61 @@ class Tag extends MY_Model {
 		}
 	}
 
-	public static function getAllTags($userId) {
-		if (empty($userId)) {
-			return null;
+	public static function getAllTags($userId = null, $status = IMG_STATE_PUBLIC, $least = TAG_IMG_LEAST) {
+		$tbl = self::$tbl;
+		$tblTagImg = self::$tblTagImg;
+		$tblImg = self::$tblImg;
+
+		$data = array();
+
+		if (!is_numeric($least) || $least < 0) {
+			$least = 0;
 		}
 
-		$data = array('user_id' => $userId);
+		if (empty($userId) && empty($status)) {
+			$whereClause = "";
 
-		return self::loadByTerm($data);
+		} else if (!empty($userId) && empty($status)) {
+			$whereClause = "WHERE  $tblImg.`user_id` = ? ";
+			$data = [$userId];
+
+		} else if (empty($userId) && !empty($status)) {
+			$whereClause = "WHERE $tblImg.`status` = ? ";
+			$data = [$status];
+
+		} else {
+			$whereClause = "WHERE  $tblImg.`user_id` = ? AND $tblImg.`status` = ? ";
+			$data = [$userId, $status];
+
+		}
+
+		$data[] = $least;
+
+		$sql = "SELECT 
+	$tbl.`tag_name`,
+	$tbl.`id`
+FROM 
+	$tbl 
+	INNER JOIN $tblTagImg ON $tbl.`id` = $tblTagImg.`tag_id` 
+	INNER JOIN $tblImg ON $tblTagImg.`image_id` = $tblImg.`id` 
+	$whereClause
+
+GROUP BY 
+	$tbl.`id` 
+HAVING 
+	COUNT($tblImg.`id`) > ? 
+ORDER BY 
+	$tbl.`tag_name` ASC";
+
+		$res = get_instance()->db->query($sql, $data)->result_array();
+
+		if (empty($res)) {
+			return null;
+		} else {
+			return $res;
+		}
 	}
+
 
 	public static function countPublicImg($user_id) {
 		$sql = "SELECT COUNT(Tag.id) num, Tag.id id, Tag.tag_name name FROM Tag LEFT JOIN Image_tag ON Tag.id = Image_tag.tag_id INNER JOIN Image ON Image_tag.image_id = Image.id WHERE Image.status = ? AND Image.user_id = ? GROUP BY Image_tag.tag_id ORDER BY num DESC, Tag.id DESC";
@@ -279,8 +326,8 @@ class Tag extends MY_Model {
 	}
 
 	public static function getStickedTag($user_id) {
-		$imgNum = 1;
-		$tagNum = 10;
+		$imgNum = TAG_IMG_LEAST;
+		$tagNum = 3;
 
 		$tags = self::countPublicImg($user_id);
 
@@ -291,7 +338,7 @@ class Tag extends MY_Model {
 		$data = array();
 
 		foreach ($tags as $tag) {
-			if (count($data) > $tagNum || $tag['num'] < $imgNum) {
+			if (count($data) > $tagNum || $tag['num'] <= $imgNum) {
 				break;
 			}
 

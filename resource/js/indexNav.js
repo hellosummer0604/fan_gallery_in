@@ -229,15 +229,45 @@ headNav._bindResizeEvt = function () {
 }
 
 headNav._setFirstCateActive = function () {
-	var obj = jQuery('.nav_li:first');
+    var tagId = Init.router('tag');
+
+    if (tagId !== null) {
+        var sectionId = 'nav_' + tagId;
+        obj = jQuery('#' + sectionId);
+    }
+
+    if (typeof obj == 'undefined') {
+        var obj = jQuery('.nav_li:first');
+    }
 
 	if (obj.length > 0) {
 		headNav._setActive(obj);
 	}
 }
 
+headNav._setUrl = function (navObj) {
+
+    if (typeof navObj == 'undefined') {
+        return;
+    }
+
+    var tagId = navObj.attr('id');
+    tagId = tagId.substring(4);
+
+    var newUrl = "";
+    var userId = Init.router('user');
+
+    if (userId !== null) {
+        newUrl = document.location.origin + '/user/' + userId + '/tag/' + tagId;
+        history.pushState(null, null, newUrl);
+    }
+}
+
 headNav._setActive = function (obj) {
-	obj.addClass("active");
+    //update browser url
+    headNav._setUrl(obj);
+
+    obj.addClass("active");
 	var activeSectionId = obj.attr('id').substr(4);
 
 	//load img section
@@ -269,7 +299,7 @@ headNav._bindClickEvt = function () {
 	jQuery(".linkContainer .nav_li").each(function () {
 
 		jQuery(this).off('click').on('click', function(e) {
-			headNav._liOnClick(jQuery(this));
+			headNav._liOnClick(jQuery(this));              //todo
 		});
 
 	});

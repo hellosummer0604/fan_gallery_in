@@ -233,21 +233,33 @@ class Currentuser extends User_Controller {
 	 */
 	public function getAllTags_get($userId) {
 		$userId = cutUserId($userId);
+		$status = IMG_STATE_PUBLIC;
+		$least = TAG_IMG_LEAST;
+
+		if ($userId == $this->isOnline()) {
+			$status = NULL;
+			$least = 0;
+		}
 
 		$this->load->model('Tag');
 
-		$tags = Tag::getAllTags($userId);
+		$tags = Tag::getAllTags($userId, $status, $least);
 		$data = array();
 
 		if (!empty($tags)) {
 			foreach ($tags as $tag) {
-				$data[] = array('id' => $tag->getId(), 'name' => $tag->getTagName());
+				$data[] = array('id' => $tag['id'], 'name' => $tag['tag_name']);
 			}
 		}
 
 		usort($data, function($a, $b) {
 			return strcmp($a['name'], $b['name']);
 		});
+
+		//add featured
+		if ($userId == $this->isOnline()) {
+			$data[] = array('id' => TAG_FEATURED, 'name' => "featured");
+		}
 
 		echo responseJson(true, "", "", "", $data);
 	}
