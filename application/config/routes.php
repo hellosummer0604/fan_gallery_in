@@ -77,6 +77,8 @@ $route['account/login']['post'] = 'Home/login';
 $route['account/logout'] = 'Home/logout';
 $route['account/retrieve'] = 'Home/retrieve';
 
+$route['account/tags'] = 'Ajax_controller/tag';
+
 //for html component
 $route['component/head'] = 'Home/headNav';
 $route['component/imgPopup/(:num)'] = 'Home/imgPopup/$1';

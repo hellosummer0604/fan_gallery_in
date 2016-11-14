@@ -22,7 +22,7 @@ popupBoxEdit.autoComplete = function () {
     var tagList = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch: '/ajax_controller/tag',
+        prefetch: '/account/tags',
         //prefetch: 'https://twitter.github.io/typeahead.js/data/films/post_1960.json',
 
     });

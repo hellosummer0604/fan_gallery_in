@@ -154,56 +154,33 @@ class Ajax_controller extends MY_Controller
 		return $res;
 	}
 
-    public function tag()
-    {
-        $res = "[
-   {
-      \"value\":\"Drink\",
-      \"id\":\"ChIJCW8PPKmMWYgRXTo0BsEx75Q\"
-   },
-   {
-      \"value\":\"Smoothy\",
-      \"id\":\"ChIJV8n8ZvEVtokRWz0esW4x2gk\"
-   },
-   {
-      \"value\":\"Interior\",
-      \"id\":\"ChIJfTxB93w5QIcRcvYseNxCK8E\"
-   },
-   {
-      \"value\":\"Light\",
-      \"id\":\"ChIJVdvutIxiz1QRrfEteLgfO5s\"
-   },
-   {
-      \"value\":\"Night\",
-      \"id\":\"ChIJi_uVCUR7k1QRv4obofFy3fc\"
-   },
-   {
-      \"value\":\"Dog\",
-      \"id\":\"ChIJi_uVCUR7k1QRv4obofFy3fc\"
-   },
-   {
-      \"value\":\"Driver\",
-      \"id\":\"ChIJi_uVCUR7k1QRv4obofFy3fc\"
-   },
-   {
-      \"value\":\"DDD\",
-      \"id\":\"ChIJi_uVCUR7k1QRv4obofFy3fc\"
-   },
-   {
-      \"value\":\"2新的分类\",
-      \"id\":\"ChIJi_uVCUR7k1QRv4998fFy3fc\"
-   }
-]";
-        echo $res;
-    }
 
-    public function tags2() {
-        echo json_encode(array(array('value' => 'drink', 'id' => 'asdasd'), array('value' => 'smoothy', 'id' => '123123')));
-    }
+	public function tag() {
+		$userId = $this->isOnline();
 
-    public function tags() {
-        echo json_encode(array('Drink', 'Smoothy', 'Interior', 'Light', 'Night', '新的分类'));
-    }
+		if (empty($userId)) {
+			echo json_encode(null);
+			return;
+		}
+
+		$this->load->model('Tag');
+
+		$tags = Tag::getAllTags($userId, null, 0);
+
+		if (empty($tags)) {
+			echo json_encode(null);
+			return;
+		}
+
+		$data = array();
+
+		foreach ($tags as $tag) {
+			$data[] = array('id' => $tag['id'], 'value' => $tag['tag_name']);
+		}
+
+		echo json_encode($data);
+	}
+
 }
 
 
