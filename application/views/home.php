@@ -7,10 +7,14 @@
     <span class="linkContainer">
 		<?php
 		foreach ($cateList as $key => $item) {
-			echo "<li id='nav_$item' class='nav_li'>" . ucfirst($key) . "</li>";
+			if ($key == 'more') {
+				echo "<li id='moreBtn' data-jq-dropdown='#jq-dropdown-more'>More</li>";
+			} else {
+				echo "<li id='nav_$item' class='nav_li'>" . ucfirst($key) . "</li>";
+			}
 		}
 		?>
-        <li id="moreBtn" data-jq-dropdown="#jq-dropdown-more">More</li>
+
     </span>
 	<div id="jq-dropdown-more" class="jq-dropdown jq-dropdown-scroll jq-dropdown-escape">
 		<ul class="jq-dropdown-panel-narrow">
@@ -58,7 +62,16 @@
 	<div class="pagingBanner moreGroup">
 	</div>
 
-	<div class="footer" >footer</div>
+	<div class="footer">
+		<div class="mainSpan">
+			<ul>
+				<li>Site design/logo &copy; North.Gallery 2016</li>
+				<li>Tech Support: hellosummer0604@gmail.com</li>
+				<li>Photo Copyright: xxx@gmail.com</li>
+				<li>Rev 2016.11.13.191</li>
+			</ul>
+		</div>
+	</div>
 </section>
 
 </body>

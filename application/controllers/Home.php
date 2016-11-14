@@ -25,7 +25,6 @@ class Home extends MY_Controller {
 			'grid_manager',
 			'popupBox',
 			'img_grid_manager',
-			'temp_test',
 		];
 
 		$this->load->model('User');
@@ -42,6 +41,7 @@ class Home extends MY_Controller {
 		}
 
 		$imgObj = Img::load($imgId);
+		Img::addVisitedCount($imgId);
 
 		return $imgObj;
 	}
@@ -86,18 +86,49 @@ class Home extends MY_Controller {
 
 		$this->loadImgPopView();
 
-		$this->tempLoadPosterView();//todo will replace by real functions
-		
-		$data['cateList'] = $this->getCategoryLink($userId);
+		$this->tempLoadPosterView($userId);
+
+		if (!empty($userId)) {
+			$data['cateList'] = $this->getCategoryLink($userId);
+		} else {
+			$data['cateList'] = array('new' => TAG_NEW, 'popular' => TAG_POPULAR, 'featured' => TAG_FEATURED);
+		}
 
 		$this->loadView('home', $data);
 	}
 
 	//todo temporary, remove it
-	private function tempLoadPosterView() {
+	private function tempLoadPosterView($userId = null) {
+		$this->load->model('Img');
+
+		//homepage doesn't use featured as poster
+		if (!empty($userId)) {
+			$imgs = $this->Img->loadFeatured($userId);
+		} else {
+			$imgs = null;
+		}
+
+		if (empty($imgs)) {
+			$data = $this->loadRandomPost();
+		} else {
+			$img = $imgs[array_rand($imgs, 1)];
+
+			$data['src'] = base_url($img->getFullPath());
+			$data['width'] = $img->getWidth();
+			$data['height'] = $img->getHeight();
+			$data['userId'] = $userId;
+		}
+
+		$this->loadPosterView(true, $data);
+	}
+
+	private function loadRandomPost() {
 		$path = "./resource/gallery/img_publish/img_poster/";
 
 		$imgNames = $this->filehelper->getFolderFiles($path);
+		if (empty($imgNames)) {
+			return null;
+		}
 		$img = $path.$imgNames[array_rand($imgNames)];//get random img
 
 		$imgInfo = $this->filehelper->getImgSize($img);
@@ -106,8 +137,7 @@ class Home extends MY_Controller {
 		$data['width'] = $imgInfo['width'];
 		$data['height'] = $imgInfo['height'];
 
-
-		$this->loadPosterView(true, $data);
+		return $data;
 	}
 
 	public function login() {

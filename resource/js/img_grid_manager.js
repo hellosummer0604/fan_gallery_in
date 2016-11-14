@@ -30,9 +30,12 @@ Img_Grid_Manager.loadImgSection = function (sid, page) {
 	}
 
     var userId = Init.router('user');
+    var url = "";
 
     if (userId == null) {
-        window.location.href = document.location.origin;
+        url = document.location.origin + '/homepage/' + sid + '/page/' + page;
+    } else {
+        url = document.location.origin + '/user/' + userId + '/tag/' + sid + '/page/' + page;
     }
 
     var sectionInfo = {'sectionId': sid};
@@ -41,8 +44,7 @@ Img_Grid_Manager.loadImgSection = function (sid, page) {
 
     jQuery.ajax({
         method: 'POST',
-        // url: 'http://north.gallery/user/' + userId + '/tag/' + sid + '/page/' + page,
-        url: document.location.origin + '/user/' + userId + '/tag/' + sid + '/page/' + page,
+        url: url,
         data: sectionInfo,
         dataType: 'json',
         async: 'false',
@@ -311,4 +313,18 @@ Img_Grid_Manager._setPagination = function(pagination) {
             Img_Grid_Manager.changePage(pageNo - 1);
         });
     });
+}
+
+Img_Grid_Manager._resizeFooter = function() {
+    try {
+        var outer = jQuery(window).width();
+        var imgSectionWidth = jQuery(".imgGroup").innerWidth();
+
+        var padding = (outer - imgSectionWidth) / 2;
+        jQuery('.mainSpan').css({"padding-right": padding + "px"});
+    }
+    catch(err) {
+        console.error(JSON.stringify(err));
+    }
+
 }

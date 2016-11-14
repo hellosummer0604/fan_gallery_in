@@ -114,7 +114,7 @@ popupBox._bindSubmit = function () {
         var baseUrl = document.location.origin;
         var targetForm = jQuery(self).closest('form');
         var actionUrl = baseUrl + targetForm.attr("action");
-console_test(actionUrl);
+
         //disable button
         jQuery(self).prop("disabled", true);
         //loading notice
@@ -485,6 +485,10 @@ popupBox.isEditPopup = function (obj) {
         return true;
     }
 
+    if (jQuery(target).has('.popup_settings').length) {
+        return true;
+    }
+
 
     return false;
 }
@@ -495,6 +499,7 @@ popupBox.submitEditPopup = function () {
         title: jQuery('#imgTitle').val(),
         desc: jQuery('#imgDescription').val(),
         status: jQuery('#imgStatus').val(),
+        featured: jQuery('#imgFeatured').val(),
         tags: popupBoxEdit.getAllTags()
     };
 

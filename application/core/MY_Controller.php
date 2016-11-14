@@ -61,9 +61,11 @@ class MY_Controller extends CI_Controller {
 
 
 	//generate link items in nav
+
 	public function getCategoryLink($userId) {
 		$this->load->model('Tag');
 
+		//to do
 		$tags = Tag::getStickedTag($userId);
 
 
@@ -73,6 +75,7 @@ class MY_Controller extends CI_Controller {
 		foreach ($tags as $key => $item) {
 			$result[strtolower($key)] = $item;
 		}
+		$result['more'] = "";
 		
 		$this->CategoryLink = $result;
 		
@@ -118,12 +121,25 @@ class MY_Controller extends CI_Controller {
 //		$this->loadView('/include/popup/imgPopupEdit', $data);
 //	}
 
-	public function loadPosterView($enable = true, $data = null) {
+	protected function loadPosterView($enable = true, $data = null) {
 		if ($enable) {
 			if (empty($data)) {
 				$data['url'] = "http://north.gallery/resource/theme/default/img/8206-8.jpg";
 				$data['width'] = 2880;
 				$data['height'] = 1800;
+			}
+
+			$data['firstHeadline'] = FIRST_HEADLINE;
+			$data['secondHeadline'] = SECOND_HEADLINE;
+
+			if (isset($data['userId']) && !empty($data['userId'])) {
+				$this->load->model('User');
+				$user = User::load($data['userId']);
+
+				if (!empty($user)) {
+					$data['firstHeadline'] = $user->getPrimaryHeadline();
+					$data['secondHeadline'] = $user->getSecondHeadline();
+				}
 			}
 
 			$this->loadView('/include/poster', $data);

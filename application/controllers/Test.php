@@ -175,6 +175,31 @@ class Test extends MY_Controller {
 
 		print_r($user->getStickedTag());
 	}
+
+	public function test16() {
+
+		$this->load->model('Master_user');
+		$res = $this->Master_user->getPhotos(TAG_NEW);
+		print_r(json_encode($res));
+	}
+
+	public function test17() {
+
+		$this->load->model('Img');
+
+		$imgs = Img::loadFeatured();
+		print_r($imgs);
+//		print_r($this->db->last_query());
+	}
+
+	public function test18() {
+
+		$this->load->model('Tag');
+
+		$tags = Tag::getAllTags();
+		print_r($tags);
+//		print_r($this->db->last_query());
+	}
 }
 
 ?>

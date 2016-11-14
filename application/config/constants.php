@@ -93,16 +93,16 @@ define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 //
-//define('IMG_SECTION_PAGE_NO', 0);
-//define('IMG_SECTION_PAGE_SIZE', 150);
-//define('IMG_SECTION_SIZE', 24);
-//define('IMG_SECTION_LAST_SIZE', 20);
+define('IMG_SECTION_PAGE_NO', 0);
+define('IMG_SECTION_PAGE_SIZE', 150);
+define('IMG_SECTION_SIZE', 24);
+define('IMG_SECTION_LAST_SIZE', 20);
 
 //test
-define('IMG_SECTION_PAGE_NO', 0);
-define('IMG_SECTION_PAGE_SIZE', 10);
-define('IMG_SECTION_SIZE', 6);
-define('IMG_SECTION_LAST_SIZE', 6);
+//define('IMG_SECTION_PAGE_NO', 0);
+//define('IMG_SECTION_PAGE_SIZE', 3);
+//define('IMG_SECTION_SIZE', 2);
+//define('IMG_SECTION_LAST_SIZE', 2);
 
 define('SESSION_USER_ID', 'onlineUserId');
 define('SESSION_UPLOAD', 'sessUpload');
@@ -130,10 +130,24 @@ define('THUMB_MIN_WIDTH', 500);
 define('THUMB_MIN_HEIGHT', 500);
 define('THUMB_SIZE', 500);
 
-define('IMG_UNASSIGNED', 'unAssigned');
+define('IMG_UNASSIGNED', 'default');
 
 
 define('REPO_ID', 'repo_id');
+define('REPO_URL', 'infocenter');
 
 define('TAG_ALL', 'all_id');
+define('TAG_NEW', 'new_id');
+define('TAG_POPULAR', 'popular_id');
+define('TAG_FEATURED', 'featured_id');
+
+define('TAG_IMG_LEAST', 0);
+
+
+define('USER_ID_LEN', 32);
+
+
+
+define('FIRST_HEADLINE', '我觉得我觉得我像一个艺术家');
+define('SECOND_HEADLINE', 'Explore 50 million inspiring photos, connect with other enthusiasts and learn more about the craft.');
 

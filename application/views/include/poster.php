@@ -2,12 +2,22 @@
 
 </section>
 
-<section class="textSection font_color_666">
-    <div class="large"><br>我觉得我觉得我像一个艺术家</div>
+<?php
+	if (!empty($firstHeadline) || !empty($secondHeadline)) {
+?>
+	<section class="textSection font_color_666">
+		<?php
+			if (!empty($firstHeadline)) {
+				echo "<div class=\"large\"><br>$firstHeadline</div>";
+			}
+		?>
 
-    <br><br>
-    <div class="small">
-		Explore 50 million inspiring photos, connect with other enthusiasts and learn more about the
-        craft.
-    </div>
-</section>
+		<?php
+			if (!empty($secondHeadline)) {
+				echo "<br><br><div class=\"small\">$secondHeadline</div>";
+			}
+		?>
+	</section>
+<?php
+	}
+?>

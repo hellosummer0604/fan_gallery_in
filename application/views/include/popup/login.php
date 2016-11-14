@@ -26,7 +26,7 @@
 				<div class="ajaxNotice">
 					Loading...
 				</div>
-				<div class="registerFormBox">
+				<div class="popupFormBox">
 					<label>#Username/Email:</label>
 					<input name="username" type="text" maxlength="30" placeholder="insert your email/username">
 					<label>#Password:</label>
@@ -39,7 +39,7 @@
 					</div>
 					<input name="rememberme" type="checkbox" hidden="hidden" value="false">
 				</div>
-				<div class="registerFooter">
+				<div class="popupFooter">
 					<ul>
 						<li>Need an Account? <a href="switchtosignin">Sign up</a></li>
 						<li>Forgot password? <a href="#">Retrieve</a></li>
@@ -85,7 +85,7 @@
 				<div class="ajaxNotice">
 					Loading...
 				</div>
-				<div class="registerFormBox">
+				<div class="popupFormBox">
 
 					<label>#Email:</label>
 					<input name="email" type="text" maxlength="30" placeholder="insert your email">
@@ -96,7 +96,7 @@
 					<label>#Confirm Password:</label>
 					<input name="passwordConfirm" type="password" maxlength="30" placeholder="confirm your password">
 				</div>
-				<div class="registerFooter">
+				<div class="popupFooter">
 					<ul>
 						<li>Have an Account? <a href="switchtosignup">Sign in</a></li>
 					</ul>

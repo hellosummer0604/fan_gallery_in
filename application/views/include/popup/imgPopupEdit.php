@@ -12,11 +12,11 @@
 			<div class="popupImg loadingBg" id="popImgBox"></div>
 			<div class="popupImg" id="popImgText">
 				<span class="innerBox">
-					<div id="imgAuthorTags" class="itag"><a id="authorTag" href="javascript:void(0)"><?php echo $imgObj->getAuthor()->getUsername();?></a></div>
+					<div id="imgAuthorTags" class="itag"><a id="authorTag" href="<?php $userId = $imgObj->getAuthor()->getId(); echo base_url("user/$userId")?>"><?php echo $imgObj->getAuthor()->getUsername();?></a></div>
 							<span id="imgTags"><?php
 								$tags = $imgObj->getTags();
 								foreach ($tags as $item) {
-									echo "<div class='itag'><a href='".base_url('/tags/'.$item->getId())."'>".$item->getTagName()."</a></div>";
+									echo "<div class='itag'><a href='javascript::void(0)'>".$item->getTagName()."</a></div>";
 								}
 								?></span>
 				</span>
@@ -26,7 +26,7 @@
 				</span>
 
 				<span class="innerBox" id="imgStatusBox">
-					<select id="imgStatus" name="imgStatus">
+					<select class="imgStatusSelector" id="imgStatus" name="imgStatus">
 						<?php
 						$status = $imgObj->getStatus();
 
@@ -45,6 +45,21 @@
 						?>
 					</select>
 				</span>
+				<span class="innerBox" id="imgFeaturedBox">
+					<select class="imgStatusSelector" id="imgFeatured" name="imgFeatured">
+						<?php
+							$featured = $imgObj->getFeatured();
+
+							if ($featured) {
+								echo "<option value=\"1\" selected=\"selected\">Featured</option><option value=\"0\">Regular</option>";
+							} else {
+								echo "<option value=\"1\">Featured</option><option value=\"0\" selected=\"selected\">Regular</option>";
+							}
+						?>
+
+					</select>
+				</span>
+
 
 				<div class="innerBox" id="imgText">
 					<textarea name="imgDescription" rows="3" id="imgDescription" placeholder="请在此输入内容..."><?php echo br2newline($imgObj->getText());?></textarea>

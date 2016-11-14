@@ -66,6 +66,9 @@ $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+$route['/'] = 'home/index';
+$route['homepage/(:any)'] = 'Ajax_controller/getImg/null/$1';
+$route['homepage/(:any)/page/(:num)'] = 'Ajax_controller/getImg/null/$1/$2';
 
 //for signup, login, logout, retrieve
 $route['account/signup']['post'] = 'Home/signup';
@@ -73,6 +76,8 @@ $route['account/userId']['get'] = 'Home/currentUserId';
 $route['account/login']['post'] = 'Home/login';
 $route['account/logout'] = 'Home/logout';
 $route['account/retrieve'] = 'Home/retrieve';
+
+$route['account/tags'] = 'Ajax_controller/tag';
 
 //for html component
 $route['component/head'] = 'Home/headNav';
@@ -102,10 +107,17 @@ $route['u/(:any)/(:any)/(:any)/(:any)'] = 'Currentuser/$1/$2/$3/$4';
 
 
 $route['user/(:any)'] = "home/index/$1";
-$route['user/(:any)/tag/(:any)'] = "Ajax_controller/getImg/$1/$2";
+$route['user/'.REPO_URL] = "Currentuser/".REPO_URL;
+$route['user/'.REPO_URL."/tag/(:any)"] = "Currentuser/".REPO_URL;
+$route['user/(:any)/tag/(:any)']['post'] = "Ajax_controller/getImg/$1/$2";
+$route['user/(:any)/tag/(:any)']['get'] = "home/index/$1";
 $route['user/(:any)/tags'] = "Currentuser/getAllTags/$1";
-$route['user/(:any)/tag/(:any)/page/(:num)'] = "Ajax_controller/getImg/$1/$2/$3";
+$route['user/(:any)/tag/(:any)/page/(:num)']['post'] = "Ajax_controller/getImg/$1/$2/$3";
 
 $route['cron'] = "Cron_controller/test";
 $route['cron/(:any)'] = "Cron_controller/$1";
 $route['cron/(:any)/(:any)'] = "Cron_controller/$1/$2";
+
+//settings
+$route['settings'] = 'Currentuser/moduleSettings/';
+$route['commingSoon'] = 'Currentuser/commingSoon/';

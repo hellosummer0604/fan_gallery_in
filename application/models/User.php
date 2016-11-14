@@ -11,6 +11,8 @@ class User extends MY_Model
 	protected $_type = TYPE_USER;
 	protected $_first_name = null;
 	protected $_last_name = null;
+	protected $_primary_headline = null;
+	protected $_second_headline = null;
 	protected $_created = null;
 
 	/**
@@ -102,6 +104,34 @@ class User extends MY_Model
 	 */
 	public function setLastName($last_name) {
 		$this->_last_name = $last_name;
+	}
+
+	/**
+	 * @return null
+	 */
+	public function getPrimaryHeadline() {
+		return $this->_primary_headline;
+	}
+
+	/**
+	 * @param null $primary_headline
+	 */
+	public function setPrimaryHeadline($primary_headline) {
+		$this->_primary_headline = $primary_headline;
+	}
+
+	/**
+	 * @return null
+	 */
+	public function getSecondHeadline() {
+		return $this->_second_headline;
+	}
+
+	/**
+	 * @param null $second_headline
+	 */
+	public function setSecondHeadline($second_headline) {
+		$this->_second_headline = $second_headline;
 	}
 
 	/**

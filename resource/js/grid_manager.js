@@ -31,7 +31,7 @@ var ImgGrid = Class.create({
 		this.imgMinWidth = 150;
 		this.imgMinHeight = 150;
 		this.imgMaxHeight = 600;
-        this.imgBestHeight = 450;
+        this.imgBestHeight = 300;
 
 		//
 		//this.firstLoad = 50;
@@ -118,6 +118,9 @@ var ImgGrid = Class.create({
 		this._assignImgAndEvent(imgArray['imgList'], containerId);
 
 		//console_test(groupDetail);
+
+        //resize footer
+        Img_Grid_Manager._resizeFooter();
 	},
 	
 	

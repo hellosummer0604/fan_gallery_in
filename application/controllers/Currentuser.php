@@ -96,7 +96,6 @@ class Currentuser extends User_Controller {
 					'color_manager',
 					'grid_manager',
 					'img_grid_manager',
-					'temp_test',
 		];
 
 		$this->setHeader(array('css' => $cssArray, 'js' => $jsArray));
@@ -233,16 +232,28 @@ class Currentuser extends User_Controller {
 	 */
 	public function getAllTags_get($userId) {
 		$userId = cutUserId($userId);
+		$status = IMG_STATE_PUBLIC;
+		$least = TAG_IMG_LEAST;
+
+		if ($userId == $this->isOnline()) {
+			$status = NULL;
+			$least = 0;
+		}
 
 		$this->load->model('Tag');
 
-		$tags = Tag::getAllTags($userId);
+		$tags = Tag::getAllTags($userId, $status, $least);
 		$data = array();
 
 		if (!empty($tags)) {
 			foreach ($tags as $tag) {
-				$data[] = array('id' => $tag->getId(), 'name' => $tag->getTagName());
+				$data[] = array('id' => $tag['id'], 'name' => $tag['tag_name']);
 			}
+		}
+
+		//add featured
+		if ($userId == $this->isOnline()) {
+			$data[] = array('id' => TAG_FEATURED, 'name' => "featured");
 		}
 
 		usort($data, function($a, $b) {
@@ -251,4 +262,53 @@ class Currentuser extends User_Controller {
 
 		echo responseJson(true, "", "", "", $data);
 	}
+
+
+
+
+	/***************** start settings ***************/
+	public function moduleSettings_get() {
+		$this->load->model('User');
+		$viewPath = $this->basePath . "/module/settings";
+		$data = array();
+
+		$userId = $this->isOnline();
+		$user = User::load($userId);
+
+		if (!$userId || empty($user)) {
+			echo responseJson(false, '', "Need login");
+			return;
+		}
+
+		$data['user'] = $user;
+
+		$this->load->view($viewPath, $data);
+	}
+
+	public function moduleSettings_post() {
+		$this->load->model('User');
+		extract($this->input->post());
+
+		$userId = $this->isOnline();
+		$user = User::load($userId);
+
+		if (!$userId || empty($user)) {
+			echo responseJson(false, '', "Need login");
+			return;
+		}
+
+		$user->setPrimaryHeadline(substr(trim($first), 0, 50));
+		$user->setSecondHeadline(substr(trim($second), 0, 50));
+		$user->save();
+
+		echo responseJson(true, "Headlines updated on your homepage.");
+	}
+
+	public function commingSoon_get() {
+		$viewPath = $this->basePath . "/module/commingSoon";
+		$data = array();
+
+		$this->load->view($viewPath, $data);
+	}
+	/***************** end settings ***************/
 }

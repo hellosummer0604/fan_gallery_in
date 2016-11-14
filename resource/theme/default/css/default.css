@@ -387,7 +387,7 @@ div.error {
     padding-top: 3px;
 }
 
-.registerFormBox input#remembermeChk{
+.popupFormBox input#remembermeChk{
     content: '';
 
     -moz-appearance:none;
@@ -411,7 +411,7 @@ div.error {
 }
 
 
-.registerFormBox input#remembermeChk + label {
+.popupFormBox input#remembermeChk + label {
     width:16px;
     height:16px;
     display: inline-block;
@@ -419,17 +419,17 @@ div.error {
     font-size: 18px;
 }
 
-.registerFormBox input#remembermeChk:checked + label:after {
+.popupFormBox input#remembermeChk:checked + label:after {
     content: attr(data-content) '\2714';
     color: rgb(0, 171, 230);
 }
 
-/*.registerFormBox input#remembermeChk:after {*/
+/*.popupFormBox input#remembermeChk:after {*/
 /*content: '\2714';*/
 /*font-size: 14px;*/
 /*}*/
 
-.registerFormBox #remembermeTx {
+.popupFormBox #remembermeTx {
     margin-left: 12px;
     margin-top: 8px;
     display: inline-block;
@@ -437,20 +437,20 @@ div.error {
     line-height: 14px;
 }
 
-.smallPopup .mainBox .registerFormBox {
+.mainBox .popupFormBox {
     font-size: 14px;
     padding-bottom: 22px;
     overflow: hidden;
 }
 
-.smallPopup .mainBox .registerFormBox label{
+.mainBox .popupFormBox label{
     margin-left: 30px;
     margin-bottom: 3px;
     color: #666666;
     display: block;
 }
 
-.smallPopup .mainBox .registerFormBox input:not([type='checkbox']){
+.mainBox .popupFormBox input:not([type='checkbox']){
     font-size: 14px;
     width: calc(100% - 72px);
     height:30px;
@@ -464,7 +464,23 @@ div.error {
     border-radius: 3px ;
 }
 
-.smallPopup .mainBox .registerFooter {
+.mainBox .popupFormBox textarea{
+    width: calc(100% - 72px);
+    height: auto;
+    line-height: 24px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    padding-left:10px;
+    font-size: 14px;
+    text-align: left;
+    display: block;
+    border: 1px solid #aaaaaa;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px ;
+    border-radius: 3px ;
+}
+
+.mainBox .popupFooter {
     border-top: 1px solid #dddddd;
     background-color: #eaeaea;
     -moz-border-radius: 0px;
@@ -479,7 +495,7 @@ div.error {
     width: calc(100% - 30px);
 }
 
-.registerFooter ul{
+.popupFooter ul{
     color: #666666;
     list-style-type: none;
     margin-left:30px;
@@ -487,19 +503,19 @@ div.error {
     font-size: 12px;
 }
 
-.registerFooter a {
+.popupFooter a {
     color: rgb(0, 171, 230);
 }
 
-.registerFooter a:hover {
+.popupFooter a:hover {
     color: rgb(255, 51, 153);
 }
 
-.registerFooter button {
+.popupFooter button {
     margin-top: 15px;
 }
 
-.registerFooter .btn-submit {
+.popupFooter .btn-submit {
     margin-left:30px;
 }
 
@@ -629,11 +645,25 @@ div.error {
     text-align: left;
 }
 
-
-
-
 /* generic(upload) popup end*/
 
+
+/* generic(settings) popup start*/
+.genericPopup .popup_settings{
+    min-width: 380px;
+    max-width:80%;
+    height:auto;
+    text-align: justify;
+    position: relative;
+}
+
+
+.genericPopup .popup_settings #btnSection {
+    margin: 10px 30px 30px 30px;
+    text-align: left;
+}
+
+/* generic(settings) popup end*/
 
 
 /* header nav start*/
@@ -655,6 +685,11 @@ div.error {
 
 .bigLogo {
     margin: 0px 20px 0px 20px;
+}
+
+.bigLogo a{
+    margin: 0px 20px 0px 20px;
+    color: #ffffff;
 }
 
 .headerNav .userBanner {
@@ -851,6 +886,9 @@ div.error {
     cursor: pointer;
 }
 
+#moreBtn {
+    border-color: rgb(0, 171, 230);
+}
 
 
 .imgNavContainerForeground .active {
@@ -884,7 +922,7 @@ div.error {
 }
 
 .imgNavContainer #jq-dropdown-more .jq-dropdown-panel-narrow table td {
-    width: 33.3%;
+    width: 50%;
     height:35px;
     border: 1px solid #ffffff;
     overflow: hidden;
@@ -902,10 +940,6 @@ div.error {
     color: rgb(0, 171, 230);
 }
 
-.imgNavContainer #jq-dropdown-more .jq-dropdown-panel-narrow table .active {
-    height:30px;
-    border-bottom: 4px solid;
-}
 
 .imgNavContainer #jq-dropdown-more .jq-dropdown-panel-narrow table td a {
     color: #666666;
@@ -988,10 +1022,26 @@ div.error {
 
 .footer{
     width: 100%;
-    margin-top:45px;
+    min-height: 110px;
+    margin-top:25px;
     background-color: #FFFFFF;
-    min-height: 220px;
     border-top: 1px solid #ededed;
+    font-size: 14px;
+    line-height: 18px;
+    display:table;
+}
+
+.footer li {
+    list-style: none;
+}
+
+.footer .mainSpan {
+    width: 90%;
+    max-width: 1024px;
+    color: #666666;
+    display: table-cell;
+    vertical-align:middle;
+    text-align: right;
 }
 
 .imgThumbBox {
@@ -1220,7 +1270,7 @@ div.error {
     width: calc(100% - 20px);
 }
 
-#imgStatusBox {
+#imgStatusBox, #imgFeaturedBox {
     width: 225px;
     height: 23px;
     margin: 0px 5px 10px 5px;
@@ -1232,7 +1282,7 @@ div.error {
     border:1px solid #999999;
 }
 
-.popupImg select#imgStatus {
+.popupImg select.imgStatusSelector {
     border: none;
     margin-left: 5px;
     width:215px;
@@ -1242,7 +1292,7 @@ div.error {
     color: #666666;
 }
 
-.popupImg select#imgStatus option {
+.popupImg select.imgStatusSelector option {
     margin: 0px 5px 10px 5px;
 }
 /*.popupImg .innerBox button.addImgTag {*/

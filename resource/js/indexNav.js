@@ -229,15 +229,80 @@ headNav._bindResizeEvt = function () {
 }
 
 headNav._setFirstCateActive = function () {
-	var obj = jQuery('.nav_li:first');
+    var tagId = Init.router('tag');
+
+    if (tagId !== null) {
+        var sectionId = 'nav_' + tagId;
+        var obj = jQuery('#' + sectionId);
+    }
+
+    if (typeof obj == 'undefined' || obj.length == 0) {
+        var sectionInMore = headNav._loadSectionInMore(tagId);
+
+        if (sectionInMore) {
+            //already loaded, exit.
+            return;
+        } else {
+            obj = jQuery('.nav_li:first');
+        }
+    }
 
 	if (obj.length > 0) {
 		headNav._setActive(obj);
 	}
 }
 
+headNav._loadSectionInMore = function (tagId) {
+    var data = headNav._loadMoreTags();
+
+    if (data == null || data.data.length < 1) {
+        return false;
+    }
+
+    var exist = false;
+
+    jQuery(data.data).each(function () {
+        if (this.id == tagId) {
+            exist = true;
+        }
+    });
+
+    if (!exist) {
+        return false;
+    }
+
+    headNav._updateUrl(tagId);
+
+    Img_Grid_Manager.loadImgSection(tagId, 0);
+
+    jQuery('#moreBtn').addClass('active');
+
+    return true;
+}
+
+headNav._setUrl = function (navObj) {
+
+    if (typeof navObj == 'undefined') {
+        return;
+    }
+
+    var tagId = navObj.attr('id');
+    tagId = tagId.substring(4);
+
+    var newUrl = "";
+    var userId = Init.router('user');
+
+    if (userId !== null) {
+        newUrl = document.location.origin + '/user/' + userId + '/tag/' + tagId;
+        history.pushState(null, null, newUrl);
+    }
+}
+
 headNav._setActive = function (obj) {
-	obj.addClass("active");
+    //update browser url
+    headNav._setUrl(obj);
+
+    obj.addClass("active");
 	var activeSectionId = obj.attr('id').substr(4);
 
 	//load img section
@@ -269,7 +334,7 @@ headNav._bindClickEvt = function () {
 	jQuery(".linkContainer .nav_li").each(function () {
 
 		jQuery(this).off('click').on('click', function(e) {
-			headNav._liOnClick(jQuery(this));
+			headNav._liOnClick(jQuery(this));              //todo
 		});
 
 	});
@@ -310,7 +375,7 @@ headNav._bindMorePanelTriggered = function () {
     trigger.off('click').on("click", function(event) {
         headNav._setMorePanelPos();
 
-        headNav._loadMoreTags();
+        headNav._composeMoreTags();
     });
 
     jDropDown.css({
@@ -318,46 +383,65 @@ headNav._bindMorePanelTriggered = function () {
     });
 }
 
+//
 headNav._loadMoreTags = function () {
+    var result = null;
+
     var userUrl = document.location.origin + '/user/' + Init.router('user');
     jQuery.ajax({
         method: 'GET',
         url: userUrl + '/tags',
         dataType: 'json',
+        async: false,
         success: function (data) {
-
-            //insert to more panel
-            if (data.data.length > 0) {
-                //clear the panel
-                headNav._clearMorePanelTags();
-
-                var htmlStr = "";
-
-                for(var i = 0; i < data.data.length; i++) {
-                    var tmpStr = "<td width=\"50%\"><a href=\"" + data.data[i].id + "\">" + data.data[i].name + "</a></td>";
-
-                    if (i == 0) {
-                        tmpStr = "<tr>" + tmpStr;
-                    } else if (i % 2 == 0) {
-                        tmpStr = "</tr><tr>" + tmpStr;
-                    }
-
-                    if (i == data.data.length - 1) {
-                        tmpStr = tmpStr + "</tr>";
-                    }
-
-                    htmlStr = htmlStr + tmpStr;
-                }
-
-                jQuery('#jq-dropdown-more tr:last').after(htmlStr);
-                //bind panel tags click event
-                headNav._bindMorePanelTagTriggered();
-            }
+            result = data;
         },
         error: function (data) {
-            console.error('cannot load more tags '+ JSON.stringify(section));
+            console.error('cannot load more tags '+ JSON.stringify(data));
         }
     });
+
+    return result;
+}
+
+headNav._composeMoreTags = function () {
+    var data = headNav._loadMoreTags();
+
+    if (data !== null && data.data.length > 0) {
+        //clear the panel
+        headNav._clearMorePanelTags();
+
+        var htmlStr = "";
+
+        for(var i = 0; i < data.data.length; i++) {
+            var tmpStr = "<td id='more_nav_" + data.data[i].id + "'><a href=\"" + data.data[i].id + "\">" + data.data[i].name + "</a></td>";
+
+            if (i == 0) {
+                tmpStr = "<tr>" + tmpStr;
+            } else if (i % 2 == 0) {
+                tmpStr = "</tr><tr>" + tmpStr;
+            }
+
+            if (i == data.data.length - 1) {
+                tmpStr = tmpStr + "</tr>";
+            }
+
+            htmlStr = htmlStr + tmpStr;
+        }
+
+        jQuery('#jq-dropdown-more tr:last').after(htmlStr);
+        //bind panel tags click event
+        headNav._bindMorePanelTagTriggered();
+
+        var sid = Init.router('tag');
+
+        if (sid !== null) {
+            jQuery('#more_nav_' + sid).addClass('active');
+        }
+
+    } else {
+        jQuery('#jq-dropdown-more tr:last').html('no data');
+    }
 }
 
 headNav._bindMorePanelTagTriggered = function () {
@@ -370,23 +454,34 @@ headNav._bindMorePanelTagTriggered = function () {
 
             var sid = jQuery(obj).attr("href");
 
-            headNav._morePanelTagClicked(currentTd, sid);
+            headNav._morePanelTagClicked(sid);
         });
     });
 }
 
-headNav._morePanelTagClicked = function (obj, sid) {
+headNav._morePanelTagClicked = function (sid) {
+    headNav._updateUrl(sid);
+
     headNav._setNavColor("clear");
 
     headNav._setDeactive();
 
     headNav._clearMorePanelTagActive();
 
-    obj.addClass('active');
+    // obj.addClass('active');
 
     jQuery('#moreBtn').addClass('active');
 
     Img_Grid_Manager.loadImgSection(sid, 0);
+}
+
+headNav._updateUrl = function (sid) {
+    var userId = Init.router('user');
+
+    if (userId !== null) {
+        var newUrl = document.location.origin + '/user/' + userId + '/tag/' + sid;
+        history.pushState(null, null, newUrl);
+    }
 }
 
 headNav._clearMorePanelTagActive = function () {

@@ -18,7 +18,6 @@ class Infocenter extends MY_Controller {
 			'color_manager',
 			'grid_manager',
 			'img_grid_manager',
-			'temp_test',
 		];
 
 	}
