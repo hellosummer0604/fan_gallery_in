@@ -1024,7 +1024,6 @@ div.error {
     width: 100%;
     min-height: 110px;
     margin-top:25px;
-    padding-left:32px;
     background-color: #FFFFFF;
     border-top: 1px solid #ededed;
     font-size: 14px;
@@ -1042,6 +1041,9 @@ div.error {
     color: #666666;
     display: table-cell;
     vertical-align:middle;
+
+    padding-right:32px;
+    text-align: right;
 }
 
 .imgThumbBox {
