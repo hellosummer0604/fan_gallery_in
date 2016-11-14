@@ -49,9 +49,10 @@
 	<div class="footer">
 		<div class="mainSpan">
 			<ul>
-				<li>Site design/logo &copy; North.Gallery; Rev 2016.11.13.191</li>
+				<li>Site design/logo &copy; North.Gallery 2016</li>
 				<li>Tech Support: hellosummer0604@gmail.com</li>
-				<li>Photo Copyright: xxx@gmail.com</li>
+				<li>Photo Copyright: northyhades@gmail.com</li>
+				<li>Rev 2016.11.13.191</li>
 			</ul>
 		</div>
 	</div>
