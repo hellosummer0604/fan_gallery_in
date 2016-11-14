@@ -129,6 +129,19 @@ class MY_Controller extends CI_Controller {
 				$data['height'] = 1800;
 			}
 
+			$data['firstHeadline'] = "";
+			$data['secondHeadline'] = "";
+
+			if (isset($data['userId']) && !empty($data['userId'])) {
+				$this->load->model('User');
+				$user = User::load($data['userId']);
+
+				if (!empty($user)) {
+					$data['firstHeadline'] = $user->getPrimaryHeadline();
+					$data['secondHeadline'] = $user->getSecondHeadline();
+				}
+			}
+
 			$this->loadView('/include/poster', $data);
 		} else {
 			$this->loadView('/include/poster_empty');

@@ -117,6 +117,7 @@ class Home extends MY_Controller {
 			$data['src'] = base_url($img->getFullPath());
 			$data['width'] = $img->getWidth();
 			$data['height'] = $img->getHeight();
+			$data['userId'] = $userId;
 		}
 
 		$this->loadPosterView(true, $data);

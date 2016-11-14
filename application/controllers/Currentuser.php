@@ -269,21 +269,40 @@ class Currentuser extends User_Controller {
 
 	/***************** start settings ***************/
 	public function moduleSettings_get() {
+		$this->load->model('User');
 		$viewPath = $this->basePath . "/module/settings";
 		$data = array();
 
+		$userId = $this->isOnline();
+		$user = User::load($userId);
 
-		if ($this->isOnline()) {
-			$this->session->set_userdata(SESSION_UPLOAD, $this->utils->tmpRandomKey());
-			$this->load->view($viewPath, $data);
-		} else {
-			$this->response("Need login", 403);
+		if (!$userId || empty($user)) {
+			echo responseJson(false, '', "Need login");
+			return;
 		}
+
+		$data['user'] = $user;
+
+		$this->load->view($viewPath, $data);
 	}
 
 	public function moduleSettings_post() {
+		$this->load->model('User');
+		extract($this->input->post());
 
+		$userId = $this->isOnline();
+		$user = User::load($userId);
 
+		if (!$userId || empty($user)) {
+			echo responseJson(false, '', "Need login");
+			return;
+		}
+
+		$user->setPrimaryHeadline(substr(trim($first), 0, 50));
+		$user->setSecondHeadline(substr(trim($second), 0, 50));
+		$user->save();
+
+		echo responseJson(true, "Headlines updated on your homepage.");
 	}
 
 	public function commingSoon_get() {

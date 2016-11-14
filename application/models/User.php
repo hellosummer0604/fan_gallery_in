@@ -109,6 +109,34 @@ class User extends MY_Model
 	/**
 	 * @return null
 	 */
+	public function getPrimaryHeadline() {
+		return $this->_primary_headline;
+	}
+
+	/**
+	 * @param null $primary_headline
+	 */
+	public function setPrimaryHeadline($primary_headline) {
+		$this->_primary_headline = $primary_headline;
+	}
+
+	/**
+	 * @return null
+	 */
+	public function getSecondHeadline() {
+		return $this->_second_headline;
+	}
+
+	/**
+	 * @param null $second_headline
+	 */
+	public function setSecondHeadline($second_headline) {
+		$this->_second_headline = $second_headline;
+	}
+
+	/**
+	 * @return null
+	 */
 	public function getCreated() {
 		return $this->_created;
 	}

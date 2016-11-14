@@ -15,9 +15,9 @@
 	<div class="ajaxNotice" style="display: none;"></div>
 	<div class="popupFormBox">
 		<label>Primary headline:</label>
-		<input id="primary_headline" name="primary_headline" type="text" maxlength="50" placeholder="insert your primary headline">
+		<input id="primary_headline" name="primary_headline" type="text" maxlength="50" placeholder="insert your primary headline" value="<?php echo $user->getPrimaryHeadline()?>">
 		<label>Second headline:</label>
-		<input id="second_headline" name="second_headline" type="text" maxlength="50" placeholder="insert your second headline">
+		<textarea rows="5" id="second_headline" name="second_headline" type="text" maxlength="50" placeholder="insert your second headline"><?php echo $user->getSecondHeadline()?></textarea>
 	</div>
 	<div class="popupFooter">
 		<button id="uploadSetting" class="btn-submit" type="button">Update</button>
@@ -55,7 +55,27 @@
 
 	var submitUpdate = function() {
 		if (validateUpdate()) {
-			popupBox._popupMsgBanner('close');
+			var primary_headline = jQuery('#primary_headline').val().trim();
+			var second_headline = jQuery('#second_headline').val().trim();
+
+			var tempData = {'first': primary_headline, 'second': second_headline};
+
+			jQuery.ajax({
+				method: 'POST',
+				url: '<?php echo base_url('/settings')?>',
+				data: tempData,
+				dataType: 'json',
+				success: function (data) {
+					if (data.result) {
+						popupBox._popupMsgBanner("success", data.msg);
+					} else {
+						popupBox._popupMsgBanner("error", data.errorMsg);
+					}
+				},
+				error: function (data) {
+					popupBox._popupMsgBanner("error", "Server error, please reload this page and retry again.");
+				}
+			});
 
 		}
 	}
