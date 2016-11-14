@@ -118,6 +118,9 @@ var ImgGrid = Class.create({
 		this._assignImgAndEvent(imgArray['imgList'], containerId);
 
 		//console_test(groupDetail);
+
+        //resize footer
+        Img_Grid_Manager._resizeFooter();
 	},
 	
 	

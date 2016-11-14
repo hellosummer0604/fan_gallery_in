@@ -314,3 +314,12 @@ Img_Grid_Manager._setPagination = function(pagination) {
         });
     });
 }
+
+Img_Grid_Manager._resizeFooter = function() {
+    var outer = jQuery(window).width();
+    var imgSectionWidth = jQuery(".imgGroup").innerWidth();
+
+    var padding = (outer - imgSectionWidth) / 2;
+    jQuery('.mainSpan').css({"padding-right": padding + "px"});
+    console_test(padding);
+}

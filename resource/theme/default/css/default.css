@@ -1041,8 +1041,6 @@ div.error {
     color: #666666;
     display: table-cell;
     vertical-align:middle;
-
-    padding-right:32px;
     text-align: right;
 }
 
