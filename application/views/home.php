@@ -62,7 +62,16 @@
 	<div class="pagingBanner moreGroup">
 	</div>
 
-	<div class="footer" >footer</div>
+	<div class="footer">
+		<div class="mainSpan">
+			<ul>
+				<li>Site design/logo &copy; North.Gallery;</li>
+				<li>Tech Support: hellosummer0604@gmail.com</li>
+				<li>Photo Copyright: xxx@gmail.com</li>
+				<li>Rev 2016.11.13.191</li>
+			</ul>
+		</div>
+	</div>
 </section>
 
 </body>

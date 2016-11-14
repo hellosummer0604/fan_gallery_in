@@ -1022,10 +1022,26 @@ div.error {
 
 .footer{
     width: 100%;
-    margin-top:25px;
-    background-color: #FFFFFF;
     min-height: 110px;
+    margin-top:25px;
+    padding-left:32px;
+    background-color: #FFFFFF;
     border-top: 1px solid #ededed;
+    font-size: 14px;
+    line-height: 18px;
+    display:table;
+}
+
+.footer li {
+    list-style: none;
+}
+
+.footer .mainSpan {
+    width: 90%;
+    max-width: 1024px;
+    color: #666666;
+    display: table-cell;
+    vertical-align:middle;
 }
 
 .imgThumbBox {

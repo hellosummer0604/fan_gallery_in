@@ -100,9 +100,9 @@ define('IMG_SECTION_LAST_SIZE', 20);
 
 //test
 //define('IMG_SECTION_PAGE_NO', 0);
-//define('IMG_SECTION_PAGE_SIZE', 10);
-//define('IMG_SECTION_SIZE', 6);
-//define('IMG_SECTION_LAST_SIZE', 6);
+//define('IMG_SECTION_PAGE_SIZE', 3);
+//define('IMG_SECTION_SIZE', 2);
+//define('IMG_SECTION_LAST_SIZE', 2);
 
 define('SESSION_USER_ID', 'onlineUserId');
 define('SESSION_UPLOAD', 'sessUpload');
