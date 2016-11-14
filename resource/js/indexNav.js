@@ -244,7 +244,6 @@ headNav._setFirstCateActive = function () {
             return;
         } else {
             obj = jQuery('.nav_li:first');
-            console_test(obj);
         }
     }
 

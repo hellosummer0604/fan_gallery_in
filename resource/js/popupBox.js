@@ -114,7 +114,7 @@ popupBox._bindSubmit = function () {
         var baseUrl = document.location.origin;
         var targetForm = jQuery(self).closest('form');
         var actionUrl = baseUrl + targetForm.attr("action");
-console_test(actionUrl);
+
         //disable button
         jQuery(self).prop("disabled", true);
         //loading notice

@@ -96,7 +96,6 @@ class Currentuser extends User_Controller {
 					'color_manager',
 					'grid_manager',
 					'img_grid_manager',
-					'temp_test',
 		];
 
 		$this->setHeader(array('css' => $cssArray, 'js' => $jsArray));

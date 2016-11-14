@@ -25,7 +25,6 @@ class Home extends MY_Controller {
 			'grid_manager',
 			'popupBox',
 			'img_grid_manager',
-			'temp_test',
 		];
 
 		$this->load->model('User');
