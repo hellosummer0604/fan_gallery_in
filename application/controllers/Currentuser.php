@@ -285,5 +285,12 @@ class Currentuser extends User_Controller {
 
 
 	}
+
+	public function commingSoon_get() {
+		$viewPath = $this->basePath . "/module/commingSoon";
+		$data = array();
+
+		$this->load->view($viewPath, $data);
+	}
 	/***************** end settings ***************/
 }

@@ -118,3 +118,4 @@ $route['cron/(:any)/(:any)'] = "Cron_controller/$1/$2";
 
 //settings
 $route['settings'] = 'Currentuser/moduleSettings/';
+$route['commingSoon'] = 'Currentuser/commingSoon/';

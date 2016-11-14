@@ -11,9 +11,9 @@
 		}
 		?>
 	<li id='nav_<?php echo TAG_FEATURED?>' class='nav_li'>Featured</li>
-	<li>Categories</li>
-	<li>Tags</li>
-        <li>Settings</li>
+	<li><a data-popup-view="/commingSoon" data-popup-style="popup_settings">Categories</a></li>
+	<li><a data-popup-view="/commingSoon" data-popup-style="popup_settings">Tags</a></li>
+	<li><a data-popup-view="/settings" data-popup-style="popup_settings">Settings</a></li>
     </span>
 </section>
 <!--img category nav end-->
