@@ -129,8 +129,8 @@ class MY_Controller extends CI_Controller {
 				$data['height'] = 1800;
 			}
 
-			$data['firstHeadline'] = "";
-			$data['secondHeadline'] = "";
+			$data['firstHeadline'] = FIRST_HEADLINE;
+			$data['secondHeadline'] = SECOND_HEADLINE;
 
 			if (isset($data['userId']) && !empty($data['userId'])) {
 				$this->load->model('User');

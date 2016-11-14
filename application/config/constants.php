@@ -148,3 +148,6 @@ define('USER_ID_LEN', 32);
 
 
 
+define('FIRST_HEADLINE', '我觉得我觉得我像一个艺术家');
+define('SECOND_HEADLINE', 'Explore 50 million inspiring photos, connect with other enthusiasts and learn more about the craft.');
+
