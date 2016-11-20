@@ -45,18 +45,6 @@
 
 </section>
 
-<!--<section class="bodySection">
-	<div class="imgGroup" id="s12g2">
-	</div>
-	<div id="" class="imgGroup" style=" height: 212px; background-color: antiquewhite">
-
-		
-	</div>
-	
-</section>-->
-
-
-
 <section class="bodySection imgSection" id="mainImgSection">
 	<div class="beforeThis"></div>
 	<div class="pagingBanner moreGroup">
@@ -66,8 +54,8 @@
 		<div class="mainSpan">
 			<ul>
 				<li>Site design/logo &copy; North.Gallery 2016</li>
-				<li>Tech Support: hellosummer0604@gmail.com</li>
-				<li>Photo Copyright: xxx@gmail.com</li>
+				<li>Report Bug: hellosummer0604@gmail.com</li>
+				<li>Photo Copyright: northyhades@gmail.com</li>
 				<li>Rev 2016.11.13.191</li>
 			</ul>
 		</div>

@@ -154,17 +154,25 @@ headNav._getLiElementArray = function () {
 
 
 headNav._setLinkList = function () {
-	var MoreButton = jQuery(".linkContainer li").last();
+    var width = 0;
+    var num = 0;
+    var marginLR = 20;
+    var numThreshold = 0;
 
-	var marginLR = 30;
+
+	var MoreButton = jQuery("#moreBtn");
+
+    var MoreButtonWidth = 0;
+
+    if(MoreButton.length) {
+        MoreButtonWidth = MoreButton.outerWidth(true);
+        numThreshold = 1; //leave a space for moreBtn
+    }
+
 
 	var windowWidth = jQuery(window).width();
 
-	var containerMaxWidth = windowWidth - marginLR - MoreButton.outerWidth(true);
-
-	var width = 0;
-
-	var num = 0;
+	var containerMaxWidth = windowWidth - marginLR - MoreButtonWidth;
 
 	jQuery.each(headNav.liArray, function (key, obj) {
 		var ele = jQuery(obj);
@@ -181,7 +189,7 @@ headNav._setLinkList = function () {
 
 
 	jQuery(".linkContainer li").each(function () {
-		if (num-- > 1) {
+		if (num-- > numThreshold) {
 			jQuery(this).css({
 				"display": "inline-block"
 			});
