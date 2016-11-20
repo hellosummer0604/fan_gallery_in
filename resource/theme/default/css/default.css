@@ -238,7 +238,7 @@ div.error {
 
 #imgBox .mainBox{
     background: none;
-    min-width: 380px;
+    min-width: 300px;
     max-width: 1920px;
     margin-top: 20px;
     margin-bottom: 70px;
@@ -684,7 +684,7 @@ div.error {
 }
 
 .bigLogo {
-    margin: 0px 20px 0px 20px;
+    margin: 0px 0px 0px 20px;
 }
 
 .bigLogo a{
@@ -879,8 +879,8 @@ div.error {
     line-height: 46px;
     height: 50px;
     border: 0px;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
     max-width: 320px;
     overflow: hidden;
     cursor: pointer;
